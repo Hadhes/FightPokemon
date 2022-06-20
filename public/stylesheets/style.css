@@ -1,0 +1,144 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00b7ff;
+}
+
+/* .center-div {
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  border-radius: 3px;
+} */
+
+/* img.centrage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img.centrage2 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+} */
+
+#gameboy {
+  position: absolute;
+  z-index: 1;
+}
+
+#terrain {
+  position: absolute;
+  margin-left: 247px;
+  margin-top: 213px;
+  z-index: 2;
+}
+
+#pokemonVS {
+  position: absolute;
+  margin-top: 250px;
+  margin-left: 475px;
+  z-index: 3;
+}
+
+#pokemon {
+  position: absolute;
+  margin-top: 272px;
+  margin-left: 255px;
+  z-index: 3;
+}
+
+#textPoke {
+  position: absolute;
+  margin-left: 247px;
+  margin-top: 437px;
+  width: 338px;
+  height: 82px;
+  padding-top: 5px;
+  padding-left: 5px;
+  z-index: 4;
+  border: 4mm ridge rgba(211, 220, 50, 0.6);
+  background-color: white;
+}
+
+#attaquePoke1 {
+  position: absolute;
+  margin-left: 277px;
+  margin-top: 457px;
+  z-index: 5;
+}
+#attaquePoke2 {
+  position: absolute;
+  margin-left: 437px;
+  margin-top: 457px;
+  z-index: 5;
+}
+#attaquePoke3 {
+  position: absolute;
+  margin-left: 277px;
+  margin-top: 492px;
+  z-index: 5;
+}
+#attaquePoke4 {
+  position: absolute;
+  margin-left: 437px;
+  margin-top: 492px;
+  z-index: 5;
+}
+
+#nomPoke {
+  position: absolute;
+  margin-left: 447px;
+  margin-top: 372px;
+  width: 148px;
+  height: 40px;
+  padding-left: 3px;
+  z-index: 4;
+  border: 2mm ridge rgba(211, 220, 50, 0.6);
+  background-color: rgb(255, 223, 148);
+}
+
+#nomPokeVS {
+  position: absolute;
+  margin-left: 277px;
+  margin-top: 227px;
+  width: 148px;
+  height: 40px;
+  padding-left: 2px;
+  z-index: 4;
+  border: 2mm ridge rgba(211, 220, 50, 0.6);
+  background-color: rgb(255, 223, 148);
+}
+
+#pvActuPoke {
+  position: absolute;
+  margin-left: 542px;
+  margin-top: 393px;
+  z-index: 4;
+}
+
+#pvMaxPoke {
+  position: absolute;
+  margin-left: 567px;
+  margin-top: 393px;
+  z-index: 4;
+}
+
+#pvActuPokeVS {
+  position: absolute;
+  margin-left: 368px;
+  margin-top: 248px;
+  z-index: 4;
+}
+
+#pvMaxPokeVS {
+  position: absolute;
+  margin-left: 392px;
+  margin-top: 248px;
+  z-index: 4;
+}

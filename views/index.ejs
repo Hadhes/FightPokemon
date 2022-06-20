@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div>
+      <img id="gameboy" src="../images/gameboy.png" />
+      <img id="terrain" src="../images/terrain.png" width="373" />
+      <img
+        id="pokemon"
+        src="<%= dataAPI2.sprites.back_default %>"
+        width="180"
+      />
+      <img
+        id="pokemonVS"
+        src="<%= dataAPI.sprites.front_default %>"
+        width="100"
+      />
+      <div id="textPoke"></div>
+      <div id="nomPoke"><p><%= dataAPI2.name %></p></div>
+      <div id="pvActuPoke"><%= pv2 %></div>
+      <div id="pvMaxPoke">/<%= pvMax2 %></div>
+      <div id="nomPokeVS"><p><%= dataAPI.name %></p></div>
+      <div id="pvActuPokeVS"><%= pv1 %></div>
+      <div id="pvMaxPokeVS">/<%= pvMax1 %></div>
+
+      <div
+        id="attaquePoke1"
+        onclick="calculPV('attaquePoke1', 1)"
+        style="cursor: pointer"
+      >
+        <%= attaque1.name %>
+      </div>
+      <div
+        id="attaquePoke2"
+        onclick="calculPV('attaquePoke2', 2)"
+        style="cursor: pointer"
+      >
+        <%= attaque2.name %>
+      </div>
+      <div
+        id="attaquePoke3"
+        onclick="calculPV('attaquePoke3', 3)"
+        style="cursor: pointer"
+      >
+        <%= attaque3.name %>
+      </div>
+      <div
+        id="attaquePoke4"
+        onclick="calculPV('attaquePoke4', 4)"
+        style="cursor: pointer"
+      >
+        <%= attaque4.name %>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const attaque_dmg1 = Number("<%- attaque1.power%>");
+    const attaque_dmg2 = Number("<%- attaque2.power%>");
+    const attaque_dmg3 = Number("<%- attaque3.power%>");
+    const attaque_dmg4 = Number("<%- attaque4.power%>");
+
+    const attaque_dmg1VS = Number("<%- attaque1VS.power%>");
+
+    const attPoke = Number("<%- att2 %>");
+    const defPoke = Number("<%- def2 %>");
+    const attSPoke = Number("<%- attS2 %>");
+    const defSPoke = Number("<%- defS2 %>");
+    const vitPoke = Number("<%- vit2 %>");
+
+    const attPokeVS = Number("<%- att1 %>");
+    const defPokeVS = Number("<%- def1 %>");
+    const attSPokeVS = Number("<%- attS1 %>");
+    const defSPokeVS = Number("<%- defS1 %>");
+    const vitPokeVS = Number("<%- vit1 %>");
+
+    const pvVS = Number("<%- pvMax1 %>");
+    let pvActuVS = pvVS;
+
+    const pv = Number("<%- pvMax2 %>");
+    let pvActu = pv;
+
+    function calculPV(id, num) {
+      let modifPVVS = document.getElementById("pvActuPokeVS");
+      let modifPV = document.getElementById("pvActuPoke");
+
+      let test1 = "<%- type1VS %>";
+      let test2 = "<%- type2VS %>";
+      let test3 = "<%- type1 %>";
+      let test4 = "<%- type2 %>";
+      let test5 = "<%- attaque1.type.name %>";
+      let test6 = "<%- attaque1VS.type.name %>";
+      let test7 = "<%- attaque1.name %>";
+      let test8 = "<%- attaque1VS.name %>";
+      let test15 = "<%- nature %>";
+
+      let efficace1 = 1;
+      let efficace2 = 1;
+      let efficace1VS = 1;
+      let efficace2VS = 1;
+
+      let typeAttaque = "";
+      let typeAttaqueClass = "";
+      const typeAttaqueClassVS = "<%- attaque1VS.damage_class.name %>";
+
+      let degatAtt = 0;
+
+      if (num === 1) {
+        typeAttaque = "<%- attaque1.type.name %>";
+        test7 = "<%- attaque1.name %>";
+        degatAtt = attaque_dmg1;
+        typeAttaqueClass = "<%- attaque1.damage_class.name %>";
+      } else if (num === 2) {
+        typeAttaque = "<%- attaque2.type.name %>";
+        test7 = "<%- attaque2.name %>";
+        degatAtt = attaque_dmg2;
+        typeAttaqueClass = "<%- attaque2.damage_class.name %>";
+      } else if (num === 3) {
+        typeAttaque = "<%- attaque3.type.name %>";
+        test7 = "<%- attaque3.name %>";
+        degatAtt = attaque_dmg3;
+        typeAttaqueClass = "<%- attaque3.damage_class.name %>";
+      } else if (num === 4) {
+        typeAttaque = "<%- attaque4.type.name %>";
+        test7 = "<%- attaque4.name %>";
+        degatAtt = attaque_dmg4;
+        typeAttaqueClass = "<%- attaque4.damage_class.name %>";
+      }
+
+      //Attaque vs Type 1
+      if (typeAttaque === "normal") {
+        if ("<%- type1VS %>" === "rock" || "<%- type1VS %>" === "steel") {
+          efficace1 = 0.5;
+        } else if ("<%- type1VS %>" === "ghost") {
+          efficace1 = 0;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "fire") {
+        if (
+          "<%- type1VS %>" === "fire" ||
+          "<%- type1VS %>" === "water" ||
+          "<%- type1VS %>" === "rock" ||
+          "<%- type1VS %>" === "dragon"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "grass" ||
+          "<%- type1VS %>" === "ice" ||
+          "<%- type1VS %>" === "bug" ||
+          "<%- type1VS %>" === "steel"
+        ) {
+          efficace1 = 2;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "water") {
+        if (
+          "<%- type1VS %>" === "water" ||
+          "<%- type1VS %>" === "grass" ||
+          "<%- type1VS %>" === "dragon"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "fire" ||
+          "<%- type1VS %>" === "ground" ||
+          "<%- type1VS %>" === "rock"
+        ) {
+          efficace1 = 2;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "grass") {
+        if (
+          "<%- type1VS %>" === "grass" ||
+          "<%- type1VS %>" === "fire" ||
+          "<%- type1VS %>" === "poison" ||
+          "<%- type1VS %>" === "flying" ||
+          "<%- type1VS %>" === "bug" ||
+          "<%- type1VS %>" === "dragon" ||
+          "<%- type1VS %>" === "steel"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "water" ||
+          "<%- type1VS %>" === "ground" ||
+          "<%- type1VS %>" === "rock"
+        ) {
+          efficace1 = 2;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "electric") {
+        if (
+          "<%- type1VS %>" === "grass" ||
+          "<%- type1VS %>" === "electric" ||
+          "<%- type1VS %>" === "dragon"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "water" ||
+          "<%- type1VS %>" === "flying"
+        ) {
+          efficace1 = 2;
+        } else if ("<%- type1VS %>" === "ground") {
+          efficace1 = 0;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "ice") {
+        if (
+          "<%- type1VS %>" === "fire" ||
+          "<%- type1VS %>" === "water" ||
+          "<%- type1VS %>" === "ice" ||
+          "<%- type1VS %>" === "steel"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "grass" ||
+          "<%- type1VS %>" === "flying" ||
+          "<%- type1VS %>" === "ground" ||
+          "<%- type1VS %>" === "dragon"
+        ) {
+          efficace1 = 2;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "fighting") {
+        if (
+          "<%- type1VS %>" === "poison" ||
+          "<%- type1VS %>" === "flying" ||
+          "<%- type1VS %>" === "psychic" ||
+          "<%- type1VS %>" === "bug" ||
+          "<%- type1VS %>" === "fairy"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "normal" ||
+          "<%- type1VS %>" === "ice" ||
+          "<%- type1VS %>" === "rock" ||
+          "<%- type1VS %>" === "dark" ||
+          "<%- type1VS %>" === "steel"
+        ) {
+          efficace1 = 2;
+        } else if ("<%- type1VS %>" === "ghost") {
+          efficace1 = 0;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "poison") {
+        if (
+          "<%- type1VS %>" === "poison" ||
+          "<%- type1VS %>" === "ground" ||
+          "<%- type1VS %>" === "rock" ||
+          "<%- type1VS %>" === "ghost"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "grass" ||
+          "<%- type1VS %>" === "fairy"
+        ) {
+          efficace1 = 2;
+        } else if ("<%- type1VS %>" === "steel") {
+          efficace1 = 0;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "ground") {
+        if ("<%- type1VS %>" === "grass" || "<%- type1VS %>" === "bug") {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "fire" ||
+          "<%- type1VS %>" === "electric" ||
+          "<%- type1VS %>" === "poison" ||
+          "<%- type1VS %>" === "rock" ||
+          "<%- type1VS %>" === "steel"
+        ) {
+          efficace1 = 2;
+        } else if ("<%- type1VS %>" === "flying") {
+          efficace1 = 0;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "flying") {
+        if (
+          "<%- type1VS %>" === "electric" ||
+          "<%- type1VS %>" === "rock" ||
+          "<%- type1VS %>" === "steel"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "grass" ||
+          "<%- type1VS %>" === "fighting" ||
+          "<%- type1VS %>" === "bug"
+        ) {
+          efficace1 = 2;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "psychic") {
+        if ("<%- type1VS %>" === "psychic" || "<%- type1VS %>" === "steel") {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "fighting" ||
+          "<%- type1VS %>" === "poison"
+        ) {
+          efficace1 = 2;
+        } else if ("<%- type1VS %>" === "dark") {
+          efficace1 = 0;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "bug") {
+        if (
+          "<%- type1VS %>" === "fire" ||
+          "<%- type1VS %>" === "fighting" ||
+          "<%- type1VS %>" === "poison" ||
+          "<%- type1VS %>" === "flying" ||
+          "<%- type1VS %>" === "ghost" ||
+          "<%- type1VS %>" === "steel" ||
+          "<%- type1VS %>" === "fairy"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "grass" ||
+          "<%- type1VS %>" === "psychic" ||
+          "<%- type1VS %>" === "dark"
+        ) {
+          efficace1 = 2;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "rock") {
+        if (
+          "<%- type1VS %>" === "fighting" ||
+          "<%- type1VS %>" === "ground" ||
+          "<%- type1VS %>" === "steel"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "flying" ||
+          "<%- type1VS %>" === "fire" ||
+          "<%- type1VS %>" === "ice" ||
+          "<%- type1VS %>" === "bug"
+        ) {
+          efficace1 = 2;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "ghost") {
+        if ("<%- type1VS %>" === "dark") {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "ghost" ||
+          "<%- type1VS %>" === "psychic"
+        ) {
+          efficace1 = 2;
+        } else if ("<%- type1VS %>" === "normal") {
+          efficace1 = 0;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "dragon") {
+        if ("<%- type1VS %>" === "steel") {
+          efficace1 = 0.5;
+        } else if ("<%- type1VS %>" === "dragon") {
+          efficace1 = 2;
+        } else if ("<%- type1VS %>" === "fairy") {
+          efficace1 = 0;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "dark") {
+        if (
+          "<%- type1VS %>" === "fighting" ||
+          "<%- type1VS %>" === "dark" ||
+          "<%- type1VS %>" === "fairy"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "psychic" ||
+          "<%- type1VS %>" === "ghost"
+        ) {
+          efficace1 = 2;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "steel") {
+        if (
+          "<%- type1VS %>" === "fire" ||
+          "<%- type1VS %>" === "water" ||
+          "<%- type1VS %>" === "electric" ||
+          "<%- type1VS %>" === "steel"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "ice" ||
+          "<%- type1VS %>" === "rock" ||
+          "<%- type1VS %>" === "fairy"
+        ) {
+          efficace1 = 2;
+        } else {
+          efficace1 = 1;
+        }
+      } else if (typeAttaque === "fairy") {
+        if (
+          "<%- type1VS %>" === "fire" ||
+          "<%- type1VS %>" === "poison" ||
+          "<%- type1VS %>" === "steel"
+        ) {
+          efficace1 = 0.5;
+        } else if (
+          "<%- type1VS %>" === "fighting" ||
+          "<%- type1VS %>" === "dragon" ||
+          "<%- type1VS %>" === "dark"
+        ) {
+          efficace1 = 2;
+        } else {
+          efficace1 = 1;
+        }
+      } else {
+        efficace1 = 10;
+      }
+
+      //Attaque vs Type 2
+      if (typeAttaque === "normal") {
+        if ("<%- type2VS %>" === "rock" || "<%- type2VS %>" === "steel") {
+          efficace2 = 0.5;
+        } else if ("<%- type2VS %>" === "ghost") {
+          efficace2 = 0;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "fire") {
+        if (
+          "<%- type2VS %>" === "fire" ||
+          "<%- type2VS %>" === "water" ||
+          "<%- type2VS %>" === "rock" ||
+          "<%- type2VS %>" === "dragon"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "grass" ||
+          "<%- type2VS %>" === "ice" ||
+          "<%- type2VS %>" === "bug" ||
+          "<%- type2VS %>" === "steel"
+        ) {
+          efficace2 = 2;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "water") {
+        if (
+          "<%- type2VS %>" === "water" ||
+          "<%- type2VS %>" === "grass" ||
+          "<%- type2VS %>" === "dragon"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "fire" ||
+          "<%- type2VS %>" === "ground" ||
+          "<%- type2VS %>" === "rock"
+        ) {
+          efficace2 = 2;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "grass") {
+        if (
+          "<%- type2VS %>" === "grass" ||
+          "<%- type2VS %>" === "fire" ||
+          "<%- type2VS %>" === "poison" ||
+          "<%- type2VS %>" === "flying" ||
+          "<%- type2VS %>" === "bug" ||
+          "<%- type2VS %>" === "dragon" ||
+          "<%- type2VS %>" === "steel"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "water" ||
+          "<%- type2VS %>" === "ground" ||
+          "<%- type2VS %>" === "rock"
+        ) {
+          efficace2 = 2;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "electric") {
+        if (
+          "<%- type2VS %>" === "grass" ||
+          "<%- type2VS %>" === "electric" ||
+          "<%- type2VS %>" === "dragon"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "water" ||
+          "<%- type2VS %>" === "flying"
+        ) {
+          efficace2 = 2;
+        } else if ("<%- type2VS %>" === "ground") {
+          efficace2 = 0;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "ice") {
+        if (
+          "<%- type2VS %>" === "fire" ||
+          "<%- type2VS %>" === "water" ||
+          "<%- type2VS %>" === "ice" ||
+          "<%- type2VS %>" === "steel"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "grass" ||
+          "<%- type2VS %>" === "flying" ||
+          "<%- type2VS %>" === "ground" ||
+          "<%- type2VS %>" === "dragon"
+        ) {
+          efficace2 = 2;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "fighting") {
+        if (
+          "<%- type2VS %>" === "poison" ||
+          "<%- type2VS %>" === "flying" ||
+          "<%- type2VS %>" === "psychic" ||
+          "<%- type2VS %>" === "bug" ||
+          "<%- type2VS %>" === "fairy"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "normal" ||
+          "<%- type2VS %>" === "ice" ||
+          "<%- type2VS %>" === "rock" ||
+          "<%- type2VS %>" === "dark" ||
+          "<%- type2VS %>" === "steel"
+        ) {
+          efficace2 = 2;
+        } else if ("<%- type2VS %>" === "ghost") {
+          efficace2 = 0;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "poison") {
+        if (
+          "<%- type2VS %>" === "poison" ||
+          "<%- type2VS %>" === "ground" ||
+          "<%- type2VS %>" === "rock" ||
+          "<%- type2VS %>" === "ghost"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "grass" ||
+          "<%- type2VS %>" === "fairy"
+        ) {
+          efficace2 = 2;
+        } else if ("<%- type2VS %>" === "steel") {
+          efficace2 = 0;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "ground") {
+        if ("<%- type2VS %>" === "grass" || "<%- type2VS %>" === "bug") {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "fire" ||
+          "<%- type2VS %>" === "electric" ||
+          "<%- type2VS %>" === "poison" ||
+          "<%- type2VS %>" === "rock" ||
+          "<%- type2VS %>" === "steel"
+        ) {
+          efficace2 = 2;
+        } else if ("<%- type2VS %>" === "flying") {
+          efficace2 = 0;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "flying") {
+        if (
+          "<%- type2VS %>" === "electric" ||
+          "<%- type2VS %>" === "rock" ||
+          "<%- type2VS %>" === "steel"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "grass" ||
+          "<%- type2VS %>" === "fighting" ||
+          "<%- type2VS %>" === "bug"
+        ) {
+          efficace2 = 2;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "psychic") {
+        if ("<%- type2VS %>" === "psychic" || "<%- type2VS %>" === "steel") {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "fighting" ||
+          "<%- type2VS %>" === "poison"
+        ) {
+          efficace2 = 2;
+        } else if ("<%- type2VS %>" === "dark") {
+          efficace2 = 0;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "bug") {
+        if (
+          "<%- type2VS %>" === "fire" ||
+          "<%- type2VS %>" === "fighting" ||
+          "<%- type2VS %>" === "poison" ||
+          "<%- type2VS %>" === "flying" ||
+          "<%- type2VS %>" === "ghost" ||
+          "<%- type2VS %>" === "steel" ||
+          "<%- type2VS %>" === "fairy"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "grass" ||
+          "<%- type2VS %>" === "psychic" ||
+          "<%- type2VS %>" === "dark"
+        ) {
+          efficace2 = 2;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "rock") {
+        if (
+          "<%- type2VS %>" === "fighting" ||
+          "<%- type2VS %>" === "ground" ||
+          "<%- type2VS %>" === "steel"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "flying" ||
+          "<%- type2VS %>" === "fire" ||
+          "<%- type2VS %>" === "ice" ||
+          "<%- type2VS %>" === "bug"
+        ) {
+          efficace2 = 2;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "ghost") {
+        if ("<%- type2VS %>" === "dark") {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "ghost" ||
+          "<%- type2VS %>" === "psychic"
+        ) {
+          efficace2 = 2;
+        } else if ("<%- type2VS %>" === "normal") {
+          efficace2 = 0;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "dragon") {
+        if ("<%- type2VS %>" === "steel") {
+          efficace2 = 0.5;
+        } else if ("<%- type2VS %>" === "dragon") {
+          efficace2 = 2;
+        } else if ("<%- type2VS %>" === "fairy") {
+          efficace2 = 0;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "dark") {
+        if (
+          "<%- type2VS %>" === "fighting" ||
+          "<%- type2VS %>" === "dark" ||
+          "<%- type2VS %>" === "fairy"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "psychic" ||
+          "<%- type2VS %>" === "ghost"
+        ) {
+          efficace2 = 2;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "steel") {
+        if (
+          "<%- type2VS %>" === "fire" ||
+          "<%- type2VS %>" === "water" ||
+          "<%- type2VS %>" === "electric" ||
+          "<%- type2VS %>" === "steel"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "ice" ||
+          "<%- type2VS %>" === "rock" ||
+          "<%- type2VS %>" === "fairy"
+        ) {
+          efficace2 = 2;
+        } else {
+          efficace2 = 1;
+        }
+      } else if (typeAttaque === "fairy") {
+        if (
+          "<%- type2VS %>" === "fire" ||
+          "<%- type2VS %>" === "poison" ||
+          "<%- type2VS %>" === "steel"
+        ) {
+          efficace2 = 0.5;
+        } else if (
+          "<%- type2VS %>" === "fighting" ||
+          "<%- type2VS %>" === "dragon" ||
+          "<%- type2VS %>" === "dark"
+        ) {
+          efficace2 = 2;
+        } else {
+          efficace2 = 1;
+        }
+      } else {
+        efficace1 = 1;
+      }
+
+      let attaque = 0;
+      let defense = 0;
+      let attaqueVS = 0;
+      let defenseVS = 0;
+
+      if (typeAttaqueClass === "physical") {
+        attaque = attPoke;
+        defenseVS = defPokeVS;
+      } else if (typeAttaqueClass === "special") {
+        attaque = attSPoke;
+        defenseVS = defSPokeVS;
+      } else {
+        attaque = 1;
+        defenseVS = 1;
+      }
+
+      if (typeAttaqueClassVS === "physical") {
+        attaqueVS = attPokeVS;
+        defense = defPoke;
+      } else if (typeAttaqueClassVS === "special") {
+        attaqueVS = attSPokeVS;
+        defense = defSPoke;
+      } else {
+        attaqueVS = 1;
+        defense = 1;
+      }
+
+      let bonusType = 1;
+      if (typeAttaque === "<%- type1 %>" || typeAttaque === "<%- type2 %>") {
+        bonusType = 1.5;
+      }
+
+      if (vitPoke > vitPokeVS) {
+        pvActuVS = Math.round(
+          pvActuVS -
+            ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
+              bonusType *
+              (efficace1 * efficace2)
+        );
+        if (pvActuVS > 0) {
+          pvActu = Math.round(
+            pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
+          );
+        } else {
+          pvActu = pvActu;
+        }
+      } else if (vitPoke < vitPokeVS) {
+        pvActu = Math.round(
+          pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
+        );
+        if (pvActu > 0) {
+          pvActuVS = Math.round(
+            pvActuVS -
+              ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
+                bonusType *
+                (efficace1 * efficace2)
+          );
+        } else {
+          pvActuVS = pvActuVS;
+        }
+      } else if (vitPoke === vitPokeVS) {
+        let random = Math.round(Math.random() * 1 + 1);
+        if (random === 0) {
+          pvActu = Math.round(
+            pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
+          );
+          if (pvActu > 0) {
+            pvActuVS = Math.round(
+              pvActuVS -
+                ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
+                  bonusType *
+                  (efficace1 * efficace2)
+            );
+          } else {
+            pvActuVS = pvActuVS;
+          }
+        } else {
+          pvActuVS = Math.round(
+            pvActuVS -
+              ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
+                bonusType *
+                (efficace1 * efficace2)
+          );
+          if (pvActuVS > 0) {
+            pvActu = Math.round(
+              pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
+            );
+          } else {
+            pvActu = pvActu;
+          }
+        }
+      }
+
+      if (pvActuVS < 0) {
+        pvActuVS = 0;
+      }
+      if (pvActu < 0) {
+        pvActu = 0;
+      }
+
+      console.log("type1VS", test1);
+      console.log("type2VS", test2);
+      console.log("attaque1.name", test7);
+      console.log("typeAttaque", typeAttaque);
+      console.log("attaque1VS.name", test8);
+      console.log("attaque1VS.type.name", test6);
+      console.log("efficace1", efficace1);
+      console.log("efficace2", efficace2);
+      console.log("attaque", attaque);
+      console.log("defenseVS", defenseVS);
+      console.log("typeAttaqueClass", typeAttaqueClass);
+      console.log("vitPoke", vitPoke);
+      console.log("vitPokeVS", vitPokeVS);
+      console.log("bonusType", bonusType);
+      console.log("nature", test15);
+
+      modifPVVS.textContent = pvActuVS;
+      modifPV.textContent = pvActu;
+    }
+  </script>
+</html>
