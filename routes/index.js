@@ -13,6 +13,21 @@ router.get("/", function (req, res, next) {
   const data2 = request("GET", `https://pokeapi.co/api/v2/pokemon/${number2}`);
   const dataAPI2 = JSON.parse(data2.body);
 
+  //Noms FR Pokemon
+  const data13 = request(
+    "GET",
+    `https://pokeapi.co/api/v2/pokemon-species/${dataAPI2.name}`
+  );
+  const nomPokemonData = JSON.parse(data13.body);
+  const nomPokemonFR = nomPokemonData.names[4].name;
+
+  const data14 = request(
+    "GET",
+    `https://pokeapi.co/api/v2/pokemon-species/${dataAPI.name}`
+  );
+  const nomPokemonVSData = JSON.parse(data14.body);
+  const nomPokemonFRVS = nomPokemonVSData.names[4].name;
+
   //Nature Pokemon
   const number3 = Math.floor(Math.random() * 26);
   const data11 = request("GET", `https://pokeapi.co/api/v2/nature/${number3}`);
@@ -26,19 +41,23 @@ router.get("/", function (req, res, next) {
   const natureVS = natureVSData.name;
 
   // Attaque Pokemon
-  const nameAtt1 = dataAPI2.moves[0].move.name;
+  const number5 = Math.floor(Math.random() * dataAPI2.moves.length);
+  const nameAtt1 = dataAPI2.moves[number5].move.name;
   const data3 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt1}`);
   const attaque1 = JSON.parse(data3.body);
 
-  const nameAtt2 = dataAPI2.moves[1].move.name;
+  const number6 = Math.floor(Math.random() * dataAPI2.moves.length);
+  const nameAtt2 = dataAPI2.moves[number6].move.name;
   const data4 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt2}`);
   const attaque2 = JSON.parse(data4.body);
 
-  const nameAtt3 = dataAPI2.moves[2].move.name;
+  const number7 = Math.floor(Math.random() * dataAPI2.moves.length);
+  const nameAtt3 = dataAPI2.moves[number7].move.name;
   const data5 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt3}`);
   const attaque3 = JSON.parse(data5.body);
 
-  const nameAtt4 = dataAPI2.moves[3].move.name;
+  const number8 = Math.floor(Math.random() * dataAPI2.moves.length);
+  const nameAtt4 = dataAPI2.moves[number8].move.name;
   const data6 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt4}`);
   const attaque4 = JSON.parse(data6.body);
 
@@ -272,6 +291,8 @@ router.get("/", function (req, res, next) {
     type2,
     nature,
     natureVS,
+    nomPokemonFR,
+    nomPokemonFRVS,
   });
 });
 

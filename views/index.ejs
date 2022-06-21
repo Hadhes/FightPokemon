@@ -2,6 +2,12 @@
 <html>
   <head>
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dongle&family=Open+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div>
@@ -18,40 +24,69 @@
         width="100"
       />
       <div id="textPoke"></div>
-      <div id="nomPoke"><p><%= dataAPI2.name %></p></div>
-      <div id="pvActuPoke"><%= pv2 %></div>
-      <div id="pvMaxPoke">/<%= pvMax2 %></div>
-      <div id="nomPokeVS"><p><%= dataAPI.name %></p></div>
-      <div id="pvActuPokeVS"><%= pv1 %></div>
-      <div id="pvMaxPokeVS">/<%= pvMax1 %></div>
+
+      <!-- Emplacement Nom, PV, et Barre de Vie Mon Pokemon -->
+      <div id="cadrePoke"></div>
+      <div id="nomPoke">
+        <p><%= nomPokemonFR.toUpperCase() %></p>
+        <p>Lv100</p>
+      </div>
+      <div id="divBarrePoke">
+        <progress
+          id="barrePoke"
+          value="<%= pv2 %>"
+          max="<%= pvMax2 %>"
+        ></progress>
+      </div>
+      <div></div>
+      <div id="pvMaxPoke"><%= pv2 %>/<%= pvMax2 %></div>
+
+      <!-- Emplacement Nom, PV, et Barre de Vie Pokemon adverse -->
+      <div id="cadrePokeVS"></div>
+      <div id="nomPokeVS">
+        <p><%= nomPokemonFRVS.toUpperCase() %></p>
+        <p>Lv100</p>
+      </div>
+      <div>
+        <progress
+          id="barrePokeVS"
+          value="<%= pv1 %>"
+          max="<%= pvMax1 %>"
+        ></progress>
+      </div>
+      <div id="pvMaxPokeVS"><%= pv1 %>/<%= pvMax1 %></div>
 
       <div
         id="attaquePoke1"
         onclick="calculPV('attaquePoke1', 1)"
         style="cursor: pointer"
       >
-        <%= attaque1.name %>
+        <div id="badgeAtt1"><%= attaque1.type.name %></div>
+        <div><%= attaque1.names[3].name %></div>
       </div>
       <div
         id="attaquePoke2"
         onclick="calculPV('attaquePoke2', 2)"
         style="cursor: pointer"
       >
-        <%= attaque2.name %>
+        <div id="badgeAtt2"><%= attaque2.type.name %></div>
+        <div><%= attaque2.names[3].name %></div>
       </div>
       <div
         id="attaquePoke3"
         onclick="calculPV('attaquePoke3', 3)"
         style="cursor: pointer"
       >
-        <%= attaque3.name %>
+        <div id="badgeAtt3"><%= attaque3.type.name %></div>
+        <div><%= attaque3.names[3].name %></div>
       </div>
       <div
         id="attaquePoke4"
         onclick="calculPV('attaquePoke4', 4)"
         style="cursor: pointer"
       >
-        <%= attaque4.name %>
+        <div id="badgeAtt4"><%= attaque4.type.name %></div>
+        <div><%= attaque4.names[3].name %></div>
       </div>
     </div>
   </body>
@@ -82,9 +117,180 @@
     const pv = Number("<%- pvMax2 %>");
     let pvActu = pv;
 
+    let colorAttaque1 = "white";
+    let colorAttaque2 = "white";
+    let colorAttaque3 = "white";
+    let colorAttaque4 = "white";
+
+    if ("<%- attaque1.type.name %>" === "normal") {
+      colorAttaque1 = "rgba(173,165,148,255)";
+    } else if ("<%- attaque1.type.name %>" === "fighting") {
+      colorAttaque1 = "rgba(165,82,57,255)";
+    } else if ("<%- attaque1.type.name %>" === "fire") {
+      colorAttaque1 = "rgba(247,82,49,255)";
+    } else if ("<%- attaque1.type.name %>" === "water") {
+      colorAttaque1 = "rgba(57,156,255,255)";
+    } else if ("<%- attaque1.type.name %>" === "rock") {
+      colorAttaque1 = "rgba(189,165,90,255)";
+    } else if ("<%- attaque1.type.name %>" === "dragon") {
+      colorAttaque1 = "rgba(136,88,246,255)";
+    } else if ("<%- attaque1.type.name %>" === "grass") {
+      colorAttaque1 = "rgba(123,206,82,255)";
+    } else if ("<%- attaque1.type.name %>" === "ice") {
+      colorAttaque1 = "rgba(90,206,231,255)";
+    } else if ("<%- attaque1.type.name %>" === "bug") {
+      colorAttaque1 = "rgba(173,189,33,255)";
+    } else if ("<%- attaque1.type.name %>" === "steel") {
+      colorAttaque1 = "rgba(173,173,198,255)";
+    } else if ("<%- attaque1.type.name %>" === "psychic") {
+      colorAttaque1 = "rgba(255,115,165,255)";
+    } else if ("<%- attaque1.type.name %>" === "ghost") {
+      colorAttaque1 = "rgba(99,99,181,255)";
+    } else if ("<%- attaque1.type.name %>" === "ground") {
+      colorAttaque1 = "rgba(214,181,90,255)";
+    } else if ("<%- attaque1.type.name %>" === "poison") {
+      colorAttaque1 = "rgba(181,90,165,255)";
+    } else if ("<%- attaque1.type.name %>" === "flying") {
+      colorAttaque1 = "rgba(156,173,247,255)";
+    } else if ("<%- attaque1.type.name %>" === "electric") {
+      colorAttaque1 = "rgba(255,198,49,255)";
+    } else if ("<%- attaque1.type.name %>" === "fairy") {
+      colorAttaque1 = "rgba(224,154,227,255)";
+    } else if ("<%- attaque1.type.name %>" === "dark") {
+      colorAttaque1 = "rgba(115,90,74,255)";
+    }
+
+    if ("<%- attaque2.type.name %>" === "normal") {
+      colorAttaque2 = "rgba(173,165,148,255)";
+    } else if ("<%- attaque2.type.name %>" === "fighting") {
+      colorAttaque2 = "rgba(165,82,57,255)";
+    } else if ("<%- attaque2.type.name %>" === "fire") {
+      colorAttaque2 = "rgba(247,82,49,255)";
+    } else if ("<%- attaque2.type.name %>" === "water") {
+      colorAttaque2 = "rgba(57,156,255,255)";
+    } else if ("<%- attaque2.type.name %>" === "rock") {
+      colorAttaque2 = "rgba(189,165,90,255)";
+    } else if ("<%- attaque2.type.name %>" === "dragon") {
+      colorAttaque2 = "rgba(136,88,246,255)";
+    } else if ("<%- attaque2.type.name %>" === "grass") {
+      colorAttaque2 = "rgba(123,206,82,255)";
+    } else if ("<%- attaque2.type.name %>" === "ice") {
+      colorAttaque2 = "rgba(90,206,231,255)";
+    } else if ("<%- attaque2.type.name %>" === "bug") {
+      colorAttaque2 = "rgba(173,189,33,255)";
+    } else if ("<%- attaque2.type.name %>" === "steel") {
+      colorAttaque2 = "rgba(173,173,198,255)";
+    } else if ("<%- attaque2.type.name %>" === "psychic") {
+      colorAttaque2 = "rgba(255,115,165,255)";
+    } else if ("<%- attaque2.type.name %>" === "ghost") {
+      colorAttaque2 = "rgba(99,99,181,255)";
+    } else if ("<%- attaque2.type.name %>" === "ground") {
+      colorAttaque2 = "rgba(214,181,90,255)";
+    } else if ("<%- attaque2.type.name %>" === "poison") {
+      colorAttaque2 = "rgba(181,90,165,255)";
+    } else if ("<%- attaque2.type.name %>" === "flying") {
+      colorAttaque2 = "rgba(156,173,247,255)";
+    } else if ("<%- attaque2.type.name %>" === "electric") {
+      colorAttaque2 = "rgba(255,198,49,255)";
+    } else if ("<%- attaque2.type.name %>" === "fairy") {
+      colorAttaque2 = "rgba(224,154,227,255)";
+    } else if ("<%- attaque2.type.name %>" === "dark") {
+      colorAttaque2 = "rgba(115,90,74,255)";
+    }
+    3;
+
+    if ("<%- attaque3.type.name %>" === "normal") {
+      colorAttaque3 = "rgba(173,165,148,255)";
+    } else if ("<%- attaque3.type.name %>" === "fighting") {
+      colorAttaque3 = "rgba(165,82,57,255)";
+    } else if ("<%- attaque3.type.name %>" === "fire") {
+      colorAttaque3 = "rgba(247,82,49,255)";
+    } else if ("<%- attaque3.type.name %>" === "water") {
+      colorAttaque3 = "rgba(57,156,255,255)";
+    } else if ("<%- attaque3.type.name %>" === "rock") {
+      colorAttaque3 = "rgba(189,165,90,255)";
+    } else if ("<%- attaque3.type.name %>" === "dragon") {
+      colorAttaque3 = "rgba(136,88,246,255)";
+    } else if ("<%- attaque3.type.name %>" === "grass") {
+      colorAttaque3 = "rgba(123,206,82,255)";
+    } else if ("<%- attaque3.type.name %>" === "ice") {
+      colorAttaque3 = "rgba(90,206,231,255)";
+    } else if ("<%- attaque3.type.name %>" === "bug") {
+      colorAttaque3 = "rgba(173,189,33,255)";
+    } else if ("<%- attaque3.type.name %>" === "steel") {
+      colorAttaque3 = "rgba(173,173,198,255)";
+    } else if ("<%- attaque3.type.name %>" === "psychic") {
+      colorAttaque3 = "rgba(255,115,165,255)";
+    } else if ("<%- attaque3.type.name %>" === "ghost") {
+      colorAttaque3 = "rgba(99,99,181,255)";
+    } else if ("<%- attaque3.type.name %>" === "ground") {
+      colorAttaque3 = "rgba(214,181,90,255)";
+    } else if ("<%- attaque3.type.name %>" === "poison") {
+      colorAttaque3 = "rgba(181,90,165,255)";
+    } else if ("<%- attaque3.type.name %>" === "flying") {
+      colorAttaque3 = "rgba(156,173,247,255)";
+    } else if ("<%- attaque3.type.name %>" === "electric") {
+      colorAttaque3 = "rgba(255,198,49,255)";
+    } else if ("<%- attaque3.type.name %>" === "fairy") {
+      colorAttaque3 = "rgba(224,154,227,255)";
+    } else if ("<%- attaque3.type.name %>" === "dark") {
+      colorAttaque3 = "rgba(115,90,74,255)";
+    }
+
+    if ("<%- attaque4.type.name %>" === "normal") {
+      colorAttaque4 = "rgba(173,165,148,255)";
+    } else if ("<%- attaque4.type.name %>" === "fighting") {
+      colorAttaque4 = "rgba(165,82,57,255)";
+    } else if ("<%- attaque4.type.name %>" === "fire") {
+      colorAttaque4 = "rgba(247,82,49,255)";
+    } else if ("<%- attaque4.type.name %>" === "water") {
+      colorAttaque4 = "rgba(57,156,255,255)";
+    } else if ("<%- attaque4.type.name %>" === "rock") {
+      colorAttaque4 = "rgba(189,165,90,255)";
+    } else if ("<%- attaque4.type.name %>" === "dragon") {
+      colorAttaque4 = "rgba(136,88,246,255)";
+    } else if ("<%- attaque4.type.name %>" === "grass") {
+      colorAttaque4 = "rgba(123,206,82,255)";
+    } else if ("<%- attaque4.type.name %>" === "ice") {
+      colorAttaque4 = "rgba(90,206,231,255)";
+    } else if ("<%- attaque4.type.name %>" === "bug") {
+      colorAttaque4 = "rgba(173,189,33,255)";
+    } else if ("<%- attaque4.type.name %>" === "steel") {
+      colorAttaque4 = "rgba(173,173,198,255)";
+    } else if ("<%- attaque4.type.name %>" === "psychic") {
+      colorAttaque4 = "rgba(255,115,165,255)";
+    } else if ("<%- attaque4.type.name %>" === "ghost") {
+      colorAttaque4 = "rgba(99,99,181,255)";
+    } else if ("<%- attaque4.type.name %>" === "ground") {
+      colorAttaque4 = "rgba(214,181,90,255)";
+    } else if ("<%- attaque4.type.name %>" === "poison") {
+      colorAttaque4 = "rgba(181,90,165,255)";
+    } else if ("<%- attaque4.type.name %>" === "flying") {
+      colorAttaque4 = "rgba(156,173,247,255)";
+    } else if ("<%- attaque4.type.name %>" === "electric") {
+      colorAttaque4 = "rgba(255,198,49,255)";
+    } else if ("<%- attaque4.type.name %>" === "fairy") {
+      colorAttaque4 = "rgba(224,154,227,255)";
+    } else if ("<%- attaque4.type.name %>" === "dark") {
+      colorAttaque4 = "rgba(115,90,74,255)";
+    }
+
+    window.onload = function () {
+      document.getElementById("badgeAtt1").style.backgroundColor =
+        colorAttaque1;
+      document.getElementById("badgeAtt2").style.backgroundColor =
+        colorAttaque2;
+      document.getElementById("badgeAtt3").style.backgroundColor =
+        colorAttaque3;
+      document.getElementById("badgeAtt4").style.backgroundColor =
+        colorAttaque4;
+    };
+
     function calculPV(id, num) {
-      let modifPVVS = document.getElementById("pvActuPokeVS");
-      let modifPV = document.getElementById("pvActuPoke");
+      let modifPVVS = document.getElementById("pvMaxPokeVS");
+      let modifPV = document.getElementById("pvMaxPoke");
+      let barreVie = document.getElementById("barrePoke");
+      let barreVieVS = document.getElementById("barrePokeVS");
 
       let test1 = "<%- type1VS %>";
       let test2 = "<%- type2VS %>";
@@ -752,12 +958,16 @@
       }
 
       if (vitPoke > vitPokeVS) {
-        pvActuVS = Math.round(
-          pvActuVS -
-            ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
-              bonusType *
-              (efficace1 * efficace2)
-        );
+        if (pvActu > 0) {
+          pvActuVS = Math.round(
+            pvActuVS -
+              ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
+                bonusType *
+                (efficace1 * efficace2)
+          );
+        } else {
+          pvActuVS = pvActuVS;
+        }
         if (pvActuVS > 0) {
           pvActu = Math.round(
             pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
@@ -766,9 +976,13 @@
           pvActu = pvActu;
         }
       } else if (vitPoke < vitPokeVS) {
-        pvActu = Math.round(
-          pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
-        );
+        if (pvActuVS > 0) {
+          pvActu = Math.round(
+            pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
+          );
+        } else {
+          pvActu = pvActu;
+        }
         if (pvActu > 0) {
           pvActuVS = Math.round(
             pvActuVS -
@@ -782,9 +996,13 @@
       } else if (vitPoke === vitPokeVS) {
         let random = Math.round(Math.random() * 1 + 1);
         if (random === 0) {
-          pvActu = Math.round(
-            pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
-          );
+          if (pvActuVS > 0) {
+            pvActu = Math.round(
+              pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
+            );
+          } else {
+            pvActu = pvActu;
+          }
           if (pvActu > 0) {
             pvActuVS = Math.round(
               pvActuVS -
@@ -796,12 +1014,16 @@
             pvActuVS = pvActuVS;
           }
         } else {
-          pvActuVS = Math.round(
-            pvActuVS -
-              ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
-                bonusType *
-                (efficace1 * efficace2)
-          );
+          if (pvActu > 0) {
+            pvActuVS = Math.round(
+              pvActuVS -
+                ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
+                  bonusType *
+                  (efficace1 * efficace2)
+            );
+          } else {
+            pvActuVS = pvActuVS;
+          }
           if (pvActuVS > 0) {
             pvActu = Math.round(
               pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
@@ -835,8 +1057,10 @@
       console.log("bonusType", bonusType);
       console.log("nature", test15);
 
-      modifPVVS.textContent = pvActuVS;
-      modifPV.textContent = pvActu;
+      modifPV.textContent = `${pvActu}/<%= pvMax2 %>`;
+      barreVie.value = pvActu;
+      modifPVVS.textContent = `${pvActuVS}/<%= pvMax1 %>`;
+      barreVieVS.value = pvActuVS;
     }
   </script>
 </html>
