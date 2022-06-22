@@ -3,13 +3,27 @@ var router = express.Router();
 
 var request = require("sync-request");
 
-/* GET home page. */
 router.get("/", function (req, res, next) {
+  let tabPokemon = [];
+
+  for (let i = 1; i < 10; i++) {
+    let data = request("GET", `https://pokeapi.co/api/v2/pokemon/${i}`);
+    let dataAPI = JSON.parse(data.body);
+    tabPokemon.push(dataAPI.sprites.front_default);
+  }
+
+  res.render("index", {
+    tabPokemon,
+  });
+});
+
+router.get("/combat", function (req, res, next) {
   const number = Math.floor(Math.random() * 152);
   const data = request("GET", `https://pokeapi.co/api/v2/pokemon/${number}`);
   const dataAPI = JSON.parse(data.body);
 
-  const number2 = Math.floor(Math.random() * 152);
+  const number2 = Number(req.query.numero) + 1;
+  // const number2 = Math.floor(Math.random() * 152);
   const data2 = request("GET", `https://pokeapi.co/api/v2/pokemon/${number2}`);
   const dataAPI2 = JSON.parse(data2.body);
 
@@ -260,7 +274,7 @@ router.get("/", function (req, res, next) {
     vit2 = Math.floor(vit2 + (vit2 / 100) * 10);
   }
 
-  res.render("index", {
+  res.render("combat", {
     dataAPI,
     dataAPI2,
     attaque1,
