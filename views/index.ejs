@@ -12,11 +12,11 @@
   <body>
     <div>Choose your pokemon:</div>
     <% for (i = 0; i < tabPokemon.length; i++) { %>
-    <div style="cursor: pointer">
-      <a href="/combat?numero=<%=i%>"
-        ><img src="<%= tabPokemon[i] %>" width="100"
-      /></a>
-    </div>
+    <ul style="cursor: pointer">
+      <a href="/combat?numero=<%=i%>">
+        <li><%= tabPokemon[i] %></li>
+      </a>
+    </ul>
     <% } %>
   </body>
   <script></script>

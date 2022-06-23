@@ -6,10 +6,13 @@ var request = require("sync-request");
 router.get("/", function (req, res, next) {
   let tabPokemon = [];
 
-  for (let i = 1; i < 10; i++) {
-    let data = request("GET", `https://pokeapi.co/api/v2/pokemon/${i}`);
-    let dataAPI = JSON.parse(data.body);
-    tabPokemon.push(dataAPI.sprites.front_default);
+  let data = request(
+    "GET",
+    `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151`
+  );
+  let dataAPI = JSON.parse(data.body);
+  for (i = 0; i < dataAPI.results.length; i++) {
+    tabPokemon.push(dataAPI.results[i].name);
   }
 
   res.render("index", {
@@ -18,295 +21,378 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/combat", function (req, res, next) {
-  const number = Math.floor(Math.random() * 152);
-  const data = request("GET", `https://pokeapi.co/api/v2/pokemon/${number}`);
-  const dataAPI = JSON.parse(data.body);
+  let tabPokemons = [];
+  for (let i = 1; i < 7; i++) {
+    //Recherche du pokemon
+    let number1 = Math.floor(Math.random() * 152);
+    // let number2 = Number(req.query.numero) + 1;
+    if (number1 === 0) {
+      number1 = 1;
+    }
+    let data1 = request("GET", `https://pokeapi.co/api/v2/pokemon/${number1}`);
+    let dataPokemon = JSON.parse(data1.body);
 
-  const number2 = Number(req.query.numero) + 1;
-  // const number2 = Math.floor(Math.random() * 152);
-  const data2 = request("GET", `https://pokeapi.co/api/v2/pokemon/${number2}`);
-  const dataAPI2 = JSON.parse(data2.body);
+    //Nom Français du Pokemon
+    let data2 = request(
+      "GET",
+      `https://pokeapi.co/api/v2/pokemon-species/${dataPokemon.name}`
+    );
+    let nomPokemonData = JSON.parse(data2.body);
+    let nomPokemonFR = nomPokemonData.names[4].name;
 
-  //Noms FR Pokemon
-  const data13 = request(
-    "GET",
-    `https://pokeapi.co/api/v2/pokemon-species/${dataAPI2.name}`
-  );
-  const nomPokemonData = JSON.parse(data13.body);
-  const nomPokemonFR = nomPokemonData.names[4].name;
+    //Nature Pokemon
+    let number2 = Math.floor(Math.random() * 26);
+    if (number2 === 0) {
+      number2 = 1;
+    }
+    let data3 = request("GET", `https://pokeapi.co/api/v2/nature/${number2}`);
+    let natureData = JSON.parse(data3.body);
+    let nature = natureData.name;
 
-  const data14 = request(
-    "GET",
-    `https://pokeapi.co/api/v2/pokemon-species/${dataAPI.name}`
-  );
-  const nomPokemonVSData = JSON.parse(data14.body);
-  const nomPokemonFRVS = nomPokemonVSData.names[4].name;
+    // Attaque Pokemon
+    let number3 = Math.floor(Math.random() * dataPokemon.moves.length);
+    if (number3 === 0) {
+      number3 = 1;
+    }
+    let nameAtt1 = dataPokemon.moves[number3].move.name;
+    let data4 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt1}`);
+    let attaque1 = JSON.parse(data4.body);
 
-  //Nature Pokemon
-  const number3 = Math.floor(Math.random() * 26);
-  const data11 = request("GET", `https://pokeapi.co/api/v2/nature/${number3}`);
-  const natureData = JSON.parse(data11.body);
-  const nature = natureData.name;
+    let number4 = Math.floor(Math.random() * dataPokemon.moves.length);
+    if (number4 === 0) {
+      number4 = 1;
+    }
+    let nameAtt2 = dataPokemon.moves[number4].move.name;
+    let data5 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt2}`);
+    let attaque2 = JSON.parse(data5.body);
 
-  //Nature PokemonVS
-  const number4 = Math.floor(Math.random() * 26);
-  const data12 = request("GET", `https://pokeapi.co/api/v2/nature/${number4}`);
-  const natureVSData = JSON.parse(data12.body);
-  const natureVS = natureVSData.name;
+    let number5 = Math.floor(Math.random() * dataPokemon.moves.length);
+    if (number5 === 0) {
+      number5 = 1;
+    }
+    let nameAtt3 = dataPokemon.moves[number5].move.name;
+    let data6 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt3}`);
+    let attaque3 = JSON.parse(data6.body);
 
-  // Attaque Pokemon
-  const number5 = Math.floor(Math.random() * dataAPI2.moves.length);
-  const nameAtt1 = dataAPI2.moves[number5].move.name;
-  const data3 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt1}`);
-  const attaque1 = JSON.parse(data3.body);
+    let number6 = Math.floor(Math.random() * dataPokemon.moves.length);
+    if (number6 === 0) {
+      number6 = 1;
+    }
+    let nameAtt4 = dataPokemon.moves[number6].move.name;
+    let data7 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt4}`);
+    let attaque4 = JSON.parse(data7.body);
 
-  const number6 = Math.floor(Math.random() * dataAPI2.moves.length);
-  const nameAtt2 = dataAPI2.moves[number6].move.name;
-  const data4 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt2}`);
-  const attaque2 = JSON.parse(data4.body);
+    //Types pokemon
+    let nombreType = dataPokemon.types.length;
+    let type1 = dataPokemon.types[0].type.name;
+    let type2 = "neutre";
+    if (nombreType === 2) {
+      type2 = dataPokemon.types[1].type.name;
+    }
 
-  const number7 = Math.floor(Math.random() * dataAPI2.moves.length);
-  const nameAtt3 = dataAPI2.moves[number7].move.name;
-  const data5 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt3}`);
-  const attaque3 = JSON.parse(data5.body);
+    //Statistiques pokemon
+    let pv = Math.floor(
+      ((2 * dataPokemon.stats[0].base_stat + 31 + 255 / 4) * 100) / 100 + 110
+    );
+    let att = Math.floor(
+      ((2 * dataPokemon.stats[1].base_stat + 31 + 255 / 4) * 100) / 100 + 5
+    );
+    let attS = Math.floor(
+      ((2 * dataPokemon.stats[3].base_stat + 31 + 255 / 4) * 100) / 100 + 5
+    );
+    let def = Math.floor(
+      ((2 * dataPokemon.stats[2].base_stat + 31 + 255 / 4) * 100) / 100 + 5
+    );
+    let defS = Math.floor(
+      ((2 * dataPokemon.stats[4].base_stat + 31 + 255 / 4) * 100) / 100 + 5
+    );
+    let vit = Math.floor(
+      ((2 * dataPokemon.stats[5].base_stat + 31 + 255 / 4) * 100) / 100 + 5
+    );
 
-  const number8 = Math.floor(Math.random() * dataAPI2.moves.length);
-  const nameAtt4 = dataAPI2.moves[number8].move.name;
-  const data6 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt4}`);
-  const attaque4 = JSON.parse(data6.body);
+    if (nature === "bold") {
+      att = Math.floor(att - (att / 100) * 10);
+      def = Math.floor(def + (def / 100) * 10);
+    } else if (nature === "brave") {
+      att = Math.floor(att + (att / 100) * 10);
+      vit = Math.floor(vit - (vit / 100) * 10);
+    } else if (nature === "calm") {
+      att = Math.floor(att - (att / 100) * 10);
+      defS = Math.floor(defS + (defS / 100) * 10);
+    } else if (nature === "quiet") {
+      attS = Math.floor(attS + (attS / 100) * 10);
+      vit = Math.floor(vit - (vit / 100) * 10);
+    } else if (nature === "mild") {
+      attS = Math.floor(attS + (attS / 100) * 10);
+      def = Math.floor(def - (def / 100) * 10);
+    } else if (nature === "rash") {
+      attS = Math.floor(attS + (attS / 100) * 10);
+      defS = Math.floor(defS - (defS / 100) * 10);
+    } else if (nature === "gentle") {
+      def = Math.floor(def - (def / 100) * 10);
+      defS = Math.floor(defS + (defS / 100) * 10);
+    } else if (nature === "jolly") {
+      attS = Math.floor(attS - (attS / 100) * 10);
+      vit = Math.floor(vit + (vit / 100) * 10);
+    } else if (nature === "lax") {
+      def = Math.floor(def + (def / 100) * 10);
+      defS = Math.floor(defS - (defS / 100) * 10);
+    } else if (nature === "impish") {
+      attS = Math.floor(attS - (attS / 100) * 10);
+      def = Math.floor(def + (def / 100) * 10);
+    } else if (nature === "sassy") {
+      defS = Math.floor(defS + (defS / 100) * 10);
+      vit = Math.floor(vit - (vit / 100) * 10);
+    } else if (nature === "naughty") {
+      att = Math.floor(att + (att / 100) * 10);
+      defS = Math.floor(defS - (defS / 100) * 10);
+    } else if (nature === "modest") {
+      att = Math.floor(att - (att / 100) * 10);
+      attS = Math.floor(attS + (attS / 100) * 10);
+    } else if (nature === "naive") {
+      defS = Math.floor(defS - (defS / 100) * 10);
+      vit = Math.floor(vit + (vit / 100) * 10);
+    } else if (nature === "hasty") {
+      def = Math.floor(def - (def / 100) * 10);
+      vit = Math.floor(vit + (vit / 100) * 10);
+    } else if (nature === "careful") {
+      attS = Math.floor(attS - (attS / 100) * 10);
+      defS = Math.floor(defS + (defS / 100) * 10);
+    } else if (nature === "relaxed") {
+      def = Math.floor(def + (def / 100) * 10);
+      vit = Math.floor(vit - (vit / 100) * 10);
+    } else if (nature === "adamant") {
+      att = Math.floor(att + (att / 100) * 10);
+      attS = Math.floor(attS - (attS / 100) * 10);
+    } else if (nature === "lonely") {
+      att = Math.floor(att + (att / 100) * 10);
+      def = Math.floor(def - (def / 100) * 10);
+    } else if (nature === "timid") {
+      att = Math.floor(att - (att / 100) * 10);
+      vit = Math.floor(vit + (vit / 100) * 10);
+    }
 
-  // Attaque Pokemon adverse
-  const nameAtt1VS = dataAPI.moves[0].move.name;
-  const data7 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt1VS}`);
-  const attaque1VS = JSON.parse(data7.body);
-
-  const nameAtt2VS = dataAPI.moves[1].move.name;
-  const data8 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt2VS}`);
-  const attaque2VS = JSON.parse(data8.body);
-
-  const nameAtt3VS = dataAPI.moves[2].move.name;
-  const data9 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt3VS}`);
-  const attaque3VS = JSON.parse(data9.body);
-
-  const nameAtt4VS = dataAPI.moves[3].move.name;
-  const data10 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt4VS}`);
-  const attaque4VS = JSON.parse(data10.body);
-
-  //Pokemon adverse
-  const nombreTypeVS = dataAPI.types.length;
-  const type1VS = dataAPI.types[0].type.name;
-  let type2VS = "neutre";
-  if (nombreTypeVS === 2) {
-    type2VS = dataAPI.types[1].type.name;
+    let pokemon = {
+      nom: nomPokemonFR,
+      nature: nature,
+      attaque1: {
+        nom: attaque1.names[3].name,
+        puissance: attaque1.power,
+        type: attaque1.type.name,
+        classe: attaque1.damage_class.name,
+      },
+      attaque2: {
+        nom: attaque2.names[3].name,
+        puissance: attaque2.power,
+        type: attaque2.type.name,
+        classe: attaque2.damage_class.name,
+      },
+      attaque3: {
+        nom: attaque3.names[3].name,
+        puissance: attaque3.power,
+        type: attaque3.type.name,
+        classe: attaque3.damage_class.name,
+      },
+      attaque4: {
+        nom: attaque4.names[3].name,
+        puissance: attaque4.power,
+        type: attaque4.type.name,
+        classe: attaque4.damage_class.name,
+      },
+      type1: type1,
+      type2: type2,
+      stats: {
+        pv: pv,
+        att: att,
+        def: def,
+        attS: attS,
+        defS: defS,
+        vit: vit,
+      },
+      sprite: dataPokemon.sprites.back_default,
+    };
+    tabPokemons.push(pokemon);
   }
-  let pv1 = Math.floor(
-    ((2 * dataAPI.stats[0].base_stat + 31 + 255 / 4) * 100) / 100 + 110
-  );
-  let pvMax1 = Math.floor(
-    ((2 * dataAPI.stats[0].base_stat + 31 + 255 / 4) * 100) / 100 + 110
-  );
-  let att1 = Math.floor(
-    ((2 * dataAPI.stats[1].base_stat + 31 + 255 / 4) * 100) / 100 + 5
-  );
-  let attS1 = Math.floor(
-    ((2 * dataAPI.stats[3].base_stat + 31 + 255 / 4) * 100) / 100 + 5
-  );
-  let def1 = Math.floor(
-    ((2 * dataAPI.stats[2].base_stat + 31 + 255 / 4) * 100) / 100 + 5
-  );
-  let defS1 = Math.floor(
-    ((2 * dataAPI.stats[4].base_stat + 31 + 255 / 4) * 100) / 100 + 5
-  );
-  let vit1 = Math.floor(
-    ((2 * dataAPI.stats[5].base_stat + 31 + 255 / 4) * 100) / 100 + 5
-  );
 
-  if (natureVS === "bold") {
-    att1 = Math.floor(att1 - (att1 / 100) * 10);
-    def1 = Math.floor(def1 + (def1 / 100) * 10);
-  } else if (natureVS === "brave") {
-    att1 = Math.floor(att1 + (att1 / 100) * 10);
-    vit1 = Math.floor(vit1 - (vit1 / 100) * 10);
-  } else if (natureVS === "calm") {
-    att1 = Math.floor(att1 - (att1 / 100) * 10);
-    defS1 = Math.floor(defS1 + (defS1 / 100) * 10);
-  } else if (natureVS === "quiet") {
-    attS1 = Math.floor(attS1 + (attS1 / 100) * 10);
-    vit1 = Math.floor(vit1 - (vit1 / 100) * 10);
-  } else if (natureVS === "mild") {
-    attS1 = Math.floor(attS1 + (attS1 / 100) * 10);
-    def1 = Math.floor(def1 - (def1 / 100) * 10);
-  } else if (natureVS === "rash") {
-    attS1 = Math.floor(attS1 + (attS1 / 100) * 10);
-    defS1 = Math.floor(defS1 - (defS1 / 100) * 10);
-  } else if (natureVS === "gentle") {
-    def1 = Math.floor(def1 - (def1 / 100) * 10);
-    defS1 = Math.floor(defS1 + (defS1 / 100) * 10);
-  } else if (natureVS === "jolly") {
-    attS1 = Math.floor(attS1 - (attS1 / 100) * 10);
-    vit1 = Math.floor(vit1 + (vit1 / 100) * 10);
-  } else if (natureVS === "lax") {
-    def1 = Math.floor(def1 + (def1 / 100) * 10);
-    defS1 = Math.floor(defS1 - (defS1 / 100) * 10);
-  } else if (natureVS === "impish") {
-    attS1 = Math.floor(attS1 - (attS1 / 100) * 10);
-    def1 = Math.floor(def1 + (def1 / 100) * 10);
-  } else if (natureVS === "sassy") {
-    defS1 = Math.floor(defS1 + (defS1 / 100) * 10);
-    vit1 = Math.floor(vit1 - (vit1 / 100) * 10);
-  } else if (natureVS === "naughty") {
-    att1 = Math.floor(att1 + (att1 / 100) * 10);
-    defS1 = Math.floor(defS1 - (defS1 / 100) * 10);
-  } else if (natureVS === "modest") {
-    att1 = Math.floor(att1 - (att1 / 100) * 10);
-    attS1 = Math.floor(attS1 + (attS1 / 100) * 10);
-  } else if (natureVS === "naive") {
-    defS1 = Math.floor(defS1 - (defS1 / 100) * 10);
-    vit1 = Math.floor(vit1 + (vit1 / 100) * 10);
-  } else if (natureVS === "hasty") {
-    def1 = Math.floor(def1 - (def1 / 100) * 10);
-    vit1 = Math.floor(vit1 + (vit1 / 100) * 10);
-  } else if (natureVS === "careful") {
-    attS1 = Math.floor(attS1 - (attS1 / 100) * 10);
-    defS1 = Math.floor(defS1 + (defS1 / 100) * 10);
-  } else if (natureVS === "relaxed") {
-    def1 = Math.floor(def1 + (def1 / 100) * 10);
-    vit1 = Math.floor(vit1 - (vit1 / 100) * 10);
-  } else if (natureVS === "adamant") {
-    att1 = Math.floor(att1 + (att1 / 100) * 10);
-    attS1 = Math.floor(attS1 - (attS1 / 100) * 10);
-  } else if (natureVS === "lonely") {
-    att1 = Math.floor(att1 + (att1 / 100) * 10);
-    def1 = Math.floor(def1 - (def1 / 100) * 10);
-  } else if (natureVS === "timid") {
-    att1 = Math.floor(att1 - (att1 / 100) * 10);
-    vit1 = Math.floor(vit1 + (vit1 / 100) * 10);
-  }
+  let tabPokemonsVS = [];
+  for (let j = 1; j < 3; j++) {
+    // Recherche pokemon adverse
+    let number = Math.floor(Math.random() * 152);
+    if (number === 0) {
+      number = 1;
+    }
+    let data1 = request("GET", `https://pokeapi.co/api/v2/pokemon/${number}`);
+    let dataAPI = JSON.parse(data1.body);
 
-  //Mon pokemon
-  const nombreType = dataAPI2.types.length;
-  const type1 = dataAPI2.types[0].type.name;
-  let type2 = "neutre";
-  if (nombreType === 2) {
-    type2 = dataAPI2.types[1].type.name;
-  }
-  let pvMax2 = Math.floor(
-    ((2 * dataAPI2.stats[0].base_stat + 31 + 255 / 4) * 100) / 100 + 110
-  );
-  let pv2 = Math.floor(
-    ((2 * dataAPI2.stats[0].base_stat + 31 + 255 / 4) * 100) / 100 + 110
-  );
-  let att2 = Math.floor(
-    ((2 * dataAPI2.stats[1].base_stat + 31 + 255 / 4) * 100) / 100 + 5
-  );
-  let attS2 = Math.floor(
-    ((2 * dataAPI2.stats[3].base_stat + 31 + 255 / 4) * 100) / 100 + 5
-  );
-  let def2 = Math.floor(
-    ((2 * dataAPI2.stats[2].base_stat + 31 + 255 / 4) * 100) / 100 + 5
-  );
-  let defS2 = Math.floor(
-    ((2 * dataAPI2.stats[4].base_stat + 31 + 255 / 4) * 100) / 100 + 5
-  );
-  let vit2 = Math.floor(
-    ((2 * dataAPI2.stats[5].base_stat + 31 + 255 / 4) * 100) / 100 + 5
-  );
+    // Nom Fr pokemon adverse
+    let data2 = request(
+      "GET",
+      `https://pokeapi.co/api/v2/pokemon-species/${dataAPI.name}`
+    );
+    let nomPokemonVSData = JSON.parse(data2.body);
+    let nomPokemonFRVS = nomPokemonVSData.names[4].name;
 
-  if (nature === "bold") {
-    att2 = Math.floor(att2 - (att2 / 100) * 10);
-    def2 = Math.floor(def2 + (def2 / 100) * 10);
-  } else if (nature === "brave") {
-    att2 = Math.floor(att2 + (att2 / 100) * 10);
-    vit2 = Math.floor(vit2 - (vit2 / 100) * 10);
-  } else if (nature === "calm") {
-    att2 = Math.floor(att2 - (att2 / 100) * 10);
-    defS2 = Math.floor(defS2 + (defS2 / 100) * 10);
-  } else if (nature === "quiet") {
-    attS2 = Math.floor(attS2 + (attS2 / 100) * 10);
-    vit2 = Math.floor(vit2 - (vit2 / 100) * 10);
-  } else if (nature === "mild") {
-    attS2 = Math.floor(attS2 + (attS2 / 100) * 10);
-    def2 = Math.floor(def2 - (def2 / 100) * 10);
-  } else if (nature === "rash") {
-    attS2 = Math.floor(attS2 + (attS2 / 100) * 10);
-    defS2 = Math.floor(defS2 - (defS2 / 100) * 10);
-  } else if (nature === "gentle") {
-    def2 = Math.floor(def2 - (def2 / 100) * 10);
-    defS2 = Math.floor(defS2 + (defS2 / 100) * 10);
-  } else if (nature === "jolly") {
-    attS2 = Math.floor(attS2 - (attS2 / 100) * 10);
-    vit2 = Math.floor(vit2 + (vit2 / 100) * 10);
-  } else if (nature === "lax") {
-    def2 = Math.floor(def2 + (def2 / 100) * 10);
-    defS2 = Math.floor(defS2 - (defS2 / 100) * 10);
-  } else if (nature === "impish") {
-    attS2 = Math.floor(attS2 - (attS2 / 100) * 10);
-    def2 = Math.floor(def2 + (def2 / 100) * 10);
-  } else if (nature === "sassy") {
-    defS2 = Math.floor(defS2 + (defS2 / 100) * 10);
-    vit2 = Math.floor(vit2 - (vit2 / 100) * 10);
-  } else if (nature === "naughty") {
-    att2 = Math.floor(att2 + (att2 / 100) * 10);
-    defS2 = Math.floor(defS2 - (defS2 / 100) * 10);
-  } else if (nature === "modest") {
-    att2 = Math.floor(att2 - (att2 / 100) * 10);
-    attS2 = Math.floor(attS2 + (attS2 / 100) * 10);
-  } else if (nature === "naive") {
-    defS2 = Math.floor(defS2 - (defS2 / 100) * 10);
-    vit2 = Math.floor(vit2 + (vit2 / 100) * 10);
-  } else if (nature === "hasty") {
-    def2 = Math.floor(def2 - (def2 / 100) * 10);
-    vit2 = Math.floor(vit2 + (vit2 / 100) * 10);
-  } else if (nature === "careful") {
-    attS2 = Math.floor(attS2 - (attS2 / 100) * 10);
-    defS2 = Math.floor(defS2 + (defS2 / 100) * 10);
-  } else if (nature === "relaxed") {
-    def2 = Math.floor(def2 + (def2 / 100) * 10);
-    vit2 = Math.floor(vit2 - (vit2 / 100) * 10);
-  } else if (nature === "adamant") {
-    att2 = Math.floor(att2 + (att2 / 100) * 10);
-    attS2 = Math.floor(attS2 - (attS2 / 100) * 10);
-  } else if (nature === "lonely") {
-    att2 = Math.floor(att2 + (att2 / 100) * 10);
-    def2 = Math.floor(def2 - (def2 / 100) * 10);
-  } else if (nature === "timid") {
-    att2 = Math.floor(att2 - (att2 / 100) * 10);
-    vit2 = Math.floor(vit2 + (vit2 / 100) * 10);
+    // Nature Pokemon adverse
+    let number4 = Math.floor(Math.random() * 26);
+    if (number4 === 0) {
+      number4 = 1;
+    }
+    let data3 = request("GET", `https://pokeapi.co/api/v2/nature/${number4}`);
+    let natureVSData = JSON.parse(data3.body);
+    let natureVS = natureVSData.name;
+
+    // Attaque Pokemon adverse
+    let nameAtt1VS = dataAPI.moves[0].move.name;
+    let data4 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt1VS}`);
+    let attaque1VS = JSON.parse(data4.body);
+
+    let nameAtt2VS = dataAPI.moves[1].move.name;
+    let data5 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt2VS}`);
+    let attaque2VS = JSON.parse(data5.body);
+
+    let nameAtt3VS = dataAPI.moves[2].move.name;
+    let data6 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt3VS}`);
+    let attaque3VS = JSON.parse(data6.body);
+
+    let nameAtt4VS = dataAPI.moves[3].move.name;
+    let data7 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt4VS}`);
+    let attaque4VS = JSON.parse(data7.body);
+
+    //Type pokemon adverse
+    let nombreTypeVS = dataAPI.types.length;
+    let type1VS = dataAPI.types[0].type.name;
+    let type2VS = "neutre";
+    if (nombreTypeVS === 2) {
+      type2VS = dataAPI.types[1].type.name;
+    }
+
+    //Statistiques pokemon adverse
+    let pv1 = Math.floor(
+      ((2 * dataAPI.stats[0].base_stat + 31 + 255 / 4) * 100) / 100 + 110
+    );
+    let att1 = Math.floor(
+      ((2 * dataAPI.stats[1].base_stat + 31 + 255 / 4) * 100) / 100 + 5
+    );
+    let attS1 = Math.floor(
+      ((2 * dataAPI.stats[3].base_stat + 31 + 255 / 4) * 100) / 100 + 5
+    );
+    let def1 = Math.floor(
+      ((2 * dataAPI.stats[2].base_stat + 31 + 255 / 4) * 100) / 100 + 5
+    );
+    let defS1 = Math.floor(
+      ((2 * dataAPI.stats[4].base_stat + 31 + 255 / 4) * 100) / 100 + 5
+    );
+    let vit1 = Math.floor(
+      ((2 * dataAPI.stats[5].base_stat + 31 + 255 / 4) * 100) / 100 + 5
+    );
+
+    if (natureVS === "bold") {
+      att1 = Math.floor(att1 - (att1 / 100) * 10);
+      def1 = Math.floor(def1 + (def1 / 100) * 10);
+    } else if (natureVS === "brave") {
+      att1 = Math.floor(att1 + (att1 / 100) * 10);
+      vit1 = Math.floor(vit1 - (vit1 / 100) * 10);
+    } else if (natureVS === "calm") {
+      att1 = Math.floor(att1 - (att1 / 100) * 10);
+      defS1 = Math.floor(defS1 + (defS1 / 100) * 10);
+    } else if (natureVS === "quiet") {
+      attS1 = Math.floor(attS1 + (attS1 / 100) * 10);
+      vit1 = Math.floor(vit1 - (vit1 / 100) * 10);
+    } else if (natureVS === "mild") {
+      attS1 = Math.floor(attS1 + (attS1 / 100) * 10);
+      def1 = Math.floor(def1 - (def1 / 100) * 10);
+    } else if (natureVS === "rash") {
+      attS1 = Math.floor(attS1 + (attS1 / 100) * 10);
+      defS1 = Math.floor(defS1 - (defS1 / 100) * 10);
+    } else if (natureVS === "gentle") {
+      def1 = Math.floor(def1 - (def1 / 100) * 10);
+      defS1 = Math.floor(defS1 + (defS1 / 100) * 10);
+    } else if (natureVS === "jolly") {
+      attS1 = Math.floor(attS1 - (attS1 / 100) * 10);
+      vit1 = Math.floor(vit1 + (vit1 / 100) * 10);
+    } else if (natureVS === "lax") {
+      def1 = Math.floor(def1 + (def1 / 100) * 10);
+      defS1 = Math.floor(defS1 - (defS1 / 100) * 10);
+    } else if (natureVS === "impish") {
+      attS1 = Math.floor(attS1 - (attS1 / 100) * 10);
+      def1 = Math.floor(def1 + (def1 / 100) * 10);
+    } else if (natureVS === "sassy") {
+      defS1 = Math.floor(defS1 + (defS1 / 100) * 10);
+      vit1 = Math.floor(vit1 - (vit1 / 100) * 10);
+    } else if (natureVS === "naughty") {
+      att1 = Math.floor(att1 + (att1 / 100) * 10);
+      defS1 = Math.floor(defS1 - (defS1 / 100) * 10);
+    } else if (natureVS === "modest") {
+      att1 = Math.floor(att1 - (att1 / 100) * 10);
+      attS1 = Math.floor(attS1 + (attS1 / 100) * 10);
+    } else if (natureVS === "naive") {
+      defS1 = Math.floor(defS1 - (defS1 / 100) * 10);
+      vit1 = Math.floor(vit1 + (vit1 / 100) * 10);
+    } else if (natureVS === "hasty") {
+      def1 = Math.floor(def1 - (def1 / 100) * 10);
+      vit1 = Math.floor(vit1 + (vit1 / 100) * 10);
+    } else if (natureVS === "careful") {
+      attS1 = Math.floor(attS1 - (attS1 / 100) * 10);
+      defS1 = Math.floor(defS1 + (defS1 / 100) * 10);
+    } else if (natureVS === "relaxed") {
+      def1 = Math.floor(def1 + (def1 / 100) * 10);
+      vit1 = Math.floor(vit1 - (vit1 / 100) * 10);
+    } else if (natureVS === "adamant") {
+      att1 = Math.floor(att1 + (att1 / 100) * 10);
+      attS1 = Math.floor(attS1 - (attS1 / 100) * 10);
+    } else if (natureVS === "lonely") {
+      att1 = Math.floor(att1 + (att1 / 100) * 10);
+      def1 = Math.floor(def1 - (def1 / 100) * 10);
+    } else if (natureVS === "timid") {
+      att1 = Math.floor(att1 - (att1 / 100) * 10);
+      vit1 = Math.floor(vit1 + (vit1 / 100) * 10);
+    }
+
+    let pokemonVS = {
+      nom: nomPokemonFRVS,
+      nature: natureVS,
+      type1: type1VS,
+      type2: type2VS,
+      attaque1: {
+        nom: attaque1VS.names[3].name,
+        puissance: attaque1VS.power,
+        type: attaque1VS.type.name,
+        classe: attaque1VS.damage_class.name,
+      },
+      attaque2: {
+        nom: attaque2VS.names[3].name,
+        puissance: attaque2VS.power,
+        type: attaque2VS.type.name,
+        classe: attaque2VS.damage_class.name,
+      },
+      attaque3: {
+        nom: attaque3VS.names[3].name,
+        puissance: attaque3VS.power,
+        type: attaque3VS.type.name,
+        classe: attaque3VS.damage_class.name,
+      },
+      attaque4: {
+        nom: attaque4VS.names[3].name,
+        puissance: attaque4VS.power,
+        type: attaque4VS.type.name,
+        classe: attaque4VS.damage_class.name,
+      },
+      stats: {
+        pv: pv1,
+        att: att1,
+        def: def1,
+        attS: attS1,
+        defS: defS1,
+        vit: vit1,
+      },
+      sprite: dataAPI.sprites.front_default,
+    };
+    tabPokemonsVS.push(pokemonVS);
   }
 
   res.render("combat", {
-    dataAPI,
-    dataAPI2,
-    attaque1,
-    attaque2,
-    attaque3,
-    attaque4,
-    pv2,
-    pv1,
-    pvMax1,
-    pvMax2,
-    att1,
-    att2,
-    def1,
-    def2,
-    attS1,
-    attS2,
-    defS1,
-    defS2,
-    vit1,
-    vit2,
-    attaque1VS,
-    attaque2VS,
-    attaque3VS,
-    attaque4VS,
-    type1VS,
-    type2VS,
-    type1,
-    type2,
-    nature,
-    natureVS,
-    nomPokemonFR,
-    nomPokemonFRVS,
+    pokemons: tabPokemons,
+    pokemonsVS: tabPokemonsVS,
   });
 });
 

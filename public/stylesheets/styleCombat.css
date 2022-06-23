@@ -99,7 +99,7 @@ a {
 #cadrePoke {
   position: absolute;
   margin-left: 440px;
-  margin-top: 369px;
+  margin-top: 354px;
   width: 160px;
   height: 50px;
   padding-left: 3px;
@@ -120,20 +120,20 @@ a {
   font-size: 14px;
   position: absolute;
   margin-left: 445px;
-  margin-top: 362px;
+  margin-top: 347px;
 }
 
 #divBarrePoke {
   z-index: 5;
   position: absolute;
   margin-left: 450px;
-  margin-top: 390px;
+  margin-top: 375px;
 }
 
 #pvMaxPoke {
   position: absolute;
   margin-left: 546px;
-  margin-top: 405px;
+  margin-top: 390px;
   z-index: 5;
 }
 
@@ -236,4 +236,14 @@ a {
   align-items: center;
   margin-left: 5px;
   margin-right: 5px;
+}
+
+#pokeball {
+  z-index: 5;
+  position: absolute;
+  flex-direction: row;
+  margin-left: 533px;
+  margin-top: 415px;
+  width: 100px;
+  height: 15px;
 }

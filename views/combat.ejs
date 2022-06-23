@@ -13,267 +13,176 @@
     <div>
       <img id="gameboy" src="../images/gameboy.png" />
       <img id="terrain" src="../images/terrain.png" width="373" />
-      <img
-        id="pokemon"
-        src="<%= dataAPI2.sprites.back_default %>"
-        width="180"
-      />
-      <img
-        id="pokemonVS"
-        src="<%= dataAPI.sprites.front_default %>"
-        width="100"
-      />
+      <img id="pokemon" src="<%= pokemons[0].sprite %>" width="180" />
+      <img id="pokemonVS" src="<%= pokemonsVS[0].sprite %>" width="100" />
       <div id="textPoke"></div>
 
       <!-- Emplacement Nom, PV, et Barre de Vie Mon Pokemon -->
       <div id="cadrePoke"></div>
       <div id="nomPoke">
-        <p><%= nomPokemonFR.toUpperCase() %></p>
+        <p id="nomPokeMAJ"><%= pokemons[0].nom.toUpperCase() %></p>
         <p>Lv100</p>
       </div>
       <div id="divBarrePoke">
         <progress
           id="barrePoke"
-          value="<%= pv2 %>"
-          max="<%= pvMax2 %>"
+          value="<%= pokemons[0].stats.pv %>"
+          max="<%= pokemons[0].stats.pv %>"
         ></progress>
       </div>
       <div></div>
-      <div id="pvMaxPoke"><%= pv2 %>/<%= pvMax2 %></div>
+      <div id="pvMaxPoke">
+        <%= pokemons[0].stats.pv %>/<%= pokemons[0].stats.pv %>
+      </div>
 
       <!-- Emplacement Nom, PV, et Barre de Vie Pokemon adverse -->
       <div id="cadrePokeVS"></div>
       <div id="nomPokeVS">
-        <p><%= nomPokemonFRVS.toUpperCase() %></p>
+        <p><%= pokemonsVS[0].nom.toUpperCase() %></p>
         <p>Lv100</p>
       </div>
       <div>
         <progress
           id="barrePokeVS"
-          value="<%= pv1 %>"
-          max="<%= pvMax1 %>"
+          value="<%= pokemonsVS[0].stats.pv %>"
+          max="<%= pokemonsVS[0].stats.pv %>"
         ></progress>
       </div>
-      <div id="pvMaxPokeVS"><%= pv1 %>/<%= pvMax1 %></div>
+      <div id="pvMaxPokeVS">
+        <%= pokemonsVS[0].stats.pv %>/<%= pokemonsVS[0].stats.pv %>
+      </div>
 
-      <div
-        id="attaquePoke1"
-        onclick="calculPV('attaquePoke1', 1)"
-        style="cursor: pointer"
-      >
-        <div id="badgeAtt1"><%= attaque1.type.name %></div>
-        <div><%= attaque1.names[3].name %></div>
+      <div id="attaquePoke1" onclick="calculPV(1)" style="cursor: pointer">
+        <div id="badgeAtt1"><%= pokemons[0].attaque1.type %></div>
+        <div id="nomAtt1"><%= pokemons[0].attaque1.nom %></div>
       </div>
-      <div
-        id="attaquePoke2"
-        onclick="calculPV('attaquePoke2', 2)"
-        style="cursor: pointer"
-      >
-        <div id="badgeAtt2"><%= attaque2.type.name %></div>
-        <div><%= attaque2.names[3].name %></div>
+      <div id="attaquePoke2" onclick="calculPV(2)" style="cursor: pointer">
+        <div id="badgeAtt2"><%= pokemons[0].attaque2.type %></div>
+        <div id="nomAtt2"><%= pokemons[0].attaque2.nom %></div>
       </div>
-      <div
-        id="attaquePoke3"
-        onclick="calculPV('attaquePoke3', 3)"
-        style="cursor: pointer"
-      >
-        <div id="badgeAtt3"><%= attaque3.type.name %></div>
-        <div><%= attaque3.names[3].name %></div>
+      <div id="attaquePoke3" onclick="calculPV(3)" style="cursor: pointer">
+        <div id="badgeAtt3"><%= pokemons[0].attaque3.type %></div>
+        <div id="nomAtt3"><%= pokemons[0].attaque3.nom %></div>
       </div>
-      <div
-        id="attaquePoke4"
-        onclick="calculPV('attaquePoke4', 4)"
-        style="cursor: pointer"
-      >
-        <div id="badgeAtt4"><%= attaque4.type.name %></div>
-        <div><%= attaque4.names[3].name %></div>
+      <div id="attaquePoke4" onclick="calculPV(4)" style="cursor: pointer">
+        <div id="badgeAtt4"><%= pokemons[0].attaque4.type %></div>
+        <div id="nomAtt4"><%= pokemons[0].attaque4.nom %></div>
+      </div>
+      <div id="pokeball">
+        <img
+          id="pokeball1"
+          src="../images/Pokeball.png"
+          width="10"
+          style="cursor: pointer"
+          onclick="changementPoke(1)"
+        />
+        <img
+          id="pokeball2"
+          src="../images/Pokeball.png"
+          width="10"
+          style="cursor: pointer"
+          onclick="changementPoke(2)"
+        />
+        <img
+          id="pokeball3"
+          src="../images/Pokeball.png"
+          width="10"
+          style="cursor: pointer"
+          onclick="changementPoke(3)"
+        />
+        <img
+          id="pokeball4"
+          src="../images/Pokeball.png"
+          width="10"
+          style="cursor: pointer"
+          onclick="changementPoke(4)"
+        />
+        <img
+          id="pokeball5"
+          src="../images/Pokeball.png"
+          width="10"
+          style="cursor: pointer"
+          onclick="changementPoke(5)"
+        />
+        <img
+          id="pokeball6"
+          src="../images/Pokeball.png"
+          width="10"
+          style="cursor: pointer"
+          onclick="changementPoke(6)"
+        />
       </div>
     </div>
   </body>
 
   <script>
-    const attaque_dmg1 = Number("<%- attaque1.power%>");
-    const attaque_dmg2 = Number("<%- attaque2.power%>");
-    const attaque_dmg3 = Number("<%- attaque3.power%>");
-    const attaque_dmg4 = Number("<%- attaque4.power%>");
-
-    const attaque_dmg1VS = Number("<%- attaque1VS.power%>");
-
-    const attPoke = Number("<%- att2 %>");
-    const defPoke = Number("<%- def2 %>");
-    const attSPoke = Number("<%- attS2 %>");
-    const defSPoke = Number("<%- defS2 %>");
-    const vitPoke = Number("<%- vit2 %>");
-
-    const attPokeVS = Number("<%- att1 %>");
-    const defPokeVS = Number("<%- def1 %>");
-    const attSPokeVS = Number("<%- attS1 %>");
-    const defSPokeVS = Number("<%- defS1 %>");
-    const vitPokeVS = Number("<%- vit1 %>");
-
-    const pvVS = Number("<%- pvMax1 %>");
-    let pvActuVS = pvVS;
-
-    const pv = Number("<%- pvMax2 %>");
-    let pvActu = pv;
+    let couleur = function (type, attaque) {
+      if (type === "normal") {
+        return (attaque = "rgba(173,165,148,255)");
+      } else if (type === "fighting") {
+        return (attaque = "rgba(165,82,57,255)");
+      } else if (type === "fire") {
+        return (attaque = "rgba(247,82,49,255)");
+      } else if (type === "water") {
+        return (attaque = "rgba(57,156,255,255)");
+      } else if (type === "rock") {
+        return (attaque = "rgba(189,165,90,255)");
+      } else if (type === "dragon") {
+        return (attaque = "rgba(136,88,246,255)");
+      } else if (type === "grass") {
+        return (attaque = "rgba(123,206,82,255)");
+      } else if (type === "ice") {
+        return (attaque = "rgba(90,206,231,255)");
+      } else if (type === "bug") {
+        return (attaque = "rgba(173,189,33,255)");
+      } else if (type === "steel") {
+        return (attaque = "rgba(173,173,198,255)");
+      } else if (type === "psychic") {
+        return (attaque = "rgba(255,115,165,255)");
+      } else if (type === "ghost") {
+        return (attaque = "rgba(99,99,181,255)");
+      } else if (type === "ground") {
+        return (attaque = "rgba(214,181,90,255)");
+      } else if (type === "poison") {
+        return (attaque = "rgba(181,90,165,255)");
+      } else if (type === "flying") {
+        return (attaque = "rgba(156,173,247,255)");
+      } else if (type === "electric") {
+        return (attaque = "rgba(255,198,49,255)");
+      } else if (type === "fairy") {
+        return (attaque = "rgba(224,154,227,255)");
+      } else if (type === "dark") {
+        return (attaque = "rgba(115,90,74,255)");
+      }
+    };
 
     let colorAttaque1 = "white";
     let colorAttaque2 = "white";
     let colorAttaque3 = "white";
     let colorAttaque4 = "white";
 
-    if ("<%- attaque1.type.name %>" === "normal") {
-      colorAttaque1 = "rgba(173,165,148,255)";
-    } else if ("<%- attaque1.type.name %>" === "fighting") {
-      colorAttaque1 = "rgba(165,82,57,255)";
-    } else if ("<%- attaque1.type.name %>" === "fire") {
-      colorAttaque1 = "rgba(247,82,49,255)";
-    } else if ("<%- attaque1.type.name %>" === "water") {
-      colorAttaque1 = "rgba(57,156,255,255)";
-    } else if ("<%- attaque1.type.name %>" === "rock") {
-      colorAttaque1 = "rgba(189,165,90,255)";
-    } else if ("<%- attaque1.type.name %>" === "dragon") {
-      colorAttaque1 = "rgba(136,88,246,255)";
-    } else if ("<%- attaque1.type.name %>" === "grass") {
-      colorAttaque1 = "rgba(123,206,82,255)";
-    } else if ("<%- attaque1.type.name %>" === "ice") {
-      colorAttaque1 = "rgba(90,206,231,255)";
-    } else if ("<%- attaque1.type.name %>" === "bug") {
-      colorAttaque1 = "rgba(173,189,33,255)";
-    } else if ("<%- attaque1.type.name %>" === "steel") {
-      colorAttaque1 = "rgba(173,173,198,255)";
-    } else if ("<%- attaque1.type.name %>" === "psychic") {
-      colorAttaque1 = "rgba(255,115,165,255)";
-    } else if ("<%- attaque1.type.name %>" === "ghost") {
-      colorAttaque1 = "rgba(99,99,181,255)";
-    } else if ("<%- attaque1.type.name %>" === "ground") {
-      colorAttaque1 = "rgba(214,181,90,255)";
-    } else if ("<%- attaque1.type.name %>" === "poison") {
-      colorAttaque1 = "rgba(181,90,165,255)";
-    } else if ("<%- attaque1.type.name %>" === "flying") {
-      colorAttaque1 = "rgba(156,173,247,255)";
-    } else if ("<%- attaque1.type.name %>" === "electric") {
-      colorAttaque1 = "rgba(255,198,49,255)";
-    } else if ("<%- attaque1.type.name %>" === "fairy") {
-      colorAttaque1 = "rgba(224,154,227,255)";
-    } else if ("<%- attaque1.type.name %>" === "dark") {
-      colorAttaque1 = "rgba(115,90,74,255)";
-    }
+    //infos diverses
+    let attaque1Type = "<%- pokemons[0].attaque1.type %>";
+    let attaque2Type = "<%- pokemons[0].attaque2.type %>";
+    let attaque3Type = "<%- pokemons[0].attaque3.type %>";
+    let attaque4Type = "<%- pokemons[0].attaque4.type %>";
+    let attaque1Nom = "<%- pokemons[0].attaque1.nom %>";
+    let attaque2Nom = "<%- pokemons[0].attaque2.nom %>";
+    let attaque3Nom = "<%- pokemons[0].attaque3.nom %>";
+    let attaque4Nom = "<%- pokemons[0].attaque4.nom %>";
+    let attaque1Classe = "<%- pokemons[0].attaque1.classe %>";
+    let attaque2Classe = "<%- pokemons[0].attaque2.classe %>";
+    let attaque3Classe = "<%- pokemons[0].attaque3.classe %>";
+    let attaque4Classe = "<%- pokemons[0].attaque4.classe %>";
+    let type1VS = "<%- pokemonsVS[0].type1 %>";
+    let type2VS = "<%- pokemonsVS[0].type2 %>";
+    let type1 = "<%- pokemons[0].type1 %>";
+    let type2 = "<%- pokemons[0].type2 %>";
 
-    if ("<%- attaque2.type.name %>" === "normal") {
-      colorAttaque2 = "rgba(173,165,148,255)";
-    } else if ("<%- attaque2.type.name %>" === "fighting") {
-      colorAttaque2 = "rgba(165,82,57,255)";
-    } else if ("<%- attaque2.type.name %>" === "fire") {
-      colorAttaque2 = "rgba(247,82,49,255)";
-    } else if ("<%- attaque2.type.name %>" === "water") {
-      colorAttaque2 = "rgba(57,156,255,255)";
-    } else if ("<%- attaque2.type.name %>" === "rock") {
-      colorAttaque2 = "rgba(189,165,90,255)";
-    } else if ("<%- attaque2.type.name %>" === "dragon") {
-      colorAttaque2 = "rgba(136,88,246,255)";
-    } else if ("<%- attaque2.type.name %>" === "grass") {
-      colorAttaque2 = "rgba(123,206,82,255)";
-    } else if ("<%- attaque2.type.name %>" === "ice") {
-      colorAttaque2 = "rgba(90,206,231,255)";
-    } else if ("<%- attaque2.type.name %>" === "bug") {
-      colorAttaque2 = "rgba(173,189,33,255)";
-    } else if ("<%- attaque2.type.name %>" === "steel") {
-      colorAttaque2 = "rgba(173,173,198,255)";
-    } else if ("<%- attaque2.type.name %>" === "psychic") {
-      colorAttaque2 = "rgba(255,115,165,255)";
-    } else if ("<%- attaque2.type.name %>" === "ghost") {
-      colorAttaque2 = "rgba(99,99,181,255)";
-    } else if ("<%- attaque2.type.name %>" === "ground") {
-      colorAttaque2 = "rgba(214,181,90,255)";
-    } else if ("<%- attaque2.type.name %>" === "poison") {
-      colorAttaque2 = "rgba(181,90,165,255)";
-    } else if ("<%- attaque2.type.name %>" === "flying") {
-      colorAttaque2 = "rgba(156,173,247,255)";
-    } else if ("<%- attaque2.type.name %>" === "electric") {
-      colorAttaque2 = "rgba(255,198,49,255)";
-    } else if ("<%- attaque2.type.name %>" === "fairy") {
-      colorAttaque2 = "rgba(224,154,227,255)";
-    } else if ("<%- attaque2.type.name %>" === "dark") {
-      colorAttaque2 = "rgba(115,90,74,255)";
-    }
-    3;
-
-    if ("<%- attaque3.type.name %>" === "normal") {
-      colorAttaque3 = "rgba(173,165,148,255)";
-    } else if ("<%- attaque3.type.name %>" === "fighting") {
-      colorAttaque3 = "rgba(165,82,57,255)";
-    } else if ("<%- attaque3.type.name %>" === "fire") {
-      colorAttaque3 = "rgba(247,82,49,255)";
-    } else if ("<%- attaque3.type.name %>" === "water") {
-      colorAttaque3 = "rgba(57,156,255,255)";
-    } else if ("<%- attaque3.type.name %>" === "rock") {
-      colorAttaque3 = "rgba(189,165,90,255)";
-    } else if ("<%- attaque3.type.name %>" === "dragon") {
-      colorAttaque3 = "rgba(136,88,246,255)";
-    } else if ("<%- attaque3.type.name %>" === "grass") {
-      colorAttaque3 = "rgba(123,206,82,255)";
-    } else if ("<%- attaque3.type.name %>" === "ice") {
-      colorAttaque3 = "rgba(90,206,231,255)";
-    } else if ("<%- attaque3.type.name %>" === "bug") {
-      colorAttaque3 = "rgba(173,189,33,255)";
-    } else if ("<%- attaque3.type.name %>" === "steel") {
-      colorAttaque3 = "rgba(173,173,198,255)";
-    } else if ("<%- attaque3.type.name %>" === "psychic") {
-      colorAttaque3 = "rgba(255,115,165,255)";
-    } else if ("<%- attaque3.type.name %>" === "ghost") {
-      colorAttaque3 = "rgba(99,99,181,255)";
-    } else if ("<%- attaque3.type.name %>" === "ground") {
-      colorAttaque3 = "rgba(214,181,90,255)";
-    } else if ("<%- attaque3.type.name %>" === "poison") {
-      colorAttaque3 = "rgba(181,90,165,255)";
-    } else if ("<%- attaque3.type.name %>" === "flying") {
-      colorAttaque3 = "rgba(156,173,247,255)";
-    } else if ("<%- attaque3.type.name %>" === "electric") {
-      colorAttaque3 = "rgba(255,198,49,255)";
-    } else if ("<%- attaque3.type.name %>" === "fairy") {
-      colorAttaque3 = "rgba(224,154,227,255)";
-    } else if ("<%- attaque3.type.name %>" === "dark") {
-      colorAttaque3 = "rgba(115,90,74,255)";
-    }
-
-    if ("<%- attaque4.type.name %>" === "normal") {
-      colorAttaque4 = "rgba(173,165,148,255)";
-    } else if ("<%- attaque4.type.name %>" === "fighting") {
-      colorAttaque4 = "rgba(165,82,57,255)";
-    } else if ("<%- attaque4.type.name %>" === "fire") {
-      colorAttaque4 = "rgba(247,82,49,255)";
-    } else if ("<%- attaque4.type.name %>" === "water") {
-      colorAttaque4 = "rgba(57,156,255,255)";
-    } else if ("<%- attaque4.type.name %>" === "rock") {
-      colorAttaque4 = "rgba(189,165,90,255)";
-    } else if ("<%- attaque4.type.name %>" === "dragon") {
-      colorAttaque4 = "rgba(136,88,246,255)";
-    } else if ("<%- attaque4.type.name %>" === "grass") {
-      colorAttaque4 = "rgba(123,206,82,255)";
-    } else if ("<%- attaque4.type.name %>" === "ice") {
-      colorAttaque4 = "rgba(90,206,231,255)";
-    } else if ("<%- attaque4.type.name %>" === "bug") {
-      colorAttaque4 = "rgba(173,189,33,255)";
-    } else if ("<%- attaque4.type.name %>" === "steel") {
-      colorAttaque4 = "rgba(173,173,198,255)";
-    } else if ("<%- attaque4.type.name %>" === "psychic") {
-      colorAttaque4 = "rgba(255,115,165,255)";
-    } else if ("<%- attaque4.type.name %>" === "ghost") {
-      colorAttaque4 = "rgba(99,99,181,255)";
-    } else if ("<%- attaque4.type.name %>" === "ground") {
-      colorAttaque4 = "rgba(214,181,90,255)";
-    } else if ("<%- attaque4.type.name %>" === "poison") {
-      colorAttaque4 = "rgba(181,90,165,255)";
-    } else if ("<%- attaque4.type.name %>" === "flying") {
-      colorAttaque4 = "rgba(156,173,247,255)";
-    } else if ("<%- attaque4.type.name %>" === "electric") {
-      colorAttaque4 = "rgba(255,198,49,255)";
-    } else if ("<%- attaque4.type.name %>" === "fairy") {
-      colorAttaque4 = "rgba(224,154,227,255)";
-    } else if ("<%- attaque4.type.name %>" === "dark") {
-      colorAttaque4 = "rgba(115,90,74,255)";
-    }
+    colorAttaque1 = couleur(attaque1Type, colorAttaque1);
+    colorAttaque2 = couleur(attaque2Type, colorAttaque2);
+    colorAttaque3 = couleur(attaque3Type, colorAttaque3);
+    colorAttaque4 = couleur(attaque4Type, colorAttaque4);
 
     window.onload = function () {
       document.getElementById("badgeAtt1").style.backgroundColor =
@@ -286,21 +195,44 @@
         colorAttaque4;
     };
 
-    function calculPV(id, num) {
-      let modifPVVS = document.getElementById("pvMaxPokeVS");
-      let modifPV = document.getElementById("pvMaxPoke");
-      let barreVie = document.getElementById("barrePoke");
-      let barreVieVS = document.getElementById("barrePokeVS");
+    // Stats & attaques pokemon utilisé
+    let pv = Number("<%- pokemons[0].stats.pv %>");
+    let pvActu = pv;
+    let attPoke = Number("<%- pokemons[0].stats.att %>");
+    let defPoke = Number("<%- pokemons[0].stats.def %>");
+    let attSPoke = Number("<%- pokemons[0].stats.attS %>");
+    let defSPoke = Number("<%- pokemons[0].stats.defS %>");
+    let vitPoke = Number("<%- pokemons[0].stats.vit %>");
+    let attaque_dmg1 = Number("<%- pokemons[0].attaque1.puissance %>");
+    let attaque_dmg2 = Number("<%- pokemons[0].attaque2.puissance %>");
+    let attaque_dmg3 = Number("<%- pokemons[0].attaque3.puissance %>");
+    let attaque_dmg4 = Number("<%- pokemons[0].attaque4.puissance %>");
 
-      let test1 = "<%- type1VS %>";
-      let test2 = "<%- type2VS %>";
-      let test3 = "<%- type1 %>";
-      let test4 = "<%- type2 %>";
-      let test5 = "<%- attaque1.type.name %>";
-      let test6 = "<%- attaque1VS.type.name %>";
-      let test7 = "<%- attaque1.name %>";
-      let test8 = "<%- attaque1VS.name %>";
-      let test15 = "<%- nature %>";
+    // Stats & attaques pokemon adverse
+    const pvVS = Number("<%- pokemonsVS[0].stats.pv %>");
+    let pvActuVS = pvVS;
+    const attPokeVS = Number("<%- pokemonsVS[0].stats.att %>");
+    const defPokeVS = Number("<%- pokemonsVS[0].stats.def %>");
+    const attSPokeVS = Number("<%- pokemonsVS[0].stats.attS %>");
+    const defSPokeVS = Number("<%- pokemonsVS[0].stats.defS %>");
+    const vitPokeVS = Number("<%- pokemonsVS[0].stats.vit %>");
+    const attaque_dmg1VS = Number("<%- pokemonsVS[0].attaque1.puissance %>");
+
+    function calculPV(num) {
+      const modifPVVS = document.getElementById("pvMaxPokeVS");
+      const modifPV = document.getElementById("pvMaxPoke");
+      const barreVie = document.getElementById("barrePoke");
+      const barreVieVS = document.getElementById("barrePokeVS");
+
+      let test1 = type1VS;
+      let test2 = type2VS;
+      let test3 = type1;
+      let test4 = type2;
+      let test5 = attaque1Type;
+      let test6 = "<%- pokemonsVS[0].attaque1.type %>";
+      let nomAttaque = attaque1Nom;
+      let test8 = "<%- pokemonsVS[0].attaque1.nom %>";
+      let test15 = "<%- pokemons[0].nature %>";
 
       let efficace1 = 1;
       let efficace2 = 1;
@@ -309,54 +241,54 @@
 
       let typeAttaque = "";
       let typeAttaqueClass = "";
-      const typeAttaqueClassVS = "<%- attaque1VS.damage_class.name %>";
+      const typeAttaqueClassVS = attaque1Type;
 
       let degatAtt = 0;
 
       if (num === 1) {
-        typeAttaque = "<%- attaque1.type.name %>";
-        test7 = "<%- attaque1.name %>";
+        typeAttaque = attaque1Type;
+        nomAttaque = attaque1Nom;
         degatAtt = attaque_dmg1;
-        typeAttaqueClass = "<%- attaque1.damage_class.name %>";
+        typeAttaqueClass = attaque1Classe;
       } else if (num === 2) {
-        typeAttaque = "<%- attaque2.type.name %>";
-        test7 = "<%- attaque2.name %>";
+        typeAttaque = attaque2Type;
+        nomAttaque = attaque2Nom;
         degatAtt = attaque_dmg2;
-        typeAttaqueClass = "<%- attaque2.damage_class.name %>";
+        typeAttaqueClass = attaque2Classe;
       } else if (num === 3) {
-        typeAttaque = "<%- attaque3.type.name %>";
-        test7 = "<%- attaque3.name %>";
+        typeAttaque = attaque3Type;
+        nomAttaque = attaque3Nom;
         degatAtt = attaque_dmg3;
-        typeAttaqueClass = "<%- attaque3.damage_class.name %>";
+        typeAttaqueClass = attaque3Classe;
       } else if (num === 4) {
-        typeAttaque = "<%- attaque4.type.name %>";
-        test7 = "<%- attaque4.name %>";
+        typeAttaque = attaque4Type;
+        nomAttaque = attaque4Nom;
         degatAtt = attaque_dmg4;
-        typeAttaqueClass = "<%- attaque4.damage_class.name %>";
+        typeAttaqueClass = attaque4Classe;
       }
 
       //Attaque vs Type 1
       if (typeAttaque === "normal") {
-        if ("<%- type1VS %>" === "rock" || "<%- type1VS %>" === "steel") {
+        if (type1VS === "rock" || type1VS === "steel") {
           efficace1 = 0.5;
-        } else if ("<%- type1VS %>" === "ghost") {
+        } else if (type1VS === "ghost") {
           efficace1 = 0;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "fire") {
         if (
-          "<%- type1VS %>" === "fire" ||
-          "<%- type1VS %>" === "water" ||
-          "<%- type1VS %>" === "rock" ||
-          "<%- type1VS %>" === "dragon"
+          type1VS === "fire" ||
+          type1VS === "water" ||
+          type1VS === "rock" ||
+          type1VS === "dragon"
         ) {
           efficace1 = 0.5;
         } else if (
-          "<%- type1VS %>" === "grass" ||
-          "<%- type1VS %>" === "ice" ||
-          "<%- type1VS %>" === "bug" ||
-          "<%- type1VS %>" === "steel"
+          type1VS === "grass" ||
+          type1VS === "ice" ||
+          type1VS === "bug" ||
+          type1VS === "steel"
         ) {
           efficace1 = 2;
         } else {
@@ -364,15 +296,15 @@
         }
       } else if (typeAttaque === "water") {
         if (
-          "<%- type1VS %>" === "water" ||
-          "<%- type1VS %>" === "grass" ||
-          "<%- type1VS %>" === "dragon"
+          type1VS === "water" ||
+          type1VS === "grass" ||
+          type1VS === "dragon"
         ) {
           efficace1 = 0.5;
         } else if (
-          "<%- type1VS %>" === "fire" ||
-          "<%- type1VS %>" === "ground" ||
-          "<%- type1VS %>" === "rock"
+          type1VS === "fire" ||
+          type1VS === "ground" ||
+          type1VS === "rock"
         ) {
           efficace1 = 2;
         } else {
@@ -380,19 +312,19 @@
         }
       } else if (typeAttaque === "grass") {
         if (
-          "<%- type1VS %>" === "grass" ||
-          "<%- type1VS %>" === "fire" ||
-          "<%- type1VS %>" === "poison" ||
-          "<%- type1VS %>" === "flying" ||
-          "<%- type1VS %>" === "bug" ||
-          "<%- type1VS %>" === "dragon" ||
-          "<%- type1VS %>" === "steel"
+          type1VS === "grass" ||
+          type1VS === "fire" ||
+          type1VS === "poison" ||
+          type1VS === "flying" ||
+          type1VS === "bug" ||
+          type1VS === "dragon" ||
+          type1VS === "steel"
         ) {
           efficace1 = 0.5;
         } else if (
-          "<%- type1VS %>" === "water" ||
-          "<%- type1VS %>" === "ground" ||
-          "<%- type1VS %>" === "rock"
+          type1VS === "water" ||
+          type1VS === "ground" ||
+          type1VS === "rock"
         ) {
           efficace1 = 2;
         } else {
@@ -400,34 +332,31 @@
         }
       } else if (typeAttaque === "electric") {
         if (
-          "<%- type1VS %>" === "grass" ||
-          "<%- type1VS %>" === "electric" ||
-          "<%- type1VS %>" === "dragon"
+          type1VS === "grass" ||
+          type1VS === "electric" ||
+          type1VS === "dragon"
         ) {
           efficace1 = 0.5;
-        } else if (
-          "<%- type1VS %>" === "water" ||
-          "<%- type1VS %>" === "flying"
-        ) {
+        } else if (type1VS === "water" || type1VS === "flying") {
           efficace1 = 2;
-        } else if ("<%- type1VS %>" === "ground") {
+        } else if (type1VS === "ground") {
           efficace1 = 0;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "ice") {
         if (
-          "<%- type1VS %>" === "fire" ||
-          "<%- type1VS %>" === "water" ||
-          "<%- type1VS %>" === "ice" ||
-          "<%- type1VS %>" === "steel"
+          type1VS === "fire" ||
+          type1VS === "water" ||
+          type1VS === "ice" ||
+          type1VS === "steel"
         ) {
           efficace1 = 0.5;
         } else if (
-          "<%- type1VS %>" === "grass" ||
-          "<%- type1VS %>" === "flying" ||
-          "<%- type1VS %>" === "ground" ||
-          "<%- type1VS %>" === "dragon"
+          type1VS === "grass" ||
+          type1VS === "flying" ||
+          type1VS === "ground" ||
+          type1VS === "dragon"
         ) {
           efficace1 = 2;
         } else {
@@ -435,104 +364,98 @@
         }
       } else if (typeAttaque === "fighting") {
         if (
-          "<%- type1VS %>" === "poison" ||
-          "<%- type1VS %>" === "flying" ||
-          "<%- type1VS %>" === "psychic" ||
-          "<%- type1VS %>" === "bug" ||
-          "<%- type1VS %>" === "fairy"
+          type1VS === "poison" ||
+          type1VS === "flying" ||
+          type1VS === "psychic" ||
+          type1VS === "bug" ||
+          type1VS === "fairy"
         ) {
           efficace1 = 0.5;
         } else if (
-          "<%- type1VS %>" === "normal" ||
-          "<%- type1VS %>" === "ice" ||
-          "<%- type1VS %>" === "rock" ||
-          "<%- type1VS %>" === "dark" ||
-          "<%- type1VS %>" === "steel"
+          type1VS === "normal" ||
+          type1VS === "ice" ||
+          type1VS === "rock" ||
+          type1VS === "dark" ||
+          type1VS === "steel"
         ) {
           efficace1 = 2;
-        } else if ("<%- type1VS %>" === "ghost") {
+        } else if (type1VS === "ghost") {
           efficace1 = 0;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "poison") {
         if (
-          "<%- type1VS %>" === "poison" ||
-          "<%- type1VS %>" === "ground" ||
-          "<%- type1VS %>" === "rock" ||
-          "<%- type1VS %>" === "ghost"
+          type1VS === "poison" ||
+          type1VS === "ground" ||
+          type1VS === "rock" ||
+          type1VS === "ghost"
         ) {
           efficace1 = 0.5;
-        } else if (
-          "<%- type1VS %>" === "grass" ||
-          "<%- type1VS %>" === "fairy"
-        ) {
+        } else if (type1VS === "grass" || type1VS === "fairy") {
           efficace1 = 2;
-        } else if ("<%- type1VS %>" === "steel") {
+        } else if (type1VS === "steel") {
           efficace1 = 0;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "ground") {
-        if ("<%- type1VS %>" === "grass" || "<%- type1VS %>" === "bug") {
+        if (type1VS === "grass" || type1VS === "bug") {
           efficace1 = 0.5;
         } else if (
-          "<%- type1VS %>" === "fire" ||
-          "<%- type1VS %>" === "electric" ||
-          "<%- type1VS %>" === "poison" ||
-          "<%- type1VS %>" === "rock" ||
-          "<%- type1VS %>" === "steel"
+          type1VS === "fire" ||
+          type1VS === "electric" ||
+          type1VS === "poison" ||
+          type1VS === "rock" ||
+          type1VS === "steel"
         ) {
           efficace1 = 2;
-        } else if ("<%- type1VS %>" === "flying") {
+        } else if (type1VS === "flying") {
           efficace1 = 0;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "flying") {
         if (
-          "<%- type1VS %>" === "electric" ||
-          "<%- type1VS %>" === "rock" ||
-          "<%- type1VS %>" === "steel"
+          type1VS === "electric" ||
+          type1VS === "rock" ||
+          type1VS === "steel"
         ) {
           efficace1 = 0.5;
         } else if (
-          "<%- type1VS %>" === "grass" ||
-          "<%- type1VS %>" === "fighting" ||
-          "<%- type1VS %>" === "bug"
+          type1VS === "grass" ||
+          type1VS === "fighting" ||
+          type1VS === "bug"
         ) {
           efficace1 = 2;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "psychic") {
-        if ("<%- type1VS %>" === "psychic" || "<%- type1VS %>" === "steel") {
+        if (type1VS === "psychic" || type1VS === "steel") {
           efficace1 = 0.5;
-        } else if (
-          "<%- type1VS %>" === "fighting" ||
-          "<%- type1VS %>" === "poison"
-        ) {
+        } else if (type1VS === "fighting" || type1VS === "poison") {
           efficace1 = 2;
-        } else if ("<%- type1VS %>" === "dark") {
+        } else if (type1VS === "dark") {
           efficace1 = 0;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "bug") {
         if (
-          "<%- type1VS %>" === "fire" ||
-          "<%- type1VS %>" === "fighting" ||
-          "<%- type1VS %>" === "poison" ||
-          "<%- type1VS %>" === "flying" ||
-          "<%- type1VS %>" === "ghost" ||
-          "<%- type1VS %>" === "steel" ||
-          "<%- type1VS %>" === "fairy"
+          type1VS === "fire" ||
+          type1VS === "fighting" ||
+          type1VS === "poison" ||
+          type1VS === "flying" ||
+          type1VS === "ghost" ||
+          type1VS === "steel" ||
+          type1VS === "fairy"
         ) {
           efficace1 = 0.5;
         } else if (
-          "<%- type1VS %>" === "grass" ||
-          "<%- type1VS %>" === "psychic" ||
-          "<%- type1VS %>" === "dark"
+          type1VS === "grass" ||
+          type1VS === "psychic" ||
+          type1VS === "dark"
         ) {
           efficace1 = 2;
         } else {
@@ -540,87 +463,77 @@
         }
       } else if (typeAttaque === "rock") {
         if (
-          "<%- type1VS %>" === "fighting" ||
-          "<%- type1VS %>" === "ground" ||
-          "<%- type1VS %>" === "steel"
+          type1VS === "fighting" ||
+          type1VS === "ground" ||
+          type1VS === "steel"
         ) {
           efficace1 = 0.5;
         } else if (
-          "<%- type1VS %>" === "flying" ||
-          "<%- type1VS %>" === "fire" ||
-          "<%- type1VS %>" === "ice" ||
-          "<%- type1VS %>" === "bug"
+          type1VS === "flying" ||
+          type1VS === "fire" ||
+          type1VS === "ice" ||
+          type1VS === "bug"
         ) {
           efficace1 = 2;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "ghost") {
-        if ("<%- type1VS %>" === "dark") {
+        if (type1VS === "dark") {
           efficace1 = 0.5;
-        } else if (
-          "<%- type1VS %>" === "ghost" ||
-          "<%- type1VS %>" === "psychic"
-        ) {
+        } else if (type1VS === "ghost" || type1VS === "psychic") {
           efficace1 = 2;
-        } else if ("<%- type1VS %>" === "normal") {
+        } else if (type1VS === "normal") {
           efficace1 = 0;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "dragon") {
-        if ("<%- type1VS %>" === "steel") {
+        if (type1VS === "steel") {
           efficace1 = 0.5;
-        } else if ("<%- type1VS %>" === "dragon") {
+        } else if (type1VS === "dragon") {
           efficace1 = 2;
-        } else if ("<%- type1VS %>" === "fairy") {
+        } else if (type1VS === "fairy") {
           efficace1 = 0;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "dark") {
         if (
-          "<%- type1VS %>" === "fighting" ||
-          "<%- type1VS %>" === "dark" ||
-          "<%- type1VS %>" === "fairy"
+          type1VS === "fighting" ||
+          type1VS === "dark" ||
+          type1VS === "fairy"
         ) {
           efficace1 = 0.5;
-        } else if (
-          "<%- type1VS %>" === "psychic" ||
-          "<%- type1VS %>" === "ghost"
-        ) {
+        } else if (type1VS === "psychic" || type1VS === "ghost") {
           efficace1 = 2;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "steel") {
         if (
-          "<%- type1VS %>" === "fire" ||
-          "<%- type1VS %>" === "water" ||
-          "<%- type1VS %>" === "electric" ||
-          "<%- type1VS %>" === "steel"
+          type1VS === "fire" ||
+          type1VS === "water" ||
+          type1VS === "electric" ||
+          type1VS === "steel"
         ) {
           efficace1 = 0.5;
         } else if (
-          "<%- type1VS %>" === "ice" ||
-          "<%- type1VS %>" === "rock" ||
-          "<%- type1VS %>" === "fairy"
+          type1VS === "ice" ||
+          type1VS === "rock" ||
+          type1VS === "fairy"
         ) {
           efficace1 = 2;
         } else {
           efficace1 = 1;
         }
       } else if (typeAttaque === "fairy") {
-        if (
-          "<%- type1VS %>" === "fire" ||
-          "<%- type1VS %>" === "poison" ||
-          "<%- type1VS %>" === "steel"
-        ) {
+        if (type1VS === "fire" || type1VS === "poison" || type1VS === "steel") {
           efficace1 = 0.5;
         } else if (
-          "<%- type1VS %>" === "fighting" ||
-          "<%- type1VS %>" === "dragon" ||
-          "<%- type1VS %>" === "dark"
+          type1VS === "fighting" ||
+          type1VS === "dragon" ||
+          type1VS === "dark"
         ) {
           efficace1 = 2;
         } else {
@@ -632,26 +545,26 @@
 
       //Attaque vs Type 2
       if (typeAttaque === "normal") {
-        if ("<%- type2VS %>" === "rock" || "<%- type2VS %>" === "steel") {
+        if (type2VS === "rock" || type2VS === "steel") {
           efficace2 = 0.5;
-        } else if ("<%- type2VS %>" === "ghost") {
+        } else if (type2VS === "ghost") {
           efficace2 = 0;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "fire") {
         if (
-          "<%- type2VS %>" === "fire" ||
-          "<%- type2VS %>" === "water" ||
-          "<%- type2VS %>" === "rock" ||
-          "<%- type2VS %>" === "dragon"
+          type2VS === "fire" ||
+          type2VS === "water" ||
+          type2VS === "rock" ||
+          type2VS === "dragon"
         ) {
           efficace2 = 0.5;
         } else if (
-          "<%- type2VS %>" === "grass" ||
-          "<%- type2VS %>" === "ice" ||
-          "<%- type2VS %>" === "bug" ||
-          "<%- type2VS %>" === "steel"
+          type2VS === "grass" ||
+          type2VS === "ice" ||
+          type2VS === "bug" ||
+          type2VS === "steel"
         ) {
           efficace2 = 2;
         } else {
@@ -659,15 +572,15 @@
         }
       } else if (typeAttaque === "water") {
         if (
-          "<%- type2VS %>" === "water" ||
-          "<%- type2VS %>" === "grass" ||
-          "<%- type2VS %>" === "dragon"
+          type2VS === "water" ||
+          type2VS === "grass" ||
+          type2VS === "dragon"
         ) {
           efficace2 = 0.5;
         } else if (
-          "<%- type2VS %>" === "fire" ||
-          "<%- type2VS %>" === "ground" ||
-          "<%- type2VS %>" === "rock"
+          type2VS === "fire" ||
+          type2VS === "ground" ||
+          type2VS === "rock"
         ) {
           efficace2 = 2;
         } else {
@@ -675,19 +588,19 @@
         }
       } else if (typeAttaque === "grass") {
         if (
-          "<%- type2VS %>" === "grass" ||
-          "<%- type2VS %>" === "fire" ||
-          "<%- type2VS %>" === "poison" ||
-          "<%- type2VS %>" === "flying" ||
-          "<%- type2VS %>" === "bug" ||
-          "<%- type2VS %>" === "dragon" ||
-          "<%- type2VS %>" === "steel"
+          type2VS === "grass" ||
+          type2VS === "fire" ||
+          type2VS === "poison" ||
+          type2VS === "flying" ||
+          type2VS === "bug" ||
+          type2VS === "dragon" ||
+          type2VS === "steel"
         ) {
           efficace2 = 0.5;
         } else if (
-          "<%- type2VS %>" === "water" ||
-          "<%- type2VS %>" === "ground" ||
-          "<%- type2VS %>" === "rock"
+          type2VS === "water" ||
+          type2VS === "ground" ||
+          type2VS === "rock"
         ) {
           efficace2 = 2;
         } else {
@@ -695,34 +608,31 @@
         }
       } else if (typeAttaque === "electric") {
         if (
-          "<%- type2VS %>" === "grass" ||
-          "<%- type2VS %>" === "electric" ||
-          "<%- type2VS %>" === "dragon"
+          type2VS === "grass" ||
+          type2VS === "electric" ||
+          type2VS === "dragon"
         ) {
           efficace2 = 0.5;
-        } else if (
-          "<%- type2VS %>" === "water" ||
-          "<%- type2VS %>" === "flying"
-        ) {
+        } else if (type2VS === "water" || type2VS === "flying") {
           efficace2 = 2;
-        } else if ("<%- type2VS %>" === "ground") {
+        } else if (type2VS === "ground") {
           efficace2 = 0;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "ice") {
         if (
-          "<%- type2VS %>" === "fire" ||
-          "<%- type2VS %>" === "water" ||
-          "<%- type2VS %>" === "ice" ||
-          "<%- type2VS %>" === "steel"
+          type2VS === "fire" ||
+          type2VS === "water" ||
+          type2VS === "ice" ||
+          type2VS === "steel"
         ) {
           efficace2 = 0.5;
         } else if (
-          "<%- type2VS %>" === "grass" ||
-          "<%- type2VS %>" === "flying" ||
-          "<%- type2VS %>" === "ground" ||
-          "<%- type2VS %>" === "dragon"
+          type2VS === "grass" ||
+          type2VS === "flying" ||
+          type2VS === "ground" ||
+          type2VS === "dragon"
         ) {
           efficace2 = 2;
         } else {
@@ -730,104 +640,98 @@
         }
       } else if (typeAttaque === "fighting") {
         if (
-          "<%- type2VS %>" === "poison" ||
-          "<%- type2VS %>" === "flying" ||
-          "<%- type2VS %>" === "psychic" ||
-          "<%- type2VS %>" === "bug" ||
-          "<%- type2VS %>" === "fairy"
+          type2VS === "poison" ||
+          type2VS === "flying" ||
+          type2VS === "psychic" ||
+          type2VS === "bug" ||
+          type2VS === "fairy"
         ) {
           efficace2 = 0.5;
         } else if (
-          "<%- type2VS %>" === "normal" ||
-          "<%- type2VS %>" === "ice" ||
-          "<%- type2VS %>" === "rock" ||
-          "<%- type2VS %>" === "dark" ||
-          "<%- type2VS %>" === "steel"
+          type2VS === "normal" ||
+          type2VS === "ice" ||
+          type2VS === "rock" ||
+          type2VS === "dark" ||
+          type2VS === "steel"
         ) {
           efficace2 = 2;
-        } else if ("<%- type2VS %>" === "ghost") {
+        } else if (type2VS === "ghost") {
           efficace2 = 0;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "poison") {
         if (
-          "<%- type2VS %>" === "poison" ||
-          "<%- type2VS %>" === "ground" ||
-          "<%- type2VS %>" === "rock" ||
-          "<%- type2VS %>" === "ghost"
+          type2VS === "poison" ||
+          type2VS === "ground" ||
+          type2VS === "rock" ||
+          type2VS === "ghost"
         ) {
           efficace2 = 0.5;
-        } else if (
-          "<%- type2VS %>" === "grass" ||
-          "<%- type2VS %>" === "fairy"
-        ) {
+        } else if (type2VS === "grass" || type2VS === "fairy") {
           efficace2 = 2;
-        } else if ("<%- type2VS %>" === "steel") {
+        } else if (type2VS === "steel") {
           efficace2 = 0;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "ground") {
-        if ("<%- type2VS %>" === "grass" || "<%- type2VS %>" === "bug") {
+        if (type2VS === "grass" || type2VS === "bug") {
           efficace2 = 0.5;
         } else if (
-          "<%- type2VS %>" === "fire" ||
-          "<%- type2VS %>" === "electric" ||
-          "<%- type2VS %>" === "poison" ||
-          "<%- type2VS %>" === "rock" ||
-          "<%- type2VS %>" === "steel"
+          type2VS === "fire" ||
+          type2VS === "electric" ||
+          type2VS === "poison" ||
+          type2VS === "rock" ||
+          type2VS === "steel"
         ) {
           efficace2 = 2;
-        } else if ("<%- type2VS %>" === "flying") {
+        } else if (type2VS === "flying") {
           efficace2 = 0;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "flying") {
         if (
-          "<%- type2VS %>" === "electric" ||
-          "<%- type2VS %>" === "rock" ||
-          "<%- type2VS %>" === "steel"
+          type2VS === "electric" ||
+          type2VS === "rock" ||
+          type2VS === "steel"
         ) {
           efficace2 = 0.5;
         } else if (
-          "<%- type2VS %>" === "grass" ||
-          "<%- type2VS %>" === "fighting" ||
-          "<%- type2VS %>" === "bug"
+          type2VS === "grass" ||
+          type2VS === "fighting" ||
+          type2VS === "bug"
         ) {
           efficace2 = 2;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "psychic") {
-        if ("<%- type2VS %>" === "psychic" || "<%- type2VS %>" === "steel") {
+        if (type2VS === "psychic" || type2VS === "steel") {
           efficace2 = 0.5;
-        } else if (
-          "<%- type2VS %>" === "fighting" ||
-          "<%- type2VS %>" === "poison"
-        ) {
+        } else if (type2VS === "fighting" || type2VS === "poison") {
           efficace2 = 2;
-        } else if ("<%- type2VS %>" === "dark") {
+        } else if (type2VS === "dark") {
           efficace2 = 0;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "bug") {
         if (
-          "<%- type2VS %>" === "fire" ||
-          "<%- type2VS %>" === "fighting" ||
-          "<%- type2VS %>" === "poison" ||
-          "<%- type2VS %>" === "flying" ||
-          "<%- type2VS %>" === "ghost" ||
-          "<%- type2VS %>" === "steel" ||
-          "<%- type2VS %>" === "fairy"
+          type2VS === "fire" ||
+          type2VS === "fighting" ||
+          type2VS === "poison" ||
+          type2VS === "flying" ||
+          type2VS === "ghost" ||
+          type2VS === "steel" ||
+          type2VS === "fairy"
         ) {
           efficace2 = 0.5;
         } else if (
-          "<%- type2VS %>" === "grass" ||
-          "<%- type2VS %>" === "psychic" ||
-          "<%- type2VS %>" === "dark"
+          type2VS === "grass" ||
+          type2VS === "psychic" ||
+          type2VS === "dark"
         ) {
           efficace2 = 2;
         } else {
@@ -835,87 +739,77 @@
         }
       } else if (typeAttaque === "rock") {
         if (
-          "<%- type2VS %>" === "fighting" ||
-          "<%- type2VS %>" === "ground" ||
-          "<%- type2VS %>" === "steel"
+          type2VS === "fighting" ||
+          type2VS === "ground" ||
+          type2VS === "steel"
         ) {
           efficace2 = 0.5;
         } else if (
-          "<%- type2VS %>" === "flying" ||
-          "<%- type2VS %>" === "fire" ||
-          "<%- type2VS %>" === "ice" ||
-          "<%- type2VS %>" === "bug"
+          type2VS === "flying" ||
+          type2VS === "fire" ||
+          type2VS === "ice" ||
+          type2VS === "bug"
         ) {
           efficace2 = 2;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "ghost") {
-        if ("<%- type2VS %>" === "dark") {
+        if (type2VS === "dark") {
           efficace2 = 0.5;
-        } else if (
-          "<%- type2VS %>" === "ghost" ||
-          "<%- type2VS %>" === "psychic"
-        ) {
+        } else if (type2VS === "ghost" || type2VS === "psychic") {
           efficace2 = 2;
-        } else if ("<%- type2VS %>" === "normal") {
+        } else if (type2VS === "normal") {
           efficace2 = 0;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "dragon") {
-        if ("<%- type2VS %>" === "steel") {
+        if (type2VS === "steel") {
           efficace2 = 0.5;
-        } else if ("<%- type2VS %>" === "dragon") {
+        } else if (type2VS === "dragon") {
           efficace2 = 2;
-        } else if ("<%- type2VS %>" === "fairy") {
+        } else if (type2VS === "fairy") {
           efficace2 = 0;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "dark") {
         if (
-          "<%- type2VS %>" === "fighting" ||
-          "<%- type2VS %>" === "dark" ||
-          "<%- type2VS %>" === "fairy"
+          type2VS === "fighting" ||
+          type2VS === "dark" ||
+          type2VS === "fairy"
         ) {
           efficace2 = 0.5;
-        } else if (
-          "<%- type2VS %>" === "psychic" ||
-          "<%- type2VS %>" === "ghost"
-        ) {
+        } else if (type2VS === "psychic" || type2VS === "ghost") {
           efficace2 = 2;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "steel") {
         if (
-          "<%- type2VS %>" === "fire" ||
-          "<%- type2VS %>" === "water" ||
-          "<%- type2VS %>" === "electric" ||
-          "<%- type2VS %>" === "steel"
+          type2VS === "fire" ||
+          type2VS === "water" ||
+          type2VS === "electric" ||
+          type2VS === "steel"
         ) {
           efficace2 = 0.5;
         } else if (
-          "<%- type2VS %>" === "ice" ||
-          "<%- type2VS %>" === "rock" ||
-          "<%- type2VS %>" === "fairy"
+          type2VS === "ice" ||
+          type2VS === "rock" ||
+          type2VS === "fairy"
         ) {
           efficace2 = 2;
         } else {
           efficace2 = 1;
         }
       } else if (typeAttaque === "fairy") {
-        if (
-          "<%- type2VS %>" === "fire" ||
-          "<%- type2VS %>" === "poison" ||
-          "<%- type2VS %>" === "steel"
-        ) {
+        if (type2VS === "fire" || type2VS === "poison" || type2VS === "steel") {
           efficace2 = 0.5;
         } else if (
-          "<%- type2VS %>" === "fighting" ||
-          "<%- type2VS %>" === "dragon" ||
-          "<%- type2VS %>" === "dark"
+          type2VS === "fighting" ||
+          type2VS === "dragon" ||
+          type2VS === "dark"
         ) {
           efficace2 = 2;
         } else {
@@ -953,7 +847,7 @@
       }
 
       let bonusType = 1;
-      if (typeAttaque === "<%- type1 %>" || typeAttaque === "<%- type2 %>") {
+      if (typeAttaque === type1 || typeAttaque === type2) {
         bonusType = 1.5;
       }
 
@@ -1043,7 +937,7 @@
 
       console.log("type1VS", test1);
       console.log("type2VS", test2);
-      console.log("attaque1.name", test7);
+      console.log("attaque1.name", nomAttaque);
       console.log("typeAttaque", typeAttaque);
       console.log("attaque1VS.name", test8);
       console.log("attaque1VS.type.name", test6);
@@ -1057,10 +951,353 @@
       console.log("bonusType", bonusType);
       console.log("nature", test15);
 
-      modifPV.textContent = `${pvActu}/<%= pvMax2 %>`;
+      modifPV.textContent = `${pvActu}/${pv}`;
       barreVie.value = pvActu;
-      modifPVVS.textContent = `${pvActuVS}/<%= pvMax1 %>`;
+      modifPVVS.textContent = `${pvActuVS}/${pvVS}`;
       barreVieVS.value = pvActuVS;
+    }
+
+    function changementPoke(num) {
+      const modifSprite = document.getElementById("pokemon");
+      const modifNom = document.getElementById("nomPokeMAJ");
+      const modifBarre = document.getElementById("barrePoke");
+      const modifPVMax = document.getElementById("pvMaxPoke");
+      const modifBadge1 = document.getElementById("badgeAtt1");
+      const modifNomAtt1 = document.getElementById("nomAtt1");
+      const modifBadge2 = document.getElementById("badgeAtt2");
+      const modifNomAtt2 = document.getElementById("nomAtt2");
+      const modifBadge3 = document.getElementById("badgeAtt3");
+      const modifNomAtt3 = document.getElementById("nomAtt3");
+      const modifBadge4 = document.getElementById("badgeAtt4");
+      const modifNomAtt4 = document.getElementById("nomAtt4");
+
+      if (num === 1) {
+        modifSprite.src = "<%- pokemons[0].sprite %>";
+        modifNom.textContent = "<%= pokemons[0].nom.toUpperCase() %>";
+        modifBarre.value = "<%= pokemons[0].stats.pv %>";
+        modifBarre.max = "<%= pokemons[0].stats.pv %>";
+        modifPVMax.textContent =
+          "<%= pokemons[0].stats.pv %>/<%= pokemons[0].stats.pv %>";
+        modifBadge1.textContent = "<%= pokemons[0].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[0].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[0].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[0].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[0].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[0].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[0].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[0].attaque4.nom %>";
+
+        pv = Number("<%- pokemons[0].stats.pv %>");
+        attPoke = Number("<%- pokemons[0].stats.att %>");
+        defPoke = Number("<%- pokemons[0].stats.def %>");
+        attSPoke = Number("<%- pokemons[0].stats.attS %>");
+        defSPoke = Number("<%- pokemons[0].stats.defS %>");
+        vitPoke = Number("<%- pokemons[0].stats.vit %>");
+        attaque_dmg1 = Number("<%- pokemons[0].attaque1.puissance %>");
+        attaque_dmg2 = Number("<%- pokemons[0].attaque2.puissance %>");
+        attaque_dmg3 = Number("<%- pokemons[0].attaque3.puissance %>");
+        attaque_dmg4 = Number("<%- pokemons[0].attaque4.puissance %>");
+        attaque1Type = "<%- pokemons[0].attaque1.type %>";
+        attaque2Type = "<%- pokemons[0].attaque2.type %>";
+        attaque3Type = "<%- pokemons[0].attaque3.type %>";
+        attaque4Type = "<%- pokemons[0].attaque4.type %>";
+        attaque1Nom = "<%- pokemons[0].attaque1.nom %>";
+        attaque2Nom = "<%- pokemons[0].attaque2.nom %>";
+        attaque3Nom = "<%- pokemons[0].attaque3.nom %>";
+        attaque4Nom = "<%- pokemons[0].attaque4.nom %>";
+        attaque1Classe = "<%- pokemons[0].attaque1.classe %>";
+        attaque2Classe = "<%- pokemons[0].attaque2.classe %>";
+        attaque3Classe = "<%- pokemons[0].attaque3.classe %>";
+        attaque4Classe = "<%- pokemons[0].attaque4.classe %>";
+        type1VS = "<%- pokemonsVS[0].type1 %>";
+        type2VS = "<%- pokemonsVS[0].type2 %>";
+        type1 = "<%- pokemons[0].type1 %>";
+        type2 = "<%- pokemons[0].type2 %>";
+
+        colorAttaque1 = couleur(attaque1Type, colorAttaque1);
+        colorAttaque2 = couleur(attaque2Type, colorAttaque2);
+        colorAttaque3 = couleur(attaque3Type, colorAttaque3);
+        colorAttaque4 = couleur(attaque4Type, colorAttaque4);
+
+        document.getElementById("badgeAtt1").style.backgroundColor =
+          colorAttaque1;
+        document.getElementById("badgeAtt2").style.backgroundColor =
+          colorAttaque2;
+        document.getElementById("badgeAtt3").style.backgroundColor =
+          colorAttaque3;
+        document.getElementById("badgeAtt4").style.backgroundColor =
+          colorAttaque4;
+      } else if (num === 2) {
+        modifSprite.src = "<%- pokemons[1].sprite %>";
+        modifNom.textContent = "<%= pokemons[1].nom.toUpperCase() %>";
+        modifBarre.value = "<%= pokemons[1].stats.pv %>";
+        modifBarre.max = "<%= pokemons[1].stats.pv %>";
+        modifPVMax.textContent =
+          "<%= pokemons[1].stats.pv %>/<%= pokemons[1].stats.pv %>";
+        modifBadge1.textContent = "<%= pokemons[1].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[1].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[1].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[1].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[1].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[1].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[1].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[1].attaque4.nom %>";
+
+        pv = Number("<%- pokemons[1].stats.pv %>");
+        attPoke = Number("<%- pokemons[1].stats.att %>");
+        defPoke = Number("<%- pokemons[1].stats.def %>");
+        attSPoke = Number("<%- pokemons[1].stats.attS %>");
+        defSPoke = Number("<%- pokemons[1].stats.defS %>");
+        vitPoke = Number("<%- pokemons[1].stats.vit %>");
+        attaque_dmg1 = Number("<%- pokemons[1].attaque1.puissance %>");
+        attaque_dmg2 = Number("<%- pokemons[1].attaque2.puissance %>");
+        attaque_dmg3 = Number("<%- pokemons[1].attaque3.puissance %>");
+        attaque_dmg4 = Number("<%- pokemons[1].attaque4.puissance %>");
+        attaque1Type = "<%- pokemons[1].attaque1.type %>";
+        attaque2Type = "<%- pokemons[1].attaque2.type %>";
+        attaque3Type = "<%- pokemons[1].attaque3.type %>";
+        attaque4Type = "<%- pokemons[1].attaque4.type %>";
+        attaque1Nom = "<%- pokemons[1].attaque1.nom %>";
+        attaque2Nom = "<%- pokemons[1].attaque2.nom %>";
+        attaque3Nom = "<%- pokemons[1].attaque3.nom %>";
+        attaque4Nom = "<%- pokemons[1].attaque4.nom %>";
+        attaque1Classe = "<%- pokemons[1].attaque1.classe %>";
+        attaque2Classe = "<%- pokemons[1].attaque2.classe %>";
+        attaque3Classe = "<%- pokemons[1].attaque3.classe %>";
+        attaque4Classe = "<%- pokemons[1].attaque4.classe %>";
+        type1 = "<%- pokemons[1].type1 %>";
+        type2 = "<%- pokemons[1].type2 %>";
+
+        colorAttaque1 = couleur(attaque1Type, colorAttaque1);
+        colorAttaque2 = couleur(attaque2Type, colorAttaque2);
+        colorAttaque3 = couleur(attaque3Type, colorAttaque3);
+        colorAttaque4 = couleur(attaque4Type, colorAttaque4);
+
+        document.getElementById("badgeAtt1").style.backgroundColor =
+          colorAttaque1;
+        document.getElementById("badgeAtt2").style.backgroundColor =
+          colorAttaque2;
+        document.getElementById("badgeAtt3").style.backgroundColor =
+          colorAttaque3;
+        document.getElementById("badgeAtt4").style.backgroundColor =
+          colorAttaque4;
+      } else if (num === 3) {
+        modifSprite.src = "<%- pokemons[2].sprite %>";
+        modifNom.textContent = "<%= pokemons[2].nom.toUpperCase() %>";
+        modifBarre.value = "<%= pokemons[2].stats.pv %>";
+        modifBarre.max = "<%= pokemons[2].stats.pv %>";
+        modifPVMax.textContent =
+          "<%= pokemons[2].stats.pv %>/<%= pokemons[2].stats.pv %>";
+        modifBadge1.textContent = "<%= pokemons[2].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[2].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[2].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[2].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[2].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[2].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[2].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[2].attaque4.nom %>";
+
+        pv = Number("<%- pokemons[2].stats.pv %>");
+        attPoke = Number("<%- pokemons[2].stats.att %>");
+        defPoke = Number("<%- pokemons[2].stats.def %>");
+        attSPoke = Number("<%- pokemons[2].stats.attS %>");
+        defSPoke = Number("<%- pokemons[2].stats.defS %>");
+        vitPoke = Number("<%- pokemons[2].stats.vit %>");
+        attaque_dmg1 = Number("<%- pokemons[2].attaque1.puissance %>");
+        attaque_dmg2 = Number("<%- pokemons[2].attaque2.puissance %>");
+        attaque_dmg3 = Number("<%- pokemons[2].attaque3.puissance %>");
+        attaque_dmg4 = Number("<%- pokemons[2].attaque4.puissance %>");
+        attaque1Type = "<%- pokemons[2].attaque1.type %>";
+        attaque2Type = "<%- pokemons[2].attaque2.type %>";
+        attaque3Type = "<%- pokemons[2].attaque3.type %>";
+        attaque4Type = "<%- pokemons[2].attaque4.type %>";
+        attaque1Nom = "<%- pokemons[2].attaque1.nom %>";
+        attaque2Nom = "<%- pokemons[2].attaque2.nom %>";
+        attaque3Nom = "<%- pokemons[2].attaque3.nom %>";
+        attaque4Nom = "<%- pokemons[2].attaque4.nom %>";
+        attaque1Classe = "<%- pokemons[2].attaque1.classe %>";
+        attaque2Classe = "<%- pokemons[2].attaque2.classe %>";
+        attaque3Classe = "<%- pokemons[2].attaque3.classe %>";
+        attaque4Classe = "<%- pokemons[2].attaque4.classe %>";
+        type1 = "<%- pokemons[2].type1 %>";
+        type2 = "<%- pokemons[2].type2 %>";
+
+        colorAttaque1 = couleur(attaque1Type, colorAttaque1);
+        colorAttaque2 = couleur(attaque2Type, colorAttaque2);
+        colorAttaque3 = couleur(attaque3Type, colorAttaque3);
+        colorAttaque4 = couleur(attaque4Type, colorAttaque4);
+
+        document.getElementById("badgeAtt1").style.backgroundColor =
+          colorAttaque1;
+        document.getElementById("badgeAtt2").style.backgroundColor =
+          colorAttaque2;
+        document.getElementById("badgeAtt3").style.backgroundColor =
+          colorAttaque3;
+        document.getElementById("badgeAtt4").style.backgroundColor =
+          colorAttaque4;
+      } else if (num === 4) {
+        modifSprite.src = "<%- pokemons[3].sprite %>";
+        modifNom.textContent = "<%= pokemons[3].nom.toUpperCase() %>";
+        modifBarre.value = "<%= pokemons[3].stats.pv %>";
+        modifBarre.max = "<%= pokemons[3].stats.pv %>";
+        modifPVMax.textContent =
+          "<%= pokemons[3].stats.pv %>/<%= pokemons[3].stats.pv %>";
+        modifBadge1.textContent = "<%= pokemons[3].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[3].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[3].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[3].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[3].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[3].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[3].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[3].attaque4.nom %>";
+
+        pv = Number("<%- pokemons[3].stats.pv %>");
+        attPoke = Number("<%- pokemons[3].stats.att %>");
+        defPoke = Number("<%- pokemons[3].stats.def %>");
+        attSPoke = Number("<%- pokemons[3].stats.attS %>");
+        defSPoke = Number("<%- pokemons[3].stats.defS %>");
+        vitPoke = Number("<%- pokemons[3].stats.vit %>");
+        attaque_dmg1 = Number("<%- pokemons[3].attaque1.puissance %>");
+        attaque_dmg2 = Number("<%- pokemons[3].attaque2.puissance %>");
+        attaque_dmg3 = Number("<%- pokemons[3].attaque3.puissance %>");
+        attaque_dmg4 = Number("<%- pokemons[3].attaque4.puissance %>");
+        attaque1Type = "<%- pokemons[3].attaque1.type %>";
+        attaque2Type = "<%- pokemons[3].attaque2.type %>";
+        attaque3Type = "<%- pokemons[3].attaque3.type %>";
+        attaque4Type = "<%- pokemons[3].attaque4.type %>";
+        attaque1Nom = "<%- pokemons[3].attaque1.nom %>";
+        attaque2Nom = "<%- pokemons[3].attaque2.nom %>";
+        attaque3Nom = "<%- pokemons[3].attaque3.nom %>";
+        attaque4Nom = "<%- pokemons[3].attaque4.nom %>";
+        attaque1Classe = "<%- pokemons[3].attaque1.classe %>";
+        attaque2Classe = "<%- pokemons[3].attaque2.classe %>";
+        attaque3Classe = "<%- pokemons[3].attaque3.classe %>";
+        attaque4Classe = "<%- pokemons[3].attaque4.classe %>";
+        type1 = "<%- pokemons[3].type1 %>";
+        type2 = "<%- pokemons[3].type2 %>";
+
+        colorAttaque1 = couleur(attaque1Type, colorAttaque1);
+        colorAttaque2 = couleur(attaque2Type, colorAttaque2);
+        colorAttaque3 = couleur(attaque3Type, colorAttaque3);
+        colorAttaque4 = couleur(attaque4Type, colorAttaque4);
+
+        document.getElementById("badgeAtt1").style.backgroundColor =
+          colorAttaque1;
+        document.getElementById("badgeAtt2").style.backgroundColor =
+          colorAttaque2;
+        document.getElementById("badgeAtt3").style.backgroundColor =
+          colorAttaque3;
+        document.getElementById("badgeAtt4").style.backgroundColor =
+          colorAttaque4;
+      } else if (num === 5) {
+        modifSprite.src = "<%- pokemons[4].sprite %>";
+        modifNom.textContent = "<%= pokemons[4].nom.toUpperCase() %>";
+        modifBarre.value = "<%= pokemons[4].stats.pv %>";
+        modifBarre.max = "<%= pokemons[4].stats.pv %>";
+        modifPVMax.textContent =
+          "<%= pokemons[4].stats.pv %>/<%= pokemons[4].stats.pv %>";
+        modifBadge1.textContent = "<%= pokemons[4].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[4].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[4].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[4].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[4].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[4].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[4].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[4].attaque4.nom %>";
+
+        pv = Number("<%- pokemons[4].stats.pv %>");
+        attPoke = Number("<%- pokemons[4].stats.att %>");
+        defPoke = Number("<%- pokemons[4].stats.def %>");
+        attSPoke = Number("<%- pokemons[4].stats.attS %>");
+        defSPoke = Number("<%- pokemons[4].stats.defS %>");
+        vitPoke = Number("<%- pokemons[4].stats.vit %>");
+        attaque_dmg1 = Number("<%- pokemons[4].attaque1.puissance %>");
+        attaque_dmg2 = Number("<%- pokemons[4].attaque2.puissance %>");
+        attaque_dmg3 = Number("<%- pokemons[4].attaque3.puissance %>");
+        attaque_dmg4 = Number("<%- pokemons[4].attaque4.puissance %>");
+        attaque1Type = "<%- pokemons[4].attaque1.type %>";
+        attaque2Type = "<%- pokemons[4].attaque2.type %>";
+        attaque3Type = "<%- pokemons[4].attaque3.type %>";
+        attaque4Type = "<%- pokemons[4].attaque4.type %>";
+        attaque1Nom = "<%- pokemons[4].attaque1.nom %>";
+        attaque2Nom = "<%- pokemons[4].attaque2.nom %>";
+        attaque3Nom = "<%- pokemons[4].attaque3.nom %>";
+        attaque4Nom = "<%- pokemons[4].attaque4.nom %>";
+        attaque1Classe = "<%- pokemons[4].attaque1.classe %>";
+        attaque2Classe = "<%- pokemons[4].attaque2.classe %>";
+        attaque3Classe = "<%- pokemons[4].attaque3.classe %>";
+        attaque4Classe = "<%- pokemons[4].attaque4.classe %>";
+        type1 = "<%- pokemons[4].type1 %>";
+        type2 = "<%- pokemons[4].type2 %>";
+
+        colorAttaque1 = couleur(attaque1Type, colorAttaque1);
+        colorAttaque2 = couleur(attaque2Type, colorAttaque2);
+        colorAttaque3 = couleur(attaque3Type, colorAttaque3);
+        colorAttaque4 = couleur(attaque4Type, colorAttaque4);
+
+        document.getElementById("badgeAtt1").style.backgroundColor =
+          colorAttaque1;
+        document.getElementById("badgeAtt2").style.backgroundColor =
+          colorAttaque2;
+        document.getElementById("badgeAtt3").style.backgroundColor =
+          colorAttaque3;
+        document.getElementById("badgeAtt4").style.backgroundColor =
+          colorAttaque4;
+      } else if (num === 6) {
+        modifSprite.src = "<%- pokemons[5].sprite %>";
+        modifNom.textContent = "<%= pokemons[5].nom.toUpperCase() %>";
+        modifBarre.value = "<%= pokemons[5].stats.pv %>";
+        modifBarre.max = "<%= pokemons[5].stats.pv %>";
+        modifPVMax.textContent =
+          "<%= pokemons[5].stats.pv %>/<%= pokemons[5].stats.pv %>";
+        modifBadge1.textContent = "<%= pokemons[5].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[5].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[5].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[5].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[5].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[5].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[5].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[5].attaque4.nom %>";
+
+        pv = Number("<%- pokemons[5].stats.pv %>");
+        attPoke = Number("<%- pokemons[5].stats.att %>");
+        defPoke = Number("<%- pokemons[5].stats.def %>");
+        attSPoke = Number("<%- pokemons[5].stats.attS %>");
+        defSPoke = Number("<%- pokemons[5].stats.defS %>");
+        vitPoke = Number("<%- pokemons[5].stats.vit %>");
+        attaque_dmg1 = Number("<%- pokemons[5].attaque1.puissance %>");
+        attaque_dmg2 = Number("<%- pokemons[5].attaque2.puissance %>");
+        attaque_dmg3 = Number("<%- pokemons[5].attaque3.puissance %>");
+        attaque_dmg4 = Number("<%- pokemons[5].attaque4.puissance %>");
+        attaque1Type = "<%- pokemons[5].attaque1.type %>";
+        attaque2Type = "<%- pokemons[5].attaque2.type %>";
+        attaque3Type = "<%- pokemons[5].attaque3.type %>";
+        attaque4Type = "<%- pokemons[5].attaque4.type %>";
+        attaque1Nom = "<%- pokemons[5].attaque1.nom %>";
+        attaque2Nom = "<%- pokemons[5].attaque2.nom %>";
+        attaque3Nom = "<%- pokemons[5].attaque3.nom %>";
+        attaque4Nom = "<%- pokemons[5].attaque4.nom %>";
+        attaque1Classe = "<%- pokemons[5].attaque1.classe %>";
+        attaque2Classe = "<%- pokemons[5].attaque2.classe %>";
+        attaque3Classe = "<%- pokemons[5].attaque3.classe %>";
+        attaque4Classe = "<%- pokemons[5].attaque4.classe %>";
+        type1 = "<%- pokemons[5].type1 %>";
+        type2 = "<%- pokemons[5].type2 %>";
+
+        colorAttaque1 = couleur(attaque1Type, colorAttaque1);
+        colorAttaque2 = couleur(attaque2Type, colorAttaque2);
+        colorAttaque3 = couleur(attaque3Type, colorAttaque3);
+        colorAttaque4 = couleur(attaque4Type, colorAttaque4);
+
+        document.getElementById("badgeAtt1").style.backgroundColor =
+          colorAttaque1;
+        document.getElementById("badgeAtt2").style.backgroundColor =
+          colorAttaque2;
+        document.getElementById("badgeAtt3").style.backgroundColor =
+          colorAttaque3;
+        document.getElementById("badgeAtt4").style.backgroundColor =
+          colorAttaque4;
+      }
     }
   </script>
 </html>
