@@ -195,9 +195,18 @@
         colorAttaque4;
     };
 
+    let tabPVActu = new Array(6);
+    let nombre = 0;
+
     // Stats & attaques pokemon utilisé
     let pv = Number("<%- pokemons[0].stats.pv %>");
-    let pvActu = pv;
+    let pvActu;
+    if (tabPVActu[nombre] === Number) {
+      pvActu = tabPVActu[nombre];
+    } else {
+      pvActu = pv;
+    }
+
     let attPoke = Number("<%- pokemons[0].stats.att %>");
     let defPoke = Number("<%- pokemons[0].stats.def %>");
     let attSPoke = Number("<%- pokemons[0].stats.attS %>");
@@ -935,21 +944,31 @@
         pvActu = 0;
       }
 
-      console.log("type1VS", test1);
-      console.log("type2VS", test2);
-      console.log("attaque1.name", nomAttaque);
-      console.log("typeAttaque", typeAttaque);
-      console.log("attaque1VS.name", test8);
-      console.log("attaque1VS.type.name", test6);
-      console.log("efficace1", efficace1);
-      console.log("efficace2", efficace2);
-      console.log("attaque", attaque);
-      console.log("defenseVS", defenseVS);
-      console.log("typeAttaqueClass", typeAttaqueClass);
-      console.log("vitPoke", vitPoke);
-      console.log("vitPokeVS", vitPokeVS);
-      console.log("bonusType", bonusType);
-      console.log("nature", test15);
+      // console.log("type1VS", test1);
+      // console.log("type2VS", test2);
+      // console.log("attaque1.name", nomAttaque);
+      // console.log("typeAttaque", typeAttaque);
+      // console.log("attaque1VS.name", test8);
+      // console.log("attaque1VS.type.name", test6);
+      // console.log("efficace1", efficace1);
+      // console.log("efficace2", efficace2);
+      // console.log("attaque", attaque);
+      // console.log("defenseVS", defenseVS);
+      // console.log("typeAttaqueClass", typeAttaqueClass);
+      // console.log("vitPoke", vitPoke);
+      // console.log("vitPokeVS", vitPokeVS);
+      // console.log("bonusType", bonusType);
+      // console.log("nature", test15);
+
+      tabPVActu.splice(nombre, 1, pvActu);
+
+      console.log("tab1", tabPVActu[0]);
+      console.log("tab2", tabPVActu[1]);
+      console.log("tab3", tabPVActu[2]);
+      console.log("tab4", tabPVActu[3]);
+      console.log("tab5", tabPVActu[4]);
+      console.log("tab6", tabPVActu[5]);
+      console.log("nombre", nombre);
 
       modifPV.textContent = `${pvActu}/${pv}`;
       barreVie.value = pvActu;
@@ -972,22 +991,14 @@
       const modifNomAtt4 = document.getElementById("nomAtt4");
 
       if (num === 1) {
-        modifSprite.src = "<%- pokemons[0].sprite %>";
-        modifNom.textContent = "<%= pokemons[0].nom.toUpperCase() %>";
-        modifBarre.value = "<%= pokemons[0].stats.pv %>";
-        modifBarre.max = "<%= pokemons[0].stats.pv %>";
-        modifPVMax.textContent =
-          "<%= pokemons[0].stats.pv %>/<%= pokemons[0].stats.pv %>";
-        modifBadge1.textContent = "<%= pokemons[0].attaque1.type %>";
-        modifNomAtt1.textContent = "<%= pokemons[0].attaque1.nom %>";
-        modifBadge2.textContent = "<%= pokemons[0].attaque2.type %>";
-        modifNomAtt2.textContent = "<%= pokemons[0].attaque2.nom %>";
-        modifBadge3.textContent = "<%= pokemons[0].attaque3.type %>";
-        modifNomAtt3.textContent = "<%= pokemons[0].attaque3.nom %>";
-        modifBadge4.textContent = "<%= pokemons[0].attaque4.type %>";
-        modifNomAtt4.textContent = "<%= pokemons[0].attaque4.nom %>";
+        nombre = 0;
 
         pv = Number("<%- pokemons[0].stats.pv %>");
+        if (Number.isInteger(tabPVActu[0])) {
+          pvActu = tabPVActu[0];
+        } else {
+          pvActu = pv;
+        }
         attPoke = Number("<%- pokemons[0].stats.att %>");
         defPoke = Number("<%- pokemons[0].stats.def %>");
         attSPoke = Number("<%- pokemons[0].stats.attS %>");
@@ -1027,23 +1038,29 @@
           colorAttaque3;
         document.getElementById("badgeAtt4").style.backgroundColor =
           colorAttaque4;
+
+        modifSprite.src = "<%- pokemons[0].sprite %>";
+        modifNom.textContent = "<%= pokemons[0].nom.toUpperCase() %>";
+        modifBarre.value = `${pvActu}`;
+        modifBarre.max = "<%= pokemons[0].stats.pv %>";
+        modifPVMax.textContent = `${pvActu}/<%= pokemons[0].stats.pv %>`;
+        modifBadge1.textContent = "<%= pokemons[0].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[0].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[0].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[0].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[0].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[0].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[0].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[0].attaque4.nom %>";
       } else if (num === 2) {
-        modifSprite.src = "<%- pokemons[1].sprite %>";
-        modifNom.textContent = "<%= pokemons[1].nom.toUpperCase() %>";
-        modifBarre.value = "<%= pokemons[1].stats.pv %>";
-        modifBarre.max = "<%= pokemons[1].stats.pv %>";
-        modifPVMax.textContent =
-          "<%= pokemons[1].stats.pv %>/<%= pokemons[1].stats.pv %>";
-        modifBadge1.textContent = "<%= pokemons[1].attaque1.type %>";
-        modifNomAtt1.textContent = "<%= pokemons[1].attaque1.nom %>";
-        modifBadge2.textContent = "<%= pokemons[1].attaque2.type %>";
-        modifNomAtt2.textContent = "<%= pokemons[1].attaque2.nom %>";
-        modifBadge3.textContent = "<%= pokemons[1].attaque3.type %>";
-        modifNomAtt3.textContent = "<%= pokemons[1].attaque3.nom %>";
-        modifBadge4.textContent = "<%= pokemons[1].attaque4.type %>";
-        modifNomAtt4.textContent = "<%= pokemons[1].attaque4.nom %>";
+        nombre = 1;
 
         pv = Number("<%- pokemons[1].stats.pv %>");
+        if (Number.isInteger(tabPVActu[1])) {
+          pvActu = tabPVActu[1];
+        } else {
+          pvActu = pv;
+        }
         attPoke = Number("<%- pokemons[1].stats.att %>");
         defPoke = Number("<%- pokemons[1].stats.def %>");
         attSPoke = Number("<%- pokemons[1].stats.attS %>");
@@ -1081,23 +1098,29 @@
           colorAttaque3;
         document.getElementById("badgeAtt4").style.backgroundColor =
           colorAttaque4;
+
+        modifSprite.src = "<%- pokemons[1].sprite %>";
+        modifNom.textContent = "<%= pokemons[1].nom.toUpperCase() %>";
+        modifBarre.value = `${pvActu}`;
+        modifBarre.max = "<%= pokemons[1].stats.pv %>";
+        modifPVMax.textContent = `${pvActu}/<%= pokemons[1].stats.pv %>`;
+        modifBadge1.textContent = "<%= pokemons[1].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[1].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[1].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[1].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[1].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[1].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[1].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[1].attaque4.nom %>";
       } else if (num === 3) {
-        modifSprite.src = "<%- pokemons[2].sprite %>";
-        modifNom.textContent = "<%= pokemons[2].nom.toUpperCase() %>";
-        modifBarre.value = "<%= pokemons[2].stats.pv %>";
-        modifBarre.max = "<%= pokemons[2].stats.pv %>";
-        modifPVMax.textContent =
-          "<%= pokemons[2].stats.pv %>/<%= pokemons[2].stats.pv %>";
-        modifBadge1.textContent = "<%= pokemons[2].attaque1.type %>";
-        modifNomAtt1.textContent = "<%= pokemons[2].attaque1.nom %>";
-        modifBadge2.textContent = "<%= pokemons[2].attaque2.type %>";
-        modifNomAtt2.textContent = "<%= pokemons[2].attaque2.nom %>";
-        modifBadge3.textContent = "<%= pokemons[2].attaque3.type %>";
-        modifNomAtt3.textContent = "<%= pokemons[2].attaque3.nom %>";
-        modifBadge4.textContent = "<%= pokemons[2].attaque4.type %>";
-        modifNomAtt4.textContent = "<%= pokemons[2].attaque4.nom %>";
+        nombre = 2;
 
         pv = Number("<%- pokemons[2].stats.pv %>");
+        if (Number.isInteger(tabPVActu[2])) {
+          pvActu = tabPVActu[2];
+        } else {
+          pvActu = pv;
+        }
         attPoke = Number("<%- pokemons[2].stats.att %>");
         defPoke = Number("<%- pokemons[2].stats.def %>");
         attSPoke = Number("<%- pokemons[2].stats.attS %>");
@@ -1135,23 +1158,29 @@
           colorAttaque3;
         document.getElementById("badgeAtt4").style.backgroundColor =
           colorAttaque4;
+
+        modifSprite.src = "<%- pokemons[2].sprite %>";
+        modifNom.textContent = "<%= pokemons[2].nom.toUpperCase() %>";
+        modifBarre.value = `${pvActu}`;
+        modifBarre.max = "<%= pokemons[2].stats.pv %>";
+        modifPVMax.textContent = `${pvActu}/<%= pokemons[2].stats.pv %>`;
+        modifBadge1.textContent = "<%= pokemons[2].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[2].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[2].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[2].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[2].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[2].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[2].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[2].attaque4.nom %>";
       } else if (num === 4) {
-        modifSprite.src = "<%- pokemons[3].sprite %>";
-        modifNom.textContent = "<%= pokemons[3].nom.toUpperCase() %>";
-        modifBarre.value = "<%= pokemons[3].stats.pv %>";
-        modifBarre.max = "<%= pokemons[3].stats.pv %>";
-        modifPVMax.textContent =
-          "<%= pokemons[3].stats.pv %>/<%= pokemons[3].stats.pv %>";
-        modifBadge1.textContent = "<%= pokemons[3].attaque1.type %>";
-        modifNomAtt1.textContent = "<%= pokemons[3].attaque1.nom %>";
-        modifBadge2.textContent = "<%= pokemons[3].attaque2.type %>";
-        modifNomAtt2.textContent = "<%= pokemons[3].attaque2.nom %>";
-        modifBadge3.textContent = "<%= pokemons[3].attaque3.type %>";
-        modifNomAtt3.textContent = "<%= pokemons[3].attaque3.nom %>";
-        modifBadge4.textContent = "<%= pokemons[3].attaque4.type %>";
-        modifNomAtt4.textContent = "<%= pokemons[3].attaque4.nom %>";
+        nombre = 3;
 
         pv = Number("<%- pokemons[3].stats.pv %>");
+        if (Number.isInteger(tabPVActu[3])) {
+          pvActu = tabPVActu[3];
+        } else {
+          pvActu = pv;
+        }
         attPoke = Number("<%- pokemons[3].stats.att %>");
         defPoke = Number("<%- pokemons[3].stats.def %>");
         attSPoke = Number("<%- pokemons[3].stats.attS %>");
@@ -1189,23 +1218,29 @@
           colorAttaque3;
         document.getElementById("badgeAtt4").style.backgroundColor =
           colorAttaque4;
+
+        modifSprite.src = "<%- pokemons[3].sprite %>";
+        modifNom.textContent = "<%= pokemons[3].nom.toUpperCase() %>";
+        modifBarre.value = `${pvActu}`;
+        modifBarre.max = "<%= pokemons[3].stats.pv %>";
+        modifPVMax.textContent = `${pvActu}/<%= pokemons[3].stats.pv %>`;
+        modifBadge1.textContent = "<%= pokemons[3].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[3].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[3].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[3].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[3].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[3].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[3].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[3].attaque4.nom %>";
       } else if (num === 5) {
-        modifSprite.src = "<%- pokemons[4].sprite %>";
-        modifNom.textContent = "<%= pokemons[4].nom.toUpperCase() %>";
-        modifBarre.value = "<%= pokemons[4].stats.pv %>";
-        modifBarre.max = "<%= pokemons[4].stats.pv %>";
-        modifPVMax.textContent =
-          "<%= pokemons[4].stats.pv %>/<%= pokemons[4].stats.pv %>";
-        modifBadge1.textContent = "<%= pokemons[4].attaque1.type %>";
-        modifNomAtt1.textContent = "<%= pokemons[4].attaque1.nom %>";
-        modifBadge2.textContent = "<%= pokemons[4].attaque2.type %>";
-        modifNomAtt2.textContent = "<%= pokemons[4].attaque2.nom %>";
-        modifBadge3.textContent = "<%= pokemons[4].attaque3.type %>";
-        modifNomAtt3.textContent = "<%= pokemons[4].attaque3.nom %>";
-        modifBadge4.textContent = "<%= pokemons[4].attaque4.type %>";
-        modifNomAtt4.textContent = "<%= pokemons[4].attaque4.nom %>";
+        nombre = 4;
 
         pv = Number("<%- pokemons[4].stats.pv %>");
+        if (Number.isInteger(tabPVActu[4])) {
+          pvActu = tabPVActu[4];
+        } else {
+          pvActu = pv;
+        }
         attPoke = Number("<%- pokemons[4].stats.att %>");
         defPoke = Number("<%- pokemons[4].stats.def %>");
         attSPoke = Number("<%- pokemons[4].stats.attS %>");
@@ -1243,23 +1278,29 @@
           colorAttaque3;
         document.getElementById("badgeAtt4").style.backgroundColor =
           colorAttaque4;
+
+        modifSprite.src = "<%- pokemons[4].sprite %>";
+        modifNom.textContent = "<%= pokemons[4].nom.toUpperCase() %>";
+        modifBarre.value = `${pvActu}`;
+        modifBarre.max = "<%= pokemons[4].stats.pv %>";
+        modifPVMax.textContent = `${pvActu}/<%= pokemons[4].stats.pv %>`;
+        modifBadge1.textContent = "<%= pokemons[4].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[4].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[4].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[4].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[4].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[4].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[4].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[4].attaque4.nom %>";
       } else if (num === 6) {
-        modifSprite.src = "<%- pokemons[5].sprite %>";
-        modifNom.textContent = "<%= pokemons[5].nom.toUpperCase() %>";
-        modifBarre.value = "<%= pokemons[5].stats.pv %>";
-        modifBarre.max = "<%= pokemons[5].stats.pv %>";
-        modifPVMax.textContent =
-          "<%= pokemons[5].stats.pv %>/<%= pokemons[5].stats.pv %>";
-        modifBadge1.textContent = "<%= pokemons[5].attaque1.type %>";
-        modifNomAtt1.textContent = "<%= pokemons[5].attaque1.nom %>";
-        modifBadge2.textContent = "<%= pokemons[5].attaque2.type %>";
-        modifNomAtt2.textContent = "<%= pokemons[5].attaque2.nom %>";
-        modifBadge3.textContent = "<%= pokemons[5].attaque3.type %>";
-        modifNomAtt3.textContent = "<%= pokemons[5].attaque3.nom %>";
-        modifBadge4.textContent = "<%= pokemons[5].attaque4.type %>";
-        modifNomAtt4.textContent = "<%= pokemons[5].attaque4.nom %>";
+        nombre = 5;
 
         pv = Number("<%- pokemons[5].stats.pv %>");
+        if (Number.isInteger(tabPVActu[5])) {
+          pvActu = tabPVActu[5];
+        } else {
+          pvActu = pv;
+        }
         attPoke = Number("<%- pokemons[5].stats.att %>");
         defPoke = Number("<%- pokemons[5].stats.def %>");
         attSPoke = Number("<%- pokemons[5].stats.attS %>");
@@ -1297,6 +1338,20 @@
           colorAttaque3;
         document.getElementById("badgeAtt4").style.backgroundColor =
           colorAttaque4;
+
+        modifSprite.src = "<%- pokemons[5].sprite %>";
+        modifNom.textContent = "<%= pokemons[5].nom.toUpperCase() %>";
+        modifBarre.value = `${pvActu}`;
+        modifBarre.max = "<%= pokemons[5].stats.pv %>";
+        modifPVMax.textContent = `${pvActu}/<%= pokemons[5].stats.pv %>`;
+        modifBadge1.textContent = "<%= pokemons[5].attaque1.type %>";
+        modifNomAtt1.textContent = "<%= pokemons[5].attaque1.nom %>";
+        modifBadge2.textContent = "<%= pokemons[5].attaque2.type %>";
+        modifNomAtt2.textContent = "<%= pokemons[5].attaque2.nom %>";
+        modifBadge3.textContent = "<%= pokemons[5].attaque3.type %>";
+        modifNomAtt3.textContent = "<%= pokemons[5].attaque3.nom %>";
+        modifBadge4.textContent = "<%= pokemons[5].attaque4.type %>";
+        modifNomAtt4.textContent = "<%= pokemons[5].attaque4.nom %>";
       }
     }
   </script>
