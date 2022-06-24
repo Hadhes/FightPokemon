@@ -6,30 +6,681 @@ var request = require("sync-request");
 router.get("/", function (req, res, next) {
   let tabPokemon = [];
 
-  let data = request(
-    "GET",
-    `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151`
-  );
-  let dataAPI = JSON.parse(data.body);
-  for (i = 0; i < dataAPI.results.length; i++) {
-    tabPokemon.push(dataAPI.results[i].name);
+  for (i = 1; i < 387; i++) {
+    tabPokemon.push(
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/${i}.png`
+    );
   }
 
-  res.render("index", {
+  res.render("choix1", {
     tabPokemon,
+  });
+});
+
+router.get("/choix2", function (req, res, next) {
+  let tabPokemon = [];
+
+  const num1 = Number(req.query.num1);
+  const att11 = req.query.att11;
+  const att12 = req.query.att12;
+  const att13 = req.query.att13;
+  const att14 = req.query.att14;
+  const nat1 = req.query.nat1;
+
+  for (i = 1; i < 387; i++) {
+    tabPokemon.push(
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/${i}.png`
+    );
+  }
+
+  res.render("choix2", {
+    tabPokemon,
+    num1,
+    att11,
+    att12,
+    att13,
+    att14,
+    nat1,
+  });
+});
+
+router.get("/choix3", function (req, res, next) {
+  let tabPokemon = [];
+
+  const num1 = Number(req.query.num1);
+  const att11 = req.query.att11;
+  const att12 = req.query.att12;
+  const att13 = req.query.att13;
+  const att14 = req.query.att14;
+  const nat1 = req.query.nat1;
+
+  const num2 = Number(req.query.num2);
+  const att21 = req.query.att21;
+  const att22 = req.query.att22;
+  const att23 = req.query.att23;
+  const att24 = req.query.att24;
+  const nat2 = req.query.nat2;
+
+  for (i = 1; i < 387; i++) {
+    tabPokemon.push(
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/${i}.png`
+    );
+  }
+
+  res.render("choix3", {
+    tabPokemon,
+    num1,
+    att11,
+    att12,
+    att13,
+    att14,
+    nat1,
+    num2,
+    att21,
+    att22,
+    att23,
+    att24,
+    nat2,
+  });
+});
+
+router.get("/choix4", function (req, res, next) {
+  let tabPokemon = [];
+
+  const num1 = Number(req.query.num1);
+  const att11 = req.query.att11;
+  const att12 = req.query.att12;
+  const att13 = req.query.att13;
+  const att14 = req.query.att14;
+  const nat1 = req.query.nat1;
+
+  const num2 = Number(req.query.num2);
+  const att21 = req.query.att21;
+  const att22 = req.query.att22;
+  const att23 = req.query.att23;
+  const att24 = req.query.att24;
+  const nat2 = req.query.nat2;
+
+  const num3 = Number(req.query.num3);
+  const att31 = req.query.att31;
+  const att32 = req.query.att32;
+  const att33 = req.query.att33;
+  const att34 = req.query.att34;
+  const nat3 = req.query.nat3;
+
+  for (i = 1; i < 387; i++) {
+    tabPokemon.push(
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/${i}.png`
+    );
+  }
+
+  res.render("choix4", {
+    tabPokemon,
+    num1,
+    att11,
+    att12,
+    att13,
+    att14,
+    nat1,
+    num2,
+    att21,
+    att22,
+    att23,
+    att24,
+    nat2,
+    num3,
+    att31,
+    att32,
+    att33,
+    att34,
+    nat3,
+  });
+});
+
+router.get("/choix5", function (req, res, next) {
+  let tabPokemon = [];
+
+  const num1 = Number(req.query.num1);
+  const att11 = req.query.att11;
+  const att12 = req.query.att12;
+  const att13 = req.query.att13;
+  const att14 = req.query.att14;
+  const nat1 = req.query.nat1;
+
+  const num2 = Number(req.query.num2);
+  const att21 = req.query.att21;
+  const att22 = req.query.att22;
+  const att23 = req.query.att23;
+  const att24 = req.query.att24;
+  const nat2 = req.query.nat2;
+
+  const num3 = Number(req.query.num3);
+  const att31 = req.query.att31;
+  const att32 = req.query.att32;
+  const att33 = req.query.att33;
+  const att34 = req.query.att34;
+  const nat3 = req.query.nat3;
+
+  const num4 = Number(req.query.num4);
+  const att41 = req.query.att41;
+  const att42 = req.query.att42;
+  const att43 = req.query.att43;
+  const att44 = req.query.att44;
+  const nat4 = req.query.nat4;
+
+  for (i = 1; i < 387; i++) {
+    tabPokemon.push(
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/${i}.png`
+    );
+  }
+
+  res.render("choix5", {
+    tabPokemon,
+    num1,
+    att11,
+    att12,
+    att13,
+    att14,
+    nat1,
+    num2,
+    att21,
+    att22,
+    att23,
+    att24,
+    nat2,
+    num3,
+    att31,
+    att32,
+    att33,
+    att34,
+    nat3,
+    num4,
+    att41,
+    att42,
+    att43,
+    att44,
+    nat4,
+  });
+});
+
+router.get("/choix6", function (req, res, next) {
+  let tabPokemon = [];
+
+  const num1 = Number(req.query.num1);
+  const att11 = req.query.att11;
+  const att12 = req.query.att12;
+  const att13 = req.query.att13;
+  const att14 = req.query.att14;
+  const nat1 = req.query.nat1;
+
+  const num2 = Number(req.query.num2);
+  const att21 = req.query.att21;
+  const att22 = req.query.att22;
+  const att23 = req.query.att23;
+  const att24 = req.query.att24;
+  const nat2 = req.query.nat2;
+
+  const num3 = Number(req.query.num3);
+  const att31 = req.query.att31;
+  const att32 = req.query.att32;
+  const att33 = req.query.att33;
+  const att34 = req.query.att34;
+  const nat3 = req.query.nat3;
+
+  const num4 = Number(req.query.num4);
+  const att41 = req.query.att41;
+  const att42 = req.query.att42;
+  const att43 = req.query.att43;
+  const att44 = req.query.att44;
+  const nat4 = req.query.nat4;
+
+  const num5 = Number(req.query.num5);
+  const att51 = req.query.att51;
+  const att52 = req.query.att52;
+  const att53 = req.query.att53;
+  const att54 = req.query.att54;
+  const nat5 = req.query.nat5;
+
+  for (i = 1; i < 387; i++) {
+    tabPokemon.push(
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/${i}.png`
+    );
+  }
+
+  res.render("choix6", {
+    tabPokemon,
+    num1,
+    att11,
+    att12,
+    att13,
+    att14,
+    nat1,
+    num2,
+    att21,
+    att22,
+    att23,
+    att24,
+    nat2,
+    num3,
+    att31,
+    att32,
+    att33,
+    att34,
+    nat3,
+    num4,
+    att41,
+    att42,
+    att43,
+    att44,
+    nat4,
+    num5,
+    att51,
+    att52,
+    att53,
+    att54,
+    nat5,
+  });
+});
+
+router.get("/attaque1", function (req, res, next) {
+  const tabAttaques = [];
+  const num1 = Number(req.query.num1);
+  const data = request("GET", `https://pokeapi.co/api/v2/pokemon/${num1}`);
+  const dataPokemon = JSON.parse(data.body);
+
+  for (let i = 0; i < dataPokemon.moves.length; i++) {
+    tabAttaques.push(dataPokemon.moves[i].move.name);
+  }
+
+  res.render("attaque1", {
+    tabAttaques,
+    num1,
+  });
+});
+
+router.get("/attaque2", function (req, res, next) {
+  const tabAttaques = [];
+
+  const num1 = Number(req.query.num1);
+  const att11 = req.query.att11;
+  const att12 = req.query.att12;
+  const att13 = req.query.att13;
+  const att14 = req.query.att14;
+  const nat1 = req.query.nat1;
+
+  const num2 = Number(req.query.num2);
+  const data = request("GET", `https://pokeapi.co/api/v2/pokemon/${num2}`);
+  const dataPokemon = JSON.parse(data.body);
+
+  for (let i = 0; i < dataPokemon.moves.length; i++) {
+    tabAttaques.push(dataPokemon.moves[i].move.name);
+  }
+
+  res.render("attaque2", {
+    tabAttaques,
+    num1,
+    att11,
+    att12,
+    att13,
+    att14,
+    nat1,
+    num2,
+  });
+});
+
+router.get("/attaque3", function (req, res, next) {
+  const tabAttaques = [];
+
+  const num1 = Number(req.query.num1);
+  const att11 = req.query.att11;
+  const att12 = req.query.att12;
+  const att13 = req.query.att13;
+  const att14 = req.query.att14;
+  const nat1 = req.query.nat1;
+
+  const num2 = Number(req.query.num2);
+  const att21 = req.query.att21;
+  const att22 = req.query.att22;
+  const att23 = req.query.att23;
+  const att24 = req.query.att24;
+  const nat2 = req.query.nat2;
+
+  const num3 = Number(req.query.num3);
+  const data = request("GET", `https://pokeapi.co/api/v2/pokemon/${num3}`);
+  const dataPokemon = JSON.parse(data.body);
+
+  for (let i = 0; i < dataPokemon.moves.length; i++) {
+    tabAttaques.push(dataPokemon.moves[i].move.name);
+  }
+
+  res.render("attaque3", {
+    tabAttaques,
+    num1,
+    att11,
+    att12,
+    att13,
+    att14,
+    nat1,
+    num2,
+    att21,
+    att22,
+    att23,
+    att24,
+    nat2,
+    num3,
+  });
+});
+
+router.get("/attaque4", function (req, res, next) {
+  const tabAttaques = [];
+
+  const num1 = Number(req.query.num1);
+  const att11 = req.query.att11;
+  const att12 = req.query.att12;
+  const att13 = req.query.att13;
+  const att14 = req.query.att14;
+  const nat1 = req.query.nat1;
+
+  const num2 = Number(req.query.num2);
+  const att21 = req.query.att21;
+  const att22 = req.query.att22;
+  const att23 = req.query.att23;
+  const att24 = req.query.att24;
+  const nat2 = req.query.nat2;
+
+  const num3 = Number(req.query.num3);
+  const att31 = req.query.att31;
+  const att32 = req.query.att32;
+  const att33 = req.query.att33;
+  const att34 = req.query.att34;
+  const nat3 = req.query.nat3;
+
+  const num4 = Number(req.query.num4);
+  const data = request("GET", `https://pokeapi.co/api/v2/pokemon/${num4}`);
+  const dataPokemon = JSON.parse(data.body);
+
+  for (let i = 0; i < dataPokemon.moves.length; i++) {
+    tabAttaques.push(dataPokemon.moves[i].move.name);
+  }
+
+  res.render("attaque4", {
+    tabAttaques,
+    num1,
+    att11,
+    att12,
+    att13,
+    att14,
+    nat1,
+    num2,
+    att21,
+    att22,
+    att23,
+    att24,
+    nat2,
+    num3,
+    att31,
+    att32,
+    att33,
+    att34,
+    nat3,
+    num4,
+  });
+});
+
+router.get("/attaque5", function (req, res, next) {
+  const tabAttaques = [];
+
+  const num1 = Number(req.query.num1);
+  const att11 = req.query.att11;
+  const att12 = req.query.att12;
+  const att13 = req.query.att13;
+  const att14 = req.query.att14;
+  const nat1 = req.query.nat1;
+
+  const num2 = Number(req.query.num2);
+  const att21 = req.query.att21;
+  const att22 = req.query.att22;
+  const att23 = req.query.att23;
+  const att24 = req.query.att24;
+  const nat2 = req.query.nat2;
+
+  const num3 = Number(req.query.num3);
+  const att31 = req.query.att31;
+  const att32 = req.query.att32;
+  const att33 = req.query.att33;
+  const att34 = req.query.att34;
+  const nat3 = req.query.nat3;
+
+  const num4 = Number(req.query.num4);
+  const att41 = req.query.att41;
+  const att42 = req.query.att42;
+  const att43 = req.query.att43;
+  const att44 = req.query.att44;
+  const nat4 = req.query.nat4;
+
+  const num5 = Number(req.query.num5);
+  const data = request("GET", `https://pokeapi.co/api/v2/pokemon/${num5}`);
+  const dataPokemon = JSON.parse(data.body);
+
+  for (let i = 0; i < dataPokemon.moves.length; i++) {
+    tabAttaques.push(dataPokemon.moves[i].move.name);
+  }
+
+  res.render("attaque5", {
+    tabAttaques,
+    num1,
+    att11,
+    att12,
+    att13,
+    att14,
+    nat1,
+    num2,
+    att21,
+    att22,
+    att23,
+    att24,
+    nat2,
+    num3,
+    att31,
+    att32,
+    att33,
+    att34,
+    nat3,
+    num4,
+    att41,
+    att42,
+    att43,
+    att44,
+    nat4,
+    num5,
+  });
+});
+
+router.get("/attaque6", function (req, res, next) {
+  const tabAttaques = [];
+
+  const num1 = Number(req.query.num1);
+  const att11 = req.query.att11;
+  const att12 = req.query.att12;
+  const att13 = req.query.att13;
+  const att14 = req.query.att14;
+  const nat1 = req.query.nat1;
+
+  const num2 = Number(req.query.num2);
+  const att21 = req.query.att21;
+  const att22 = req.query.att22;
+  const att23 = req.query.att23;
+  const att24 = req.query.att24;
+  const nat2 = req.query.nat2;
+
+  const num3 = Number(req.query.num3);
+  const att31 = req.query.att31;
+  const att32 = req.query.att32;
+  const att33 = req.query.att33;
+  const att34 = req.query.att34;
+  const nat3 = req.query.nat3;
+
+  const num4 = Number(req.query.num4);
+  const att41 = req.query.att41;
+  const att42 = req.query.att42;
+  const att43 = req.query.att43;
+  const att44 = req.query.att44;
+  const nat4 = req.query.nat4;
+
+  const num5 = Number(req.query.num5);
+  const att51 = req.query.att51;
+  const att52 = req.query.att52;
+  const att53 = req.query.att53;
+  const att54 = req.query.att54;
+  const nat5 = req.query.nat5;
+
+  const num6 = Number(req.query.num6);
+  const data = request("GET", `https://pokeapi.co/api/v2/pokemon/${num6}`);
+  const dataPokemon = JSON.parse(data.body);
+
+  for (let i = 0; i < dataPokemon.moves.length; i++) {
+    tabAttaques.push(dataPokemon.moves[i].move.name);
+  }
+
+  res.render("attaque6", {
+    tabAttaques,
+    num1,
+    att11,
+    att12,
+    att13,
+    att14,
+    nat1,
+    num2,
+    att21,
+    att22,
+    att23,
+    att24,
+    nat2,
+    num3,
+    att31,
+    att32,
+    att33,
+    att34,
+    nat3,
+    num4,
+    att41,
+    att42,
+    att43,
+    att44,
+    nat4,
+    num5,
+    att51,
+    att52,
+    att53,
+    att54,
+    nat5,
+    num6,
   });
 });
 
 router.get("/combat", function (req, res, next) {
   let tabPokemons = [];
-  for (let i = 1; i < 7; i++) {
+
+  const num1 = Number(req.query.num1);
+  const att11 = req.query.att11;
+  const att12 = req.query.att12;
+  const att13 = req.query.att13;
+  const att14 = req.query.att14;
+  const nat1 = req.query.nat1;
+
+  const num2 = Number(req.query.num2);
+  const att21 = req.query.att21;
+  const att22 = req.query.att22;
+  const att23 = req.query.att23;
+  const att24 = req.query.att24;
+  const nat2 = req.query.nat2;
+
+  const num3 = Number(req.query.num3);
+  const att31 = req.query.att31;
+  const att32 = req.query.att32;
+  const att33 = req.query.att33;
+  const att34 = req.query.att34;
+  const nat3 = req.query.nat3;
+
+  const num4 = Number(req.query.num4);
+  const att41 = req.query.att41;
+  const att42 = req.query.att42;
+  const att43 = req.query.att43;
+  const att44 = req.query.att44;
+  const nat4 = req.query.nat4;
+
+  const num5 = Number(req.query.num5);
+  const att51 = req.query.att51;
+  const att52 = req.query.att52;
+  const att53 = req.query.att53;
+  const att54 = req.query.att54;
+  const nat5 = req.query.nat5;
+
+  const num6 = Number(req.query.num6);
+  const att61 = req.query.att61;
+  const att62 = req.query.att62;
+  const att63 = req.query.att63;
+  const att64 = req.query.att64;
+  const nat6 = req.query.nat6;
+
+  let tabFinal = [
+    {
+      num: num1,
+      att1: att11,
+      att2: att12,
+      att3: att13,
+      att4: att14,
+      nat: nat1,
+    },
+    {
+      num: num2,
+      att1: att21,
+      att2: att22,
+      att3: att23,
+      att4: att24,
+      nat: nat2,
+    },
+    {
+      num: num3,
+      att1: att31,
+      att2: att32,
+      att3: att33,
+      att4: att34,
+      nat: nat3,
+    },
+    {
+      num: num4,
+      att1: att41,
+      att2: att42,
+      att3: att43,
+      att4: att44,
+      nat: nat4,
+    },
+    {
+      num: num5,
+      att1: att51,
+      att2: att52,
+      att3: att53,
+      att4: att54,
+      nat: nat5,
+    },
+    {
+      num: num6,
+      att1: att61,
+      att2: att62,
+      att3: att63,
+      att4: att64,
+      nat: nat6,
+    },
+  ];
+
+  for (let i = 0; i < 6; i++) {
+    console.log(tabFinal[i]);
     //Recherche du pokemon
-    let number1 = Math.floor(Math.random() * 152);
-    // let number2 = Number(req.query.numero) + 1;
-    if (number1 === 0) {
-      number1 = 1;
-    }
-    let data1 = request("GET", `https://pokeapi.co/api/v2/pokemon/${number1}`);
+    let data1 = request(
+      "GET",
+      `https://pokeapi.co/api/v2/pokemon/${tabFinal[i].num}`
+    );
     let dataPokemon = JSON.parse(data1.body);
 
     //Nom Français du Pokemon
@@ -41,45 +692,36 @@ router.get("/combat", function (req, res, next) {
     let nomPokemonFR = nomPokemonData.names[4].name;
 
     //Nature Pokemon
-    let number2 = Math.floor(Math.random() * 26);
-    if (number2 === 0) {
-      number2 = 1;
-    }
-    let data3 = request("GET", `https://pokeapi.co/api/v2/nature/${number2}`);
+    let data3 = request(
+      "GET",
+      `https://pokeapi.co/api/v2/nature/${tabFinal[i].nat}`
+    );
     let natureData = JSON.parse(data3.body);
     let nature = natureData.name;
 
     // Attaque Pokemon
-    let number3 = Math.floor(Math.random() * dataPokemon.moves.length);
-    if (number3 === 0) {
-      number3 = 1;
-    }
-    let nameAtt1 = dataPokemon.moves[number3].move.name;
-    let data4 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt1}`);
+    let data4 = request(
+      "GET",
+      `https://pokeapi.co/api/v2/move/${tabFinal[i].att1}`
+    );
     let attaque1 = JSON.parse(data4.body);
 
-    let number4 = Math.floor(Math.random() * dataPokemon.moves.length);
-    if (number4 === 0) {
-      number4 = 1;
-    }
-    let nameAtt2 = dataPokemon.moves[number4].move.name;
-    let data5 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt2}`);
+    let data5 = request(
+      "GET",
+      `https://pokeapi.co/api/v2/move/${tabFinal[i].att2}`
+    );
     let attaque2 = JSON.parse(data5.body);
 
-    let number5 = Math.floor(Math.random() * dataPokemon.moves.length);
-    if (number5 === 0) {
-      number5 = 1;
-    }
-    let nameAtt3 = dataPokemon.moves[number5].move.name;
-    let data6 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt3}`);
+    let data6 = request(
+      "GET",
+      `https://pokeapi.co/api/v2/move/${tabFinal[i].att3}`
+    );
     let attaque3 = JSON.parse(data6.body);
 
-    let number6 = Math.floor(Math.random() * dataPokemon.moves.length);
-    if (number6 === 0) {
-      number6 = 1;
-    }
-    let nameAtt4 = dataPokemon.moves[number6].move.name;
-    let data7 = request("GET", `https://pokeapi.co/api/v2/move/${nameAtt4}`);
+    let data7 = request(
+      "GET",
+      `https://pokeapi.co/api/v2/move/${tabFinal[i].att4}`
+    );
     let attaque4 = JSON.parse(data7.body);
 
     //Types pokemon

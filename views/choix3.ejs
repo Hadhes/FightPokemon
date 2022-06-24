@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/choix.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dongle&family=Open+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="cadre">
+      <div><img id="logo" src="/images/logo.png" /></div>
+      <div id="texte">Choisis ton troisième pokemon :</div>
+      <div id="containerIcones">
+        <% for (i = 0; i < tabPokemon.length; i++) { %>
+        <div class="icone" key="<%= i %>">
+          <a
+            href="/attaque3?num3=<%= i+1 %>&num1=<%= num1 %>&att11=<%= att11 %>&att12=<%= att12 %>&att13=<%= att13 %>&att14=<%= att14 %>&nat1=<%= nat1 %>&num2=<%= num2 %>&att21=<%= att21 %>&att22=<%= att22 %>&att23=<%= att23 %>&att24=<%= att24 %>&nat2=<%= nat2 %>"
+            style="cursor: pointer"
+          >
+            <img id="pokemon" src="<%= tabPokemon[i] %>" />
+          </a>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </body>
+  <script></script>
+</html>

@@ -1,0 +1,80 @@
+body {
+  font-family: "Dongle", sans-serif;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  background-color: rgb(252, 214, 0);
+}
+
+a {
+  color: #00b7ff;
+}
+
+#cadre {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  width: 1000px;
+}
+
+#logo {
+  width: 338px;
+  margin-bottom: 20px;
+}
+
+#texte {
+  margin-bottom: 20px;
+}
+
+#containerIcones {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.icone {
+  display: flex;
+  border: solid black;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  justify-content: center;
+  background-color: white;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  /* padding-right: 5px; */
+}
+
+#containerAttaques {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.list {
+  display: flex;
+  margin-bottom: 5px;
+  width: 200px;
+  justify-content: flex-start;
+}
+
+#bouton {
+  margin-top: 10px;
+}
+
+table,
+td {
+  border: 1px solid #333;
+  background-color: white;
+}
+
+td.plus {
+  background-color: greenyellow;
+}
+
+td.moins {
+  background-color: red;
+}
+
+td.important {
+  background-color: grey;
+}

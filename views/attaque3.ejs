@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/choix.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dongle&family=Open+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="cadre">
+      <div><img id="logo" src="/images/logo.png" /></div>
+      <div id="texte">
+        <p>Choisis tes attaques pour ton troisième pokemon :</p>
+        <p>
+          (attention, ceci est une Alpha, la plupart des attaques ne
+          fonctionnent pas et ne font que des dégâts)
+        </p>
+      </div>
+      <div><p>Attaques (4 à sélectionner) :</p></div>
+      <div id="containerAttaques">
+        <% for (i = 0; i < tabAttaques.length; i++) { %>
+        <div class="list" key="<%= i %>">
+          <input
+            type="checkbox"
+            name="checkAttaque"
+            value="<%= tabAttaques[i] %>"
+          />
+          <label for="<%= tabAttaques[i] %>"><%= tabAttaques[i] %></label>
+        </div>
+        <% } %>
+      </div>
+      <div><p>Nature (1 à sélectionner) :</p></div>
+      <table>
+        <tbody>
+          <tr>
+            <td class="important">Nature</td>
+            <td class="important">Attaque</td>
+            <td class="important">Défense</td>
+            <td class="important">Att Spé</td>
+            <td class="important">Déf Spé</td>
+            <td class="important">Vitesse</td>
+            <td class="important">Validé</td>
+          </tr>
+          <tr>
+            <td class="important">Assuré</td>
+            <td class="moins">-10%</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="bold" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Bizarre</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="quirky" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Brave</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="brave" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Calme</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="calm" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Discret</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="quiet" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Docile</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="docile" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Doux</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="mild" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Foufou</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="rash" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Gentil</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="gentle" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Hardi</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="hardy" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Jovial</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="jolly" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Lâche</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="lax" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Malin</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="impish" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Malpoli</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td class="moins">-10%</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="sassy" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Mauvais</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="naughty" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Modeste</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="modest" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Naïf</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td class="plus">+10%</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="naive" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Pressé</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="hasty" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Prudent</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="careful" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Pudique</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="bashful" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Relax</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="relaxed" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Rigide</td>
+            <td class="plus">+10%</td>
+            <td>—</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="adamant" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Sérieux</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="serious" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Solo</td>
+            <td class="plus">+10%</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="lonely" />
+            </td>
+          </tr>
+          <tr>
+            <td class="important">Timide</td>
+            <td class="moins">-10%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="plus">+10%</td>
+            <td>
+              <input type="checkbox" name="checkNature" value="timid" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="bouton">
+        <button onclick="recupValeurs();" type="submit">Valider</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    function recupValeurs() {
+      const tabCheck = [];
+      const tabNature = [];
+      const raccourci = document.getElementsByName("checkAttaque");
+      const raccourci2 = document.getElementsByName("checkNature");
+      const num1 = "<%- num1 %>";
+      const att11 = "<%= att11 %>";
+      const att12 = "<%= att12 %>";
+      const att13 = "<%= att13 %>";
+      const att14 = "<%= att14 %>";
+      const nat1 = "<%= nat1 %>";
+      const num2 = "<%- num2 %>";
+      const att21 = "<%= att21 %>";
+      const att22 = "<%= att22 %>";
+      const att23 = "<%= att23 %>";
+      const att24 = "<%= att24 %>";
+      const nat2 = "<%= nat2 %>";
+      const num3 = "<%- num3 %>";
+
+      for (let i = 0; i < raccourci.length; i++) {
+        if (raccourci[i].checked) {
+          tabCheck.push(raccourci[i].value);
+        }
+      }
+      for (let i = 0; i < raccourci2.length; i++) {
+        if (raccourci2[i].checked) {
+          tabNature.push(raccourci2[i].value);
+        }
+      }
+      if (tabCheck.length === 4 && tabNature.length === 1) {
+        window.location = `/choix4?num1=${num1}&att11=${att11}&att12=${att12}&att13=${att13}&att14=${att14}&nat1=${nat1}&num2=${num2}&att21=${att21}&att22=${att22}&att23=${att23}&att24=${att24}&nat2=${nat2}&num3=${num3}&att31=${tabCheck[0]}&att32=${tabCheck[1]}&att33=${tabCheck[2]}&att34=${tabCheck[3]}&nat3=${tabNature[0]}`;
+      } else {
+        alert(
+          "Attention, il faut 4 attaques, pas plus, pas moins. Et une seule nature"
+        );
+      }
+    }
+  </script>
+</html>
