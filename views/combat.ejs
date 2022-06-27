@@ -34,40 +34,7 @@
       <div id="pvMaxPoke">
         <%= pokemons[0].stats.pv %>/<%= pokemons[0].stats.pv %>
       </div>
-
-      <!-- Emplacement Nom, PV, et Barre de Vie Pokemon adverse -->
-      <div id="cadrePokeVS"></div>
-      <div id="nomPokeVS">
-        <p><%= pokemonsVS[0].nom.toUpperCase() %></p>
-        <p>Lv100</p>
-      </div>
-      <div>
-        <progress
-          id="barrePokeVS"
-          value="<%= pokemonsVS[0].stats.pv %>"
-          max="<%= pokemonsVS[0].stats.pv %>"
-        ></progress>
-      </div>
-      <div id="pvMaxPokeVS">
-        <%= pokemonsVS[0].stats.pv %>/<%= pokemonsVS[0].stats.pv %>
-      </div>
-
-      <div id="attaquePoke1" onclick="calculPV(1)" style="cursor: pointer">
-        <div id="badgeAtt1"><%= pokemons[0].attaque1.type %></div>
-        <div id="nomAtt1"><%= pokemons[0].attaque1.nom %></div>
-      </div>
-      <div id="attaquePoke2" onclick="calculPV(2)" style="cursor: pointer">
-        <div id="badgeAtt2"><%= pokemons[0].attaque2.type %></div>
-        <div id="nomAtt2"><%= pokemons[0].attaque2.nom %></div>
-      </div>
-      <div id="attaquePoke3" onclick="calculPV(3)" style="cursor: pointer">
-        <div id="badgeAtt3"><%= pokemons[0].attaque3.type %></div>
-        <div id="nomAtt3"><%= pokemons[0].attaque3.nom %></div>
-      </div>
-      <div id="attaquePoke4" onclick="calculPV(4)" style="cursor: pointer">
-        <div id="badgeAtt4"><%= pokemons[0].attaque4.type %></div>
-        <div id="nomAtt4"><%= pokemons[0].attaque4.nom %></div>
-      </div>
+      <div id="statut"></div>
       <div id="pokeball">
         <img
           id="pokeball1"
@@ -112,11 +79,149 @@
           onclick="changementPoke(6)"
         />
       </div>
+
+      <!-- Emplacement Nom, PV, et Barre de Vie Pokemon adverse -->
+      <div id="cadrePokeVS"></div>
+      <div id="nomPokeVS">
+        <p id="nomPokeMAJVS"><%= pokemonsVS[0].nom.toUpperCase() %></p>
+        <p>Lv100</p>
+      </div>
+      <div>
+        <progress
+          id="barrePokeVS"
+          value="<%= pokemonsVS[0].stats.pv %>"
+          max="<%= pokemonsVS[0].stats.pv %>"
+        ></progress>
+      </div>
+      <div id="pvMaxPokeVS">
+        <%= pokemonsVS[0].stats.pv %>/<%= pokemonsVS[0].stats.pv %>
+      </div>
+      <div id="statutVS"></div>
+      <div id="pokeballVS">
+        <img id="pokeballVS1" src="../images/Pokeball.png" width="10" />
+        <img id="pokeballVS2" src="../images/Pokeball.png" width="10" />
+        <img id="pokeballVS3" src="../images/Pokeball.png" width="10" />
+        <img id="pokeballVS4" src="../images/Pokeball.png" width="10" />
+        <img id="pokeballVS5" src="../images/Pokeball.png" width="10" />
+        <img id="pokeballVS6" src="../images/Pokeball.png" width="10" />
+      </div>
+
+      <div id="attaquePoke1" onclick="calculPV(1)" style="cursor: pointer">
+        <div id="badgeAtt1"><%= pokemons[0].attaque1.type %></div>
+        <div id="nomAtt1"><%= pokemons[0].attaque1.nom %></div>
+      </div>
+      <div id="attaquePoke2" onclick="calculPV(2)" style="cursor: pointer">
+        <div id="badgeAtt2"><%= pokemons[0].attaque2.type %></div>
+        <div id="nomAtt2"><%= pokemons[0].attaque2.nom %></div>
+      </div>
+      <div id="attaquePoke3" onclick="calculPV(3)" style="cursor: pointer">
+        <div id="badgeAtt3"><%= pokemons[0].attaque3.type %></div>
+        <div id="nomAtt3"><%= pokemons[0].attaque3.nom %></div>
+      </div>
+      <div id="attaquePoke4" onclick="calculPV(4)" style="cursor: pointer">
+        <div id="badgeAtt4"><%= pokemons[0].attaque4.type %></div>
+        <div id="nomAtt4"><%= pokemons[0].attaque4.nom %></div>
+      </div>
     </div>
   </body>
 
   <script>
-    let couleur = function (type, attaque) {
+    let joueur = true;
+
+    let tabPVActu = new Array(6);
+    let tabPVActuVS = new Array(6);
+    let nombre = 0;
+    let nombreVS = 0;
+
+    // Stats & attaques pokemon utilisé
+    let numPoke = 1;
+
+    let pv = Number("<%- pokemons[0].stats.pv %>");
+    let pvActu;
+    if (tabPVActu[nombre] === Number) {
+      pvActu = tabPVActu[nombre];
+    } else {
+      pvActu = pv;
+    }
+    let attMaxPoke = Number("<%- pokemons[0].stats.att %>");
+    let defMaxPoke = Number("<%- pokemons[0].stats.def %>");
+    let attSMaxPoke = Number("<%- pokemons[0].stats.attS %>");
+    let defSMaxPoke = Number("<%- pokemons[0].stats.defS %>");
+    let vitMaxPoke = Number("<%- pokemons[0].stats.vit %>");
+    let attPoke = attMaxPoke;
+    let defPoke = defMaxPoke;
+    let attSPoke = attSMaxPoke;
+    let defSPoke = defSMaxPoke;
+    let vitPoke = vitMaxPoke;
+
+    let attaque_dmg1 = Number("<%- pokemons[0].attaque1.puissance %>");
+    let attaque_dmg2 = Number("<%- pokemons[0].attaque2.puissance %>");
+    let attaque_dmg3 = Number("<%- pokemons[0].attaque3.puissance %>");
+    let attaque_dmg4 = Number("<%- pokemons[0].attaque4.puissance %>");
+    let attaque1Type = "<%- pokemons[0].attaque1.type %>";
+    let attaque2Type = "<%- pokemons[0].attaque2.type %>";
+    let attaque3Type = "<%- pokemons[0].attaque3.type %>";
+    let attaque4Type = "<%- pokemons[0].attaque4.type %>";
+    let attaque1Nom = "<%- pokemons[0].attaque1.nom %>";
+    let attaque2Nom = "<%- pokemons[0].attaque2.nom %>";
+    let attaque3Nom = "<%- pokemons[0].attaque3.nom %>";
+    let attaque4Nom = "<%- pokemons[0].attaque4.nom %>";
+    let attaque1Classe = "<%- pokemons[0].attaque1.classe %>";
+    let attaque2Classe = "<%- pokemons[0].attaque2.classe %>";
+    let attaque3Classe = "<%- pokemons[0].attaque3.classe %>";
+    let attaque4Classe = "<%- pokemons[0].attaque4.classe %>";
+
+    let type1 = "<%- pokemons[0].type1 %>";
+    let type2 = "<%- pokemons[0].type2 %>";
+
+    // Stats & attaques pokemon adverse
+    let numPokeVS = 1;
+
+    let pvVS = Number("<%- pokemonsVS[0].stats.pv %>");
+    let pvActuVS;
+    if (tabPVActuVS[nombre] === Number) {
+      pvActuVS = tabPVActuVS[nombre];
+    } else {
+      pvActuVS = pvVS;
+    }
+    let attMaxPokeVS = Number("<%- pokemonsVS[0].stats.att %>");
+    let defMaxPokeVS = Number("<%- pokemonsVS[0].stats.def %>");
+    let attSMaxPokeVS = Number("<%- pokemonsVS[0].stats.attS %>");
+    let defSMaxPokeVS = Number("<%- pokemonsVS[0].stats.defS %>");
+    let vitMaxPokeVS = Number("<%- pokemonsVS[0].stats.vit %>");
+    let attPokeVS = attMaxPokeVS;
+    let defPokeVS = defMaxPokeVS;
+    let attSPokeVS = attSMaxPokeVS;
+    let defSPokeVS = defSMaxPokeVS;
+    let vitPokeVS = vitMaxPokeVS;
+
+    let attaque_dmg1VS = Number("<%- pokemonsVS[0].attaque1.puissance %>");
+    let attaque_dmg2VS = Number("<%- pokemonsVS[0].attaque2.puissance %>");
+    let attaque_dmg3VS = Number("<%- pokemonsVS[0].attaque3.puissance %>");
+    let attaque_dmg4VS = Number("<%- pokemonsVS[0].attaque4.puissance %>");
+    let attaque1TypeVS = "<%- pokemonsVS[0].attaque1.type %>";
+    let attaque2TypeVS = "<%- pokemonsVS[0].attaque2.type %>";
+    let attaque3TypeVS = "<%- pokemonsVS[0].attaque3.type %>";
+    let attaque4TypeVS = "<%- pokemonsVS[0].attaque4.type %>";
+    let attaque1NomVS = "<%- pokemonsVS[0].attaque1.nom %>";
+    let attaque2NomVS = "<%- pokemonsVS[0].attaque2.nom %>";
+    let attaque3NomVS = "<%- pokemonsVS[0].attaque3.nom %>";
+    let attaque4NomVS = "<%- pokemonsVS[0].attaque4.nom %>";
+    let attaque1ClasseVS = "<%- pokemonsVS[0].attaque1.classe %>";
+    let attaque2ClasseVS = "<%- pokemonsVS[0].attaque2.classe %>";
+    let attaque3ClasseVS = "<%- pokemonsVS[0].attaque3.classe %>";
+    let attaque4ClasseVS = "<%- pokemonsVS[0].attaque4.classe %>";
+
+    let type1VS = "<%- pokemonsVS[0].type1 %>";
+    let type2VS = "<%- pokemonsVS[0].type2 %>";
+
+    //Couleurs badges attaques
+    let colorAttaque1 = "white";
+    let colorAttaque2 = "white";
+    let colorAttaque3 = "white";
+    let colorAttaque4 = "white";
+
+    function couleur(type, attaque) {
       if (type === "normal") {
         return (attaque = "rgba(173,165,148,255)");
       } else if (type === "fighting") {
@@ -154,30 +259,7 @@
       } else if (type === "dark") {
         return (attaque = "rgba(115,90,74,255)");
       }
-    };
-
-    let colorAttaque1 = "white";
-    let colorAttaque2 = "white";
-    let colorAttaque3 = "white";
-    let colorAttaque4 = "white";
-
-    //infos diverses
-    let attaque1Type = "<%- pokemons[0].attaque1.type %>";
-    let attaque2Type = "<%- pokemons[0].attaque2.type %>";
-    let attaque3Type = "<%- pokemons[0].attaque3.type %>";
-    let attaque4Type = "<%- pokemons[0].attaque4.type %>";
-    let attaque1Nom = "<%- pokemons[0].attaque1.nom %>";
-    let attaque2Nom = "<%- pokemons[0].attaque2.nom %>";
-    let attaque3Nom = "<%- pokemons[0].attaque3.nom %>";
-    let attaque4Nom = "<%- pokemons[0].attaque4.nom %>";
-    let attaque1Classe = "<%- pokemons[0].attaque1.classe %>";
-    let attaque2Classe = "<%- pokemons[0].attaque2.classe %>";
-    let attaque3Classe = "<%- pokemons[0].attaque3.classe %>";
-    let attaque4Classe = "<%- pokemons[0].attaque4.classe %>";
-    let type1VS = "<%- pokemonsVS[0].type1 %>";
-    let type2VS = "<%- pokemonsVS[0].type2 %>";
-    let type1 = "<%- pokemons[0].type1 %>";
-    let type2 = "<%- pokemons[0].type2 %>";
+    }
 
     colorAttaque1 = couleur(attaque1Type, colorAttaque1);
     colorAttaque2 = couleur(attaque2Type, colorAttaque2);
@@ -195,38 +277,158 @@
         colorAttaque4;
     };
 
-    let tabPVActu = new Array(6);
-    let nombre = 0;
+    let cranStat = [0, 0, 0, 0, 0];
+    let cranStatVS = [0, 0, 0, 0, 0];
 
-    // Stats & attaques pokemon utilisé
-    let pv = Number("<%- pokemons[0].stats.pv %>");
-    let pvActu;
-    if (tabPVActu[nombre] === Number) {
-      pvActu = tabPVActu[nombre];
-    } else {
-      pvActu = pv;
+    // Calcule du pourcentage pour le calcul de changement de stats
+    function pourcentage(cran, pourcentageV) {
+      if (cran === 0) {
+        return (pourcentageV = 100);
+      } else if (cran === -1) {
+        return (pourcentageV = 67);
+      } else if (cran === -2) {
+        return (pourcentageV = 50);
+      } else if (cran === -3) {
+        return (pourcentageV = 40);
+      } else if (cran === -4) {
+        return (pourcentageV = 33);
+      } else if (cran === -5) {
+        return (pourcentageV = 29);
+      } else if (cran === -6) {
+        return (pourcentageV = 25);
+      } else if (cran === 1) {
+        return (pourcentageV = 150);
+      } else if (cran === 2) {
+        return (pourcentageV = 200);
+      } else if (cran === 3) {
+        return (pourcentageV = 250);
+      } else if (cran === 4) {
+        return (pourcentageV = 300);
+      } else if (cran === 5) {
+        return (pourcentageV = 350);
+      } else if (cran === 6) {
+        return (pourcentageV = 400);
+      }
     }
 
-    let attPoke = Number("<%- pokemons[0].stats.att %>");
-    let defPoke = Number("<%- pokemons[0].stats.def %>");
-    let attSPoke = Number("<%- pokemons[0].stats.attS %>");
-    let defSPoke = Number("<%- pokemons[0].stats.defS %>");
-    let vitPoke = Number("<%- pokemons[0].stats.vit %>");
-    let attaque_dmg1 = Number("<%- pokemons[0].attaque1.puissance %>");
-    let attaque_dmg2 = Number("<%- pokemons[0].attaque2.puissance %>");
-    let attaque_dmg3 = Number("<%- pokemons[0].attaque3.puissance %>");
-    let attaque_dmg4 = Number("<%- pokemons[0].attaque4.puissance %>");
+    // Baisse des stats avec une attaque
+    function baisseStat(stat, num) {
+      let pourcentageT = 100;
+      if (joueur === false) {
+        if (stat === att) {
+          cranStat[0] = cranStat[0] - num;
+          pourcentageT = pourcentage(cranStat[0], pourcentageT);
+          return (attPoke = (attMaxPoke * pourcentage) / 100);
+        } else if (stat === def) {
+          cranStat[1] = cranStat[1] - num;
+          pourcentageT = pourcentage(cranStat[1], pourcentageT);
+          return (defPoke = (defMaxPoke * pourcentage) / 100);
+        } else if (stat === attS) {
+          cranStat[2] = cranStat[2] - num;
+          pourcentageT = pourcentage(cranStat[2], pourcentageT);
+          return (attSPoke = (attSMaxPoke * pourcentage) / 100);
+        } else if (stat === defS) {
+          cranStat[3] = cranStat[3] - num;
+          pourcentageT = pourcentage(cranStat[3], pourcentageT);
+          return (defSPoke = (defSMaxPoke * pourcentage) / 100);
+        } else if (stat === vit) {
+          cranStat[4] = cranStat[4] - num;
+          pourcentageT = pourcentage(cranStat[4], pourcentageT);
+          return (vitPoke = (vitMaxPoke * pourcentage) / 100);
+        }
+      } else if (joueur === true) {
+        if (stat === att) {
+          cranStatVS[0] = cranStatVS[0] - num;
+          pourcentageT = pourcentage(cranStatVS[0], pourcentageT);
+          return (attPokeVS = (attMaxPokeVS * pourcentage) / 100);
+        } else if (stat === def) {
+          cranStatVS[1] = cranStatVS[1] - num;
+          pourcentageT = pourcentage(cranStatVS[1], pourcentageT);
+          return (defPokeVS = (defMaxPokeVS * pourcentage) / 100);
+        } else if (stat === attS) {
+          cranStatVS[2] = cranStatVS[2] - num;
+          pourcentageT = pourcentage(cranStatVS[2], pourcentageT);
+          return (attSPokeVS = (attSMaxPokeVS * pourcentage) / 100);
+        } else if (stat === defS) {
+          cranStatVS[3] = cranStatVS[3] - num;
+          pourcentageT = pourcentage(cranStatVS[3], pourcentageT);
+          return (defSPokeVS = (defSMaxPokeVS * pourcentage) / 100);
+        } else if (stat === vit) {
+          cranStatVS[4] = cranStatVS[4] - num1;
+          pourcentageT = pourcentage(cranStatVS[4], pourcentageT);
+          return (vitPokeVS = (vitMaxPokeVS * pourcentage) / 100);
+        }
+      }
+    }
 
-    // Stats & attaques pokemon adverse
-    const pvVS = Number("<%- pokemonsVS[0].stats.pv %>");
-    let pvActuVS = pvVS;
-    const attPokeVS = Number("<%- pokemonsVS[0].stats.att %>");
-    const defPokeVS = Number("<%- pokemonsVS[0].stats.def %>");
-    const attSPokeVS = Number("<%- pokemonsVS[0].stats.attS %>");
-    const defSPokeVS = Number("<%- pokemonsVS[0].stats.defS %>");
-    const vitPokeVS = Number("<%- pokemonsVS[0].stats.vit %>");
-    const attaque_dmg1VS = Number("<%- pokemonsVS[0].attaque1.puissance %>");
+    // Augmentation des stats avec une attaque
+    function augmenteStat(stat, num) {
+      let pourcentageT = 100;
+      if (joueur === true) {
+        if (stat === att) {
+          cranStat[0] = cranStat[0] - num;
+          pourcentageT = pourcentage(cranStat[0], pourcentageT);
+          return (attPoke = (attMaxPoke * pourcentageT) / 100);
+        } else if (stat === def) {
+          cranStat[1] = cranStat[1] - num;
+          pourcentageT = pourcentage(cranStat[1], pourcentageT);
+          return (defPoke = (defMaxPoke * pourcentageT) / 100);
+        } else if (stat === attS) {
+          cranStat[2] = cranStat[2] - num;
+          pourcentageT = pourcentage(cranStat[2], pourcentageT);
+          return (attSPoke = (attSMaxPoke * pourcentageT) / 100);
+        } else if (stat === defS) {
+          cranStat[3] = cranStat[3] - num;
+          pourcentageT = pourcentage(cranStat[3], pourcentageT);
+          return (defSPoke = (defSMaxPoke * pourcentageT) / 100);
+        } else if (stat === vit) {
+          cranStat[4] = cranStat[4] - num;
+          pourcentageT = pourcentage(cranStat[4], pourcentageT);
+          return (vitPoke = (vitMaxPoke * pourcentageT) / 100);
+        }
+      } else if (joueur === false) {
+        if (stat === att) {
+          cranStatVS[0] = cranStatVS[0] - num;
+          pourcentageT = pourcentage(cranStatVS[0], pourcentageT);
+          return (attPokeVS = (attMaxPokeVS * pourcentageT) / 100);
+        } else if (stat === def) {
+          cranStatVS[1] = cranStatVS[1] - num;
+          pourcentageT = pourcentage(cranStatVS[1], pourcentageT);
+          return (defPokeVS = (defMaxPokeVS * pourcentageT) / 100);
+        } else if (stat === attS) {
+          cranStatVS[2] = cranStatVS[2] - num;
+          pourcentageT = pourcentage(cranStatVS[2], pourcentageT);
+          return (attSPokeVS = (attSMaxPokeVS * pourcentageT) / 100);
+        } else if (stat === defS) {
+          cranStatVS[3] = cranStatVS[3] - num;
+          pourcentageT = pourcentage(cranStatVS[3], pourcentageT);
+          return (defSPokeVS = (defSMaxPokeVS * pourcentageT) / 100);
+        } else if (stat === vit) {
+          cranStatVS[4] = cranStatVS[4] - num1;
+          pourcentageT = pourcentage(cranStatVS[4], pourcentageT);
+          return (vitPokeVS = (vitMaxPokeVS * pourcentageT) / 100);
+        }
+      }
+    }
 
+    // Effet attaque
+    // function effetAtt (nomAttaque) {
+    //   if (nomAttaque === "À la Queue") {
+    //     console.log("Raté...")
+    //   } else if  (nomAttaque === "Abattage") {
+    //     attPokeVS = attPokeVS * 67 / 100
+    //   } else if  (nomAttaque === "Abîme") {
+    //     PVActuVS = 0
+    //     baisseStat(att, 1)
+    //   } else if  (nomAttaque === "Aboiement") {
+    //     attSPokeVS = attSPokeVS * 67 / 100
+    //     baisseStat(attS, 1)
+    //   } else if  (nomAttaque === "Abri") {
+    //     ***attaque_dmg1 = 0 &&
+    //   }
+    // }
+
+    //Action de calcul des PV
     function calculPV(num) {
       const modifPVVS = document.getElementById("pvMaxPokeVS");
       const modifPV = document.getElementById("pvMaxPoke");
@@ -250,7 +452,8 @@
 
       let typeAttaque = "";
       let typeAttaqueClass = "";
-      const typeAttaqueClassVS = attaque1Type;
+      const typeAttaqueVS = attaque1TypeVS;
+      const typeAttaqueClassVS = attaque1ClasseVS;
 
       let degatAtt = 0;
 
@@ -274,559 +477,262 @@
         nomAttaque = attaque4Nom;
         degatAtt = attaque_dmg4;
         typeAttaqueClass = attaque4Classe;
+      } else if (num === "switch") {
+        typeAttaque = "neutre";
+        nomAttaque = "switch";
+        degatAtt = 0;
+        typeAttaqueClass = "physical";
       }
 
-      //Attaque vs Type 1
-      if (typeAttaque === "normal") {
-        if (type1VS === "rock" || type1VS === "steel") {
-          efficace1 = 0.5;
-        } else if (type1VS === "ghost") {
-          efficace1 = 0;
+      function efficace(typeAtt, type, efficace) {
+        if (typeAtt === "normal") {
+          if (type === "rock" || type === "steel") {
+            return (efficace = 0.5);
+          } else if (type === "ghost") {
+            return (efficace = 0);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "fire") {
+          if (
+            type === "fire" ||
+            type === "water" ||
+            type === "rock" ||
+            type === "dragon"
+          ) {
+            return (efficace = 0.5);
+          } else if (
+            type === "grass" ||
+            type === "ice" ||
+            type === "bug" ||
+            type === "steel"
+          ) {
+            return (efficace = 2);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "water") {
+          if (type === "water" || type === "grass" || type === "dragon") {
+            return (efficace = 0.5);
+          } else if (type === "fire" || type === "ground" || type === "rock") {
+            return (efficace = 2);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "grass") {
+          if (
+            type === "grass" ||
+            type === "fire" ||
+            type === "poison" ||
+            type === "flying" ||
+            type === "bug" ||
+            type === "dragon" ||
+            type === "steel"
+          ) {
+            return (efficace = 0.5);
+          } else if (type === "water" || type === "ground" || type === "rock") {
+            return (efficace = 2);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "electric") {
+          if (type === "grass" || type === "electric" || type === "dragon") {
+            return (efficace = 0.5);
+          } else if (type === "water" || type === "flying") {
+            return (efficace = 2);
+          } else if (type === "ground") {
+            return (efficace = 0);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "ice") {
+          if (
+            type === "fire" ||
+            type === "water" ||
+            type === "ice" ||
+            type === "steel"
+          ) {
+            return (efficace = 0.5);
+          } else if (
+            type === "grass" ||
+            type === "flying" ||
+            type === "ground" ||
+            type === "dragon"
+          ) {
+            return (efficace = 2);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "fighting") {
+          if (
+            type === "poison" ||
+            type === "flying" ||
+            type === "psychic" ||
+            type === "bug" ||
+            type === "fairy"
+          ) {
+            return (efficace = 0.5);
+          } else if (
+            type === "normal" ||
+            type === "ice" ||
+            type === "rock" ||
+            type === "dark" ||
+            type === "steel"
+          ) {
+            return (efficace = 2);
+          } else if (type === "ghost") {
+            return (efficace = 0);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "poison") {
+          if (
+            type === "poison" ||
+            type === "ground" ||
+            type === "rock" ||
+            type === "ghost"
+          ) {
+            return (efficace = 0.5);
+          } else if (type === "grass" || type === "fairy") {
+            return (efficace = 2);
+          } else if (type === "steel") {
+            return (efficace = 0);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "ground") {
+          if (type === "grass" || type === "bug") {
+            return (efficace = 0.5);
+          } else if (
+            type === "fire" ||
+            type === "electric" ||
+            type === "poison" ||
+            type === "rock" ||
+            type === "steel"
+          ) {
+            return (efficace = 2);
+          } else if (type === "flying") {
+            return (efficace = 0);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "flying") {
+          if (type === "electric" || type === "rock" || type === "steel") {
+            return (efficace = 0.5);
+          } else if (
+            type === "grass" ||
+            type === "fighting" ||
+            type === "bug"
+          ) {
+            return (efficace = 2);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "psychic") {
+          if (type === "psychic" || type === "steel") {
+            return (efficace = 0.5);
+          } else if (type === "fighting" || type === "poison") {
+            return (efficace = 2);
+          } else if (type === "dark") {
+            return (efficace = 0);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "bug") {
+          if (
+            type === "fire" ||
+            type === "fighting" ||
+            type === "poison" ||
+            type === "flying" ||
+            type === "ghost" ||
+            type === "steel" ||
+            type === "fairy"
+          ) {
+            return (efficace = 0.5);
+          } else if (
+            type === "grass" ||
+            type === "psychic" ||
+            type === "dark"
+          ) {
+            return (efficace = 2);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "rock") {
+          if (type === "fighting" || type === "ground" || type === "steel") {
+            return (efficace = 0.5);
+          } else if (
+            type === "flying" ||
+            type === "fire" ||
+            type === "ice" ||
+            type === "bug"
+          ) {
+            return (efficace = 2);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "ghost") {
+          if (type === "dark") {
+            return (efficace = 0.5);
+          } else if (type === "ghost" || type === "psychic") {
+            return (efficace = 2);
+          } else if (type === "normal") {
+            return (efficace = 0);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "dragon") {
+          if (type === "steel") {
+            return (efficace = 0.5);
+          } else if (type === "dragon") {
+            return (efficace = 2);
+          } else if (type === "fairy") {
+            return (efficace = 0);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "dark") {
+          if (type === "fighting" || type === "dark" || type === "fairy") {
+            return (efficace = 0.5);
+          } else if (type === "psychic" || type === "ghost") {
+            return (efficace = 2);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "steel") {
+          if (
+            type === "fire" ||
+            type === "water" ||
+            type === "electric" ||
+            type === "steel"
+          ) {
+            return (efficace = 0.5);
+          } else if (type === "ice" || type === "rock" || type === "fairy") {
+            return (efficace = 2);
+          } else {
+            return (efficace = 1);
+          }
+        } else if (typeAtt === "fairy") {
+          if (type === "fire" || type === "poison" || type === "steel") {
+            return (efficace = 0.5);
+          } else if (
+            type === "fighting" ||
+            type === "dragon" ||
+            type === "dark"
+          ) {
+            return (efficace = 2);
+          } else {
+            return (efficace = 1);
+          }
         } else {
-          efficace1 = 1;
+          return (efficace = 1);
         }
-      } else if (typeAttaque === "fire") {
-        if (
-          type1VS === "fire" ||
-          type1VS === "water" ||
-          type1VS === "rock" ||
-          type1VS === "dragon"
-        ) {
-          efficace1 = 0.5;
-        } else if (
-          type1VS === "grass" ||
-          type1VS === "ice" ||
-          type1VS === "bug" ||
-          type1VS === "steel"
-        ) {
-          efficace1 = 2;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "water") {
-        if (
-          type1VS === "water" ||
-          type1VS === "grass" ||
-          type1VS === "dragon"
-        ) {
-          efficace1 = 0.5;
-        } else if (
-          type1VS === "fire" ||
-          type1VS === "ground" ||
-          type1VS === "rock"
-        ) {
-          efficace1 = 2;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "grass") {
-        if (
-          type1VS === "grass" ||
-          type1VS === "fire" ||
-          type1VS === "poison" ||
-          type1VS === "flying" ||
-          type1VS === "bug" ||
-          type1VS === "dragon" ||
-          type1VS === "steel"
-        ) {
-          efficace1 = 0.5;
-        } else if (
-          type1VS === "water" ||
-          type1VS === "ground" ||
-          type1VS === "rock"
-        ) {
-          efficace1 = 2;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "electric") {
-        if (
-          type1VS === "grass" ||
-          type1VS === "electric" ||
-          type1VS === "dragon"
-        ) {
-          efficace1 = 0.5;
-        } else if (type1VS === "water" || type1VS === "flying") {
-          efficace1 = 2;
-        } else if (type1VS === "ground") {
-          efficace1 = 0;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "ice") {
-        if (
-          type1VS === "fire" ||
-          type1VS === "water" ||
-          type1VS === "ice" ||
-          type1VS === "steel"
-        ) {
-          efficace1 = 0.5;
-        } else if (
-          type1VS === "grass" ||
-          type1VS === "flying" ||
-          type1VS === "ground" ||
-          type1VS === "dragon"
-        ) {
-          efficace1 = 2;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "fighting") {
-        if (
-          type1VS === "poison" ||
-          type1VS === "flying" ||
-          type1VS === "psychic" ||
-          type1VS === "bug" ||
-          type1VS === "fairy"
-        ) {
-          efficace1 = 0.5;
-        } else if (
-          type1VS === "normal" ||
-          type1VS === "ice" ||
-          type1VS === "rock" ||
-          type1VS === "dark" ||
-          type1VS === "steel"
-        ) {
-          efficace1 = 2;
-        } else if (type1VS === "ghost") {
-          efficace1 = 0;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "poison") {
-        if (
-          type1VS === "poison" ||
-          type1VS === "ground" ||
-          type1VS === "rock" ||
-          type1VS === "ghost"
-        ) {
-          efficace1 = 0.5;
-        } else if (type1VS === "grass" || type1VS === "fairy") {
-          efficace1 = 2;
-        } else if (type1VS === "steel") {
-          efficace1 = 0;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "ground") {
-        if (type1VS === "grass" || type1VS === "bug") {
-          efficace1 = 0.5;
-        } else if (
-          type1VS === "fire" ||
-          type1VS === "electric" ||
-          type1VS === "poison" ||
-          type1VS === "rock" ||
-          type1VS === "steel"
-        ) {
-          efficace1 = 2;
-        } else if (type1VS === "flying") {
-          efficace1 = 0;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "flying") {
-        if (
-          type1VS === "electric" ||
-          type1VS === "rock" ||
-          type1VS === "steel"
-        ) {
-          efficace1 = 0.5;
-        } else if (
-          type1VS === "grass" ||
-          type1VS === "fighting" ||
-          type1VS === "bug"
-        ) {
-          efficace1 = 2;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "psychic") {
-        if (type1VS === "psychic" || type1VS === "steel") {
-          efficace1 = 0.5;
-        } else if (type1VS === "fighting" || type1VS === "poison") {
-          efficace1 = 2;
-        } else if (type1VS === "dark") {
-          efficace1 = 0;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "bug") {
-        if (
-          type1VS === "fire" ||
-          type1VS === "fighting" ||
-          type1VS === "poison" ||
-          type1VS === "flying" ||
-          type1VS === "ghost" ||
-          type1VS === "steel" ||
-          type1VS === "fairy"
-        ) {
-          efficace1 = 0.5;
-        } else if (
-          type1VS === "grass" ||
-          type1VS === "psychic" ||
-          type1VS === "dark"
-        ) {
-          efficace1 = 2;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "rock") {
-        if (
-          type1VS === "fighting" ||
-          type1VS === "ground" ||
-          type1VS === "steel"
-        ) {
-          efficace1 = 0.5;
-        } else if (
-          type1VS === "flying" ||
-          type1VS === "fire" ||
-          type1VS === "ice" ||
-          type1VS === "bug"
-        ) {
-          efficace1 = 2;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "ghost") {
-        if (type1VS === "dark") {
-          efficace1 = 0.5;
-        } else if (type1VS === "ghost" || type1VS === "psychic") {
-          efficace1 = 2;
-        } else if (type1VS === "normal") {
-          efficace1 = 0;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "dragon") {
-        if (type1VS === "steel") {
-          efficace1 = 0.5;
-        } else if (type1VS === "dragon") {
-          efficace1 = 2;
-        } else if (type1VS === "fairy") {
-          efficace1 = 0;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "dark") {
-        if (
-          type1VS === "fighting" ||
-          type1VS === "dark" ||
-          type1VS === "fairy"
-        ) {
-          efficace1 = 0.5;
-        } else if (type1VS === "psychic" || type1VS === "ghost") {
-          efficace1 = 2;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "steel") {
-        if (
-          type1VS === "fire" ||
-          type1VS === "water" ||
-          type1VS === "electric" ||
-          type1VS === "steel"
-        ) {
-          efficace1 = 0.5;
-        } else if (
-          type1VS === "ice" ||
-          type1VS === "rock" ||
-          type1VS === "fairy"
-        ) {
-          efficace1 = 2;
-        } else {
-          efficace1 = 1;
-        }
-      } else if (typeAttaque === "fairy") {
-        if (type1VS === "fire" || type1VS === "poison" || type1VS === "steel") {
-          efficace1 = 0.5;
-        } else if (
-          type1VS === "fighting" ||
-          type1VS === "dragon" ||
-          type1VS === "dark"
-        ) {
-          efficace1 = 2;
-        } else {
-          efficace1 = 1;
-        }
-      } else {
-        efficace1 = 10;
       }
 
-      //Attaque vs Type 2
-      if (typeAttaque === "normal") {
-        if (type2VS === "rock" || type2VS === "steel") {
-          efficace2 = 0.5;
-        } else if (type2VS === "ghost") {
-          efficace2 = 0;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "fire") {
-        if (
-          type2VS === "fire" ||
-          type2VS === "water" ||
-          type2VS === "rock" ||
-          type2VS === "dragon"
-        ) {
-          efficace2 = 0.5;
-        } else if (
-          type2VS === "grass" ||
-          type2VS === "ice" ||
-          type2VS === "bug" ||
-          type2VS === "steel"
-        ) {
-          efficace2 = 2;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "water") {
-        if (
-          type2VS === "water" ||
-          type2VS === "grass" ||
-          type2VS === "dragon"
-        ) {
-          efficace2 = 0.5;
-        } else if (
-          type2VS === "fire" ||
-          type2VS === "ground" ||
-          type2VS === "rock"
-        ) {
-          efficace2 = 2;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "grass") {
-        if (
-          type2VS === "grass" ||
-          type2VS === "fire" ||
-          type2VS === "poison" ||
-          type2VS === "flying" ||
-          type2VS === "bug" ||
-          type2VS === "dragon" ||
-          type2VS === "steel"
-        ) {
-          efficace2 = 0.5;
-        } else if (
-          type2VS === "water" ||
-          type2VS === "ground" ||
-          type2VS === "rock"
-        ) {
-          efficace2 = 2;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "electric") {
-        if (
-          type2VS === "grass" ||
-          type2VS === "electric" ||
-          type2VS === "dragon"
-        ) {
-          efficace2 = 0.5;
-        } else if (type2VS === "water" || type2VS === "flying") {
-          efficace2 = 2;
-        } else if (type2VS === "ground") {
-          efficace2 = 0;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "ice") {
-        if (
-          type2VS === "fire" ||
-          type2VS === "water" ||
-          type2VS === "ice" ||
-          type2VS === "steel"
-        ) {
-          efficace2 = 0.5;
-        } else if (
-          type2VS === "grass" ||
-          type2VS === "flying" ||
-          type2VS === "ground" ||
-          type2VS === "dragon"
-        ) {
-          efficace2 = 2;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "fighting") {
-        if (
-          type2VS === "poison" ||
-          type2VS === "flying" ||
-          type2VS === "psychic" ||
-          type2VS === "bug" ||
-          type2VS === "fairy"
-        ) {
-          efficace2 = 0.5;
-        } else if (
-          type2VS === "normal" ||
-          type2VS === "ice" ||
-          type2VS === "rock" ||
-          type2VS === "dark" ||
-          type2VS === "steel"
-        ) {
-          efficace2 = 2;
-        } else if (type2VS === "ghost") {
-          efficace2 = 0;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "poison") {
-        if (
-          type2VS === "poison" ||
-          type2VS === "ground" ||
-          type2VS === "rock" ||
-          type2VS === "ghost"
-        ) {
-          efficace2 = 0.5;
-        } else if (type2VS === "grass" || type2VS === "fairy") {
-          efficace2 = 2;
-        } else if (type2VS === "steel") {
-          efficace2 = 0;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "ground") {
-        if (type2VS === "grass" || type2VS === "bug") {
-          efficace2 = 0.5;
-        } else if (
-          type2VS === "fire" ||
-          type2VS === "electric" ||
-          type2VS === "poison" ||
-          type2VS === "rock" ||
-          type2VS === "steel"
-        ) {
-          efficace2 = 2;
-        } else if (type2VS === "flying") {
-          efficace2 = 0;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "flying") {
-        if (
-          type2VS === "electric" ||
-          type2VS === "rock" ||
-          type2VS === "steel"
-        ) {
-          efficace2 = 0.5;
-        } else if (
-          type2VS === "grass" ||
-          type2VS === "fighting" ||
-          type2VS === "bug"
-        ) {
-          efficace2 = 2;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "psychic") {
-        if (type2VS === "psychic" || type2VS === "steel") {
-          efficace2 = 0.5;
-        } else if (type2VS === "fighting" || type2VS === "poison") {
-          efficace2 = 2;
-        } else if (type2VS === "dark") {
-          efficace2 = 0;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "bug") {
-        if (
-          type2VS === "fire" ||
-          type2VS === "fighting" ||
-          type2VS === "poison" ||
-          type2VS === "flying" ||
-          type2VS === "ghost" ||
-          type2VS === "steel" ||
-          type2VS === "fairy"
-        ) {
-          efficace2 = 0.5;
-        } else if (
-          type2VS === "grass" ||
-          type2VS === "psychic" ||
-          type2VS === "dark"
-        ) {
-          efficace2 = 2;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "rock") {
-        if (
-          type2VS === "fighting" ||
-          type2VS === "ground" ||
-          type2VS === "steel"
-        ) {
-          efficace2 = 0.5;
-        } else if (
-          type2VS === "flying" ||
-          type2VS === "fire" ||
-          type2VS === "ice" ||
-          type2VS === "bug"
-        ) {
-          efficace2 = 2;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "ghost") {
-        if (type2VS === "dark") {
-          efficace2 = 0.5;
-        } else if (type2VS === "ghost" || type2VS === "psychic") {
-          efficace2 = 2;
-        } else if (type2VS === "normal") {
-          efficace2 = 0;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "dragon") {
-        if (type2VS === "steel") {
-          efficace2 = 0.5;
-        } else if (type2VS === "dragon") {
-          efficace2 = 2;
-        } else if (type2VS === "fairy") {
-          efficace2 = 0;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "dark") {
-        if (
-          type2VS === "fighting" ||
-          type2VS === "dark" ||
-          type2VS === "fairy"
-        ) {
-          efficace2 = 0.5;
-        } else if (type2VS === "psychic" || type2VS === "ghost") {
-          efficace2 = 2;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "steel") {
-        if (
-          type2VS === "fire" ||
-          type2VS === "water" ||
-          type2VS === "electric" ||
-          type2VS === "steel"
-        ) {
-          efficace2 = 0.5;
-        } else if (
-          type2VS === "ice" ||
-          type2VS === "rock" ||
-          type2VS === "fairy"
-        ) {
-          efficace2 = 2;
-        } else {
-          efficace2 = 1;
-        }
-      } else if (typeAttaque === "fairy") {
-        if (type2VS === "fire" || type2VS === "poison" || type2VS === "steel") {
-          efficace2 = 0.5;
-        } else if (
-          type2VS === "fighting" ||
-          type2VS === "dragon" ||
-          type2VS === "dark"
-        ) {
-          efficace2 = 2;
-        } else {
-          efficace2 = 1;
-        }
-      } else {
-        efficace1 = 1;
-      }
+      efficace1 = efficace(typeAttaque, type1VS, efficace1);
+      efficace2 = efficace(typeAttaque, type2VS, efficace2);
+      efficace1VS = efficace(typeAttaqueVS, type1, efficace1VS);
+      efficace2VS = efficace(typeAttaqueVS, type2, efficace2VS);
 
       let attaque = 0;
       let defense = 0;
@@ -840,8 +746,8 @@
         attaque = attSPoke;
         defenseVS = defSPokeVS;
       } else {
-        attaque = 1;
-        defenseVS = 1;
+        attaque = 0;
+        defenseVS = 999;
       }
 
       if (typeAttaqueClassVS === "physical") {
@@ -851,8 +757,8 @@
         attaqueVS = attSPokeVS;
         defense = defSPoke;
       } else {
-        attaqueVS = 1;
-        defense = 1;
+        attaqueVS = 0;
+        defense = 999;
       }
 
       let bonusType = 1;
@@ -860,8 +766,26 @@
         bonusType = 1.5;
       }
 
-      if (vitPoke > vitPokeVS) {
+      let bonusTypeVS = 1;
+      if (typeAttaqueVS === type1VS || typeAttaqueVS === type2VS) {
+        bonusTypeVS = 1.5;
+      }
+
+      if (num === "switch") {
+        if (pvActuVS > 0) {
+          joueur = false;
+          pvActu = Math.round(
+            pvActu -
+              ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
+                bonusTypeVS *
+                (efficace1VS * efficace2VS)
+          );
+        } else {
+          pvActu = pvActu;
+        }
+      } else if (vitPoke > vitPokeVS) {
         if (pvActu > 0) {
+          joueur = true;
           pvActuVS = Math.round(
             pvActuVS -
               ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
@@ -872,21 +796,30 @@
           pvActuVS = pvActuVS;
         }
         if (pvActuVS > 0) {
+          joueur = false;
           pvActu = Math.round(
-            pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
+            pvActu -
+              ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
+                bonusTypeVS *
+                (efficace1VS * efficace2VS)
           );
         } else {
           pvActu = pvActu;
         }
       } else if (vitPoke < vitPokeVS) {
         if (pvActuVS > 0) {
+          joueur = false;
           pvActu = Math.round(
-            pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
+            pvActu -
+              ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
+                bonusTypeVS *
+                (efficace1VS * efficace2VS)
           );
         } else {
           pvActu = pvActu;
         }
         if (pvActu > 0) {
+          joueur = true;
           pvActuVS = Math.round(
             pvActuVS -
               ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
@@ -900,13 +833,18 @@
         let random = Math.round(Math.random() * 1 + 1);
         if (random === 0) {
           if (pvActuVS > 0) {
+            joueur = false;
             pvActu = Math.round(
-              pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
+              pvActu -
+                ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
+                  bonusTypeVS *
+                  (efficace1VS * efficace2VS)
             );
           } else {
             pvActu = pvActu;
           }
           if (pvActu > 0) {
+            joueur = true;
             pvActuVS = Math.round(
               pvActuVS -
                 ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
@@ -918,6 +856,7 @@
           }
         } else {
           if (pvActu > 0) {
+            joueur = true;
             pvActuVS = Math.round(
               pvActuVS -
                 ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
@@ -928,8 +867,12 @@
             pvActuVS = pvActuVS;
           }
           if (pvActuVS > 0) {
+            joueur = false;
             pvActu = Math.round(
-              pvActu - ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2)
+              pvActu -
+                ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
+                  bonusTypeVS *
+                  (efficace1VS * efficace2VS)
             );
           } else {
             pvActu = pvActu;
@@ -974,8 +917,66 @@
       barreVie.value = pvActu;
       modifPVVS.textContent = `${pvActuVS}/${pvVS}`;
       barreVieVS.value = pvActuVS;
+
+      const modifPokeballVS1 = document.getElementById("pokeballVS1");
+      const modifPokeballVS2 = document.getElementById("pokeballVS2");
+      const modifPokeballVS3 = document.getElementById("pokeballVS3");
+      const modifPokeballVS4 = document.getElementById("pokeballVS4");
+      const modifPokeballVS5 = document.getElementById("pokeballVS5");
+      const modifPokeballVS6 = document.getElementById("pokeballVS6");
+
+      if (pvActuVS === 0) {
+        if (numPokeVS === 1) {
+          changementPokeVS(2);
+          numPokeVS = 2;
+          modifPokeballVS1.src = "../images/PokeballGris.jpg";
+        } else if (numPokeVS === 2) {
+          changementPokeVS(3);
+          numPokeVS = 3;
+          modifPokeballVS2.src = "../images/PokeballGris.jpg";
+        } else if (numPokeVS === 3) {
+          changementPokeVS(4);
+          numPokeVS = 4;
+          modifPokeballVS3.src = "../images/PokeballGris.jpg";
+        } else if (numPokeVS === 4) {
+          changementPokeVS(5);
+          numPokeVS = 5;
+          modifPokeballVS4.src = "../images/PokeballGris.jpg";
+        } else if (numPokeVS === 5) {
+          changementPokeVS(6);
+          numPokeVS = 6;
+          modifPokeballVS5.src = "../images/PokeballGris.jpg";
+        } else if (numPokeVS === 6) {
+          modifPokeballVS6.src = "../images/PokeballGris.jpg";
+          console.log("Victoire!!!");
+        }
+      }
+
+      const modifPokeball1 = document.getElementById("pokeball1");
+      const modifPokeball2 = document.getElementById("pokeball2");
+      const modifPokeball3 = document.getElementById("pokeball3");
+      const modifPokeball4 = document.getElementById("pokeball4");
+      const modifPokeball5 = document.getElementById("pokeball5");
+      const modifPokeball6 = document.getElementById("pokeball6");
+
+      if (pvActu === 0) {
+        if (numPoke === 1) {
+          modifPokeball1.src = "../images/PokeballGris.jpg";
+        } else if (numPoke === 2) {
+          modifPokeball2.src = "../images/PokeballGris.jpg";
+        } else if (numPoke === 3) {
+          modifPokeball3.src = "../images/PokeballGris.jpg";
+        } else if (numPoke === 4) {
+          modifPokeball4.src = "../images/PokeballGris.jpg";
+        } else if (numPoke === 5) {
+          modifPokeball5.src = "../images/PokeballGris.jpg";
+        } else if (numPoke === 6) {
+          modifPokeball6.src = "../images/PokeballGris.jpg";
+        }
+      }
     }
 
+    //Action de changement de pokemon
     function changementPoke(num) {
       const modifSprite = document.getElementById("pokemon");
       const modifNom = document.getElementById("nomPokeMAJ");
@@ -990,8 +991,12 @@
       const modifBadge4 = document.getElementById("badgeAtt4");
       const modifNomAtt4 = document.getElementById("nomAtt4");
 
+      let pvAvant = pvActu;
+
       if (num === 1) {
+        numPoke = 1;
         nombre = 0;
+        cranStat = [0, 0, 0, 0, 0];
 
         pv = Number("<%- pokemons[0].stats.pv %>");
         if (Number.isInteger(tabPVActu[0])) {
@@ -999,11 +1004,16 @@
         } else {
           pvActu = pv;
         }
-        attPoke = Number("<%- pokemons[0].stats.att %>");
-        defPoke = Number("<%- pokemons[0].stats.def %>");
-        attSPoke = Number("<%- pokemons[0].stats.attS %>");
-        defSPoke = Number("<%- pokemons[0].stats.defS %>");
-        vitPoke = Number("<%- pokemons[0].stats.vit %>");
+        attMaxPoke = Number("<%- pokemons[0].stats.att %>");
+        defMaxPoke = Number("<%- pokemons[0].stats.def %>");
+        attSMaxPoke = Number("<%- pokemons[0].stats.attS %>");
+        defSMaxPoke = Number("<%- pokemons[0].stats.defS %>");
+        vitMaxPoke = Number("<%- pokemons[0].stats.vit %>");
+        attPoke = attMaxPoke;
+        defPoke = defMaxPoke;
+        attSPoke = attSMaxPoke;
+        defSPoke = defSMaxPoke;
+        vitPoke = vitMaxPoke;
         attaque_dmg1 = Number("<%- pokemons[0].attaque1.puissance %>");
         attaque_dmg2 = Number("<%- pokemons[0].attaque2.puissance %>");
         attaque_dmg3 = Number("<%- pokemons[0].attaque3.puissance %>");
@@ -1020,8 +1030,6 @@
         attaque2Classe = "<%- pokemons[0].attaque2.classe %>";
         attaque3Classe = "<%- pokemons[0].attaque3.classe %>";
         attaque4Classe = "<%- pokemons[0].attaque4.classe %>";
-        type1VS = "<%- pokemonsVS[0].type1 %>";
-        type2VS = "<%- pokemonsVS[0].type2 %>";
         type1 = "<%- pokemons[0].type1 %>";
         type2 = "<%- pokemons[0].type2 %>";
 
@@ -1052,8 +1060,14 @@
         modifNomAtt3.textContent = "<%= pokemons[0].attaque3.nom %>";
         modifBadge4.textContent = "<%= pokemons[0].attaque4.type %>";
         modifNomAtt4.textContent = "<%= pokemons[0].attaque4.nom %>";
+
+        if (pvAvant !== 0) {
+          calculPV("switch");
+        }
       } else if (num === 2) {
+        numPoke = 2;
         nombre = 1;
+        cranStat = [0, 0, 0, 0, 0];
 
         pv = Number("<%- pokemons[1].stats.pv %>");
         if (Number.isInteger(tabPVActu[1])) {
@@ -1061,11 +1075,16 @@
         } else {
           pvActu = pv;
         }
-        attPoke = Number("<%- pokemons[1].stats.att %>");
-        defPoke = Number("<%- pokemons[1].stats.def %>");
-        attSPoke = Number("<%- pokemons[1].stats.attS %>");
-        defSPoke = Number("<%- pokemons[1].stats.defS %>");
-        vitPoke = Number("<%- pokemons[1].stats.vit %>");
+        attMaxPoke = Number("<%- pokemons[1].stats.att %>");
+        defMaxPoke = Number("<%- pokemons[1].stats.def %>");
+        attSMaxPoke = Number("<%- pokemons[1].stats.attS %>");
+        defSMaxPoke = Number("<%- pokemons[1].stats.defS %>");
+        vitMaxPoke = Number("<%- pokemons[1].stats.vit %>");
+        attPoke = attMaxPoke;
+        defPoke = defMaxPoke;
+        attSPoke = attSMaxPoke;
+        defSPoke = defSMaxPoke;
+        vitPoke = vitMaxPoke;
         attaque_dmg1 = Number("<%- pokemons[1].attaque1.puissance %>");
         attaque_dmg2 = Number("<%- pokemons[1].attaque2.puissance %>");
         attaque_dmg3 = Number("<%- pokemons[1].attaque3.puissance %>");
@@ -1112,8 +1131,14 @@
         modifNomAtt3.textContent = "<%= pokemons[1].attaque3.nom %>";
         modifBadge4.textContent = "<%= pokemons[1].attaque4.type %>";
         modifNomAtt4.textContent = "<%= pokemons[1].attaque4.nom %>";
+
+        if (pvAvant !== 0) {
+          calculPV("switch");
+        }
       } else if (num === 3) {
+        numPoke = 3;
         nombre = 2;
+        cranStat = [0, 0, 0, 0, 0];
 
         pv = Number("<%- pokemons[2].stats.pv %>");
         if (Number.isInteger(tabPVActu[2])) {
@@ -1121,11 +1146,16 @@
         } else {
           pvActu = pv;
         }
-        attPoke = Number("<%- pokemons[2].stats.att %>");
-        defPoke = Number("<%- pokemons[2].stats.def %>");
-        attSPoke = Number("<%- pokemons[2].stats.attS %>");
-        defSPoke = Number("<%- pokemons[2].stats.defS %>");
-        vitPoke = Number("<%- pokemons[2].stats.vit %>");
+        attMaxPoke = Number("<%- pokemons[2].stats.att %>");
+        defMaxPoke = Number("<%- pokemons[2].stats.def %>");
+        attSMaxPoke = Number("<%- pokemons[2].stats.attS %>");
+        defSMaxPoke = Number("<%- pokemons[2].stats.defS %>");
+        vitMaxPoke = Number("<%- pokemons[2].stats.vit %>");
+        attPoke = attMaxPoke;
+        defPoke = defMaxPoke;
+        attSPoke = attSMaxPoke;
+        defSPoke = defSMaxPoke;
+        vitPoke = vitMaxPoke;
         attaque_dmg1 = Number("<%- pokemons[2].attaque1.puissance %>");
         attaque_dmg2 = Number("<%- pokemons[2].attaque2.puissance %>");
         attaque_dmg3 = Number("<%- pokemons[2].attaque3.puissance %>");
@@ -1172,8 +1202,14 @@
         modifNomAtt3.textContent = "<%= pokemons[2].attaque3.nom %>";
         modifBadge4.textContent = "<%= pokemons[2].attaque4.type %>";
         modifNomAtt4.textContent = "<%= pokemons[2].attaque4.nom %>";
+
+        if (pvAvant !== 0) {
+          calculPV("switch");
+        }
       } else if (num === 4) {
+        numPoke = 4;
         nombre = 3;
+        cranStat = [0, 0, 0, 0, 0];
 
         pv = Number("<%- pokemons[3].stats.pv %>");
         if (Number.isInteger(tabPVActu[3])) {
@@ -1181,11 +1217,16 @@
         } else {
           pvActu = pv;
         }
-        attPoke = Number("<%- pokemons[3].stats.att %>");
-        defPoke = Number("<%- pokemons[3].stats.def %>");
-        attSPoke = Number("<%- pokemons[3].stats.attS %>");
-        defSPoke = Number("<%- pokemons[3].stats.defS %>");
-        vitPoke = Number("<%- pokemons[3].stats.vit %>");
+        attMaxPoke = Number("<%- pokemons[3].stats.att %>");
+        defMaxPoke = Number("<%- pokemons[3].stats.def %>");
+        attSMaxPoke = Number("<%- pokemons[3].stats.attS %>");
+        defSMaxPoke = Number("<%- pokemons[3].stats.defS %>");
+        vitMaxPoke = Number("<%- pokemons[3].stats.vit %>");
+        attPoke = attMaxPoke;
+        defPoke = defMaxPoke;
+        attSPoke = attSMaxPoke;
+        defSPoke = defSMaxPoke;
+        vitPoke = vitMaxPoke;
         attaque_dmg1 = Number("<%- pokemons[3].attaque1.puissance %>");
         attaque_dmg2 = Number("<%- pokemons[3].attaque2.puissance %>");
         attaque_dmg3 = Number("<%- pokemons[3].attaque3.puissance %>");
@@ -1232,8 +1273,14 @@
         modifNomAtt3.textContent = "<%= pokemons[3].attaque3.nom %>";
         modifBadge4.textContent = "<%= pokemons[3].attaque4.type %>";
         modifNomAtt4.textContent = "<%= pokemons[3].attaque4.nom %>";
+
+        if (pvAvant !== 0) {
+          calculPV("switch");
+        }
       } else if (num === 5) {
+        numPoke = 5;
         nombre = 4;
+        cranStat = [0, 0, 0, 0, 0];
 
         pv = Number("<%- pokemons[4].stats.pv %>");
         if (Number.isInteger(tabPVActu[4])) {
@@ -1241,11 +1288,16 @@
         } else {
           pvActu = pv;
         }
-        attPoke = Number("<%- pokemons[4].stats.att %>");
-        defPoke = Number("<%- pokemons[4].stats.def %>");
-        attSPoke = Number("<%- pokemons[4].stats.attS %>");
-        defSPoke = Number("<%- pokemons[4].stats.defS %>");
-        vitPoke = Number("<%- pokemons[4].stats.vit %>");
+        attMaxPoke = Number("<%- pokemons[4].stats.att %>");
+        defMaxPoke = Number("<%- pokemons[4].stats.def %>");
+        attSMaxPoke = Number("<%- pokemons[4].stats.attS %>");
+        defSMaxPoke = Number("<%- pokemons[4].stats.defS %>");
+        vitMaxPoke = Number("<%- pokemons[4].stats.vit %>");
+        attPoke = attMaxPoke;
+        defPoke = defMaxPoke;
+        attSPoke = attSMaxPoke;
+        defSPoke = defSMaxPoke;
+        vitPoke = vitMaxPoke;
         attaque_dmg1 = Number("<%- pokemons[4].attaque1.puissance %>");
         attaque_dmg2 = Number("<%- pokemons[4].attaque2.puissance %>");
         attaque_dmg3 = Number("<%- pokemons[4].attaque3.puissance %>");
@@ -1292,8 +1344,14 @@
         modifNomAtt3.textContent = "<%= pokemons[4].attaque3.nom %>";
         modifBadge4.textContent = "<%= pokemons[4].attaque4.type %>";
         modifNomAtt4.textContent = "<%= pokemons[4].attaque4.nom %>";
+
+        if (pvAvant !== 0) {
+          calculPV("switch");
+        }
       } else if (num === 6) {
+        numPoke = 6;
         nombre = 5;
+        cranStat = [0, 0, 0, 0, 0];
 
         pv = Number("<%- pokemons[5].stats.pv %>");
         if (Number.isInteger(tabPVActu[5])) {
@@ -1301,11 +1359,16 @@
         } else {
           pvActu = pv;
         }
-        attPoke = Number("<%- pokemons[5].stats.att %>");
-        defPoke = Number("<%- pokemons[5].stats.def %>");
-        attSPoke = Number("<%- pokemons[5].stats.attS %>");
-        defSPoke = Number("<%- pokemons[5].stats.defS %>");
-        vitPoke = Number("<%- pokemons[5].stats.vit %>");
+        attMaxPoke = Number("<%- pokemons[5].stats.att %>");
+        defMaxPoke = Number("<%- pokemons[5].stats.def %>");
+        attSMaxPoke = Number("<%- pokemons[5].stats.attS %>");
+        defSMaxPoke = Number("<%- pokemons[5].stats.defS %>");
+        vitMaxPoke = Number("<%- pokemons[5].stats.vit %>");
+        attPoke = attMaxPoke;
+        defPoke = defMaxPoke;
+        attSPoke = attSMaxPoke;
+        defSPoke = defSMaxPoke;
+        vitPoke = vitMaxPoke;
         attaque_dmg1 = Number("<%- pokemons[5].attaque1.puissance %>");
         attaque_dmg2 = Number("<%- pokemons[5].attaque2.puissance %>");
         attaque_dmg3 = Number("<%- pokemons[5].attaque3.puissance %>");
@@ -1352,6 +1415,284 @@
         modifNomAtt3.textContent = "<%= pokemons[5].attaque3.nom %>";
         modifBadge4.textContent = "<%= pokemons[5].attaque4.type %>";
         modifNomAtt4.textContent = "<%= pokemons[5].attaque4.nom %>";
+
+        if (pvAvant !== 0) {
+          calculPV("switch");
+        }
+      }
+    }
+
+    //Action de changement de pokemon adverse
+    function changementPokeVS(num) {
+      const modifSpriteVS = document.getElementById("pokemonVS");
+      const modifNomVS = document.getElementById("nomPokeMAJVS");
+      const modifBarreVS = document.getElementById("barrePokeVS");
+      const modifPVMaxVS = document.getElementById("pvMaxPokeVS");
+
+      if (num === 1) {
+        nombreVS = 0;
+        cranStatVS = [0, 0, 0, 0, 0];
+
+        pvVS = Number("<%- pokemonsVS[0].stats.pv %>");
+        if (Number.isInteger(tabPVActuVS[0])) {
+          pvActuVS = tabPVActuVS[0];
+        } else {
+          pvActuVS = pvVS;
+        }
+        attMaxPokeVS = Number("<%- pokemonsVS[0].stats.att %>");
+        defMaxPokeVS = Number("<%- pokemonsVS[0].stats.def %>");
+        attSMaxPokeVS = Number("<%- pokemonsVS[0].stats.attS %>");
+        defSMaxPokeVS = Number("<%- pokemonsVS[0].stats.defS %>");
+        vitMaxPokeVS = Number("<%- pokemonsVS[0].stats.vit %>");
+        attPokeVS = attMaxPokeVS;
+        defPokeVS = defMaxPokeVS;
+        attSPokeVS = attSMaxPokeVS;
+        defSPokeVS = defSMaxPokeVS;
+        vitPokeVS = vitMaxPokeVS;
+        attaque_dmg1VS = Number("<%- pokemonsVS[0].attaque1.puissance %>");
+        attaque_dmg2VS = Number("<%- pokemonsVS[0].attaque2.puissance %>");
+        attaque_dmg3VS = Number("<%- pokemonsVS[0].attaque3.puissance %>");
+        attaque_dmg4VS = Number("<%- pokemonsVS[0].attaque4.puissance %>");
+        attaque1TypeVS = "<%- pokemonsVS[0].attaque1.type %>";
+        attaque2TypeVS = "<%- pokemonsVS[0].attaque2.type %>";
+        attaque3TypeVS = "<%- pokemonsVS[0].attaque3.type %>";
+        attaque4TypeVS = "<%- pokemonsVS[0].attaque4.type %>";
+        attaque1NomVS = "<%- pokemonsVS[0].attaque1.nom %>";
+        attaque2NomVS = "<%- pokemonsVS[0].attaque2.nom %>";
+        attaque3NomVS = "<%- pokemonsVS[0].attaque3.nom %>";
+        attaque4NomVS = "<%- pokemonsVS[0].attaque4.nom %>";
+        attaque1ClasseVS = "<%- pokemonsVS[0].attaque1.classe %>";
+        attaque2ClasseVS = "<%- pokemonsVS[0].attaque2.classe %>";
+        attaque3ClasseVS = "<%- pokemonsVS[0].attaque3.classe %>";
+        attaque4ClasseVS = "<%- pokemonsVS[0].attaque4.classe %>";
+        type1VS = "<%- pokemonsVS[0].type1 %>";
+        type2VS = "<%- pokemonsVS[0].type2 %>";
+
+        modifSpriteVS.src = "<%- pokemonsVS[0].sprite %>";
+        modifNomVS.textContent = "<%= pokemonsVS[0].nom.toUpperCase() %>";
+        modifBarreVS.value = `${pvActuVS}`;
+        modifBarreVS.max = "<%= pokemonsVS[0].stats.pv %>";
+        modifPVMaxVS.textContent = `${pvActuVS}/<%= pokemonsVS[0].stats.pv %>`;
+      } else if (num === 2) {
+        nombreVS = 1;
+        cranStatVS = [0, 0, 0, 0, 0];
+
+        pvVS = Number("<%- pokemonsVS[1].stats.pv %>");
+        if (Number.isInteger(tabPVActuVS[1])) {
+          pvActuVS = tabPVActuVS[1];
+        } else {
+          pvActuVS = pvVS;
+        }
+        attMaxPokeVS = Number("<%- pokemonsVS[1].stats.att %>");
+        defMaxPokeVS = Number("<%- pokemonsVS[1].stats.def %>");
+        attSMaxPokeVS = Number("<%- pokemonsVS[1].stats.attS %>");
+        defSMaxPokeVS = Number("<%- pokemonsVS[1].stats.defS %>");
+        vitMaxPokeVS = Number("<%- pokemonsVS[1].stats.vit %>");
+        attPokeVS = attMaxPokeVS;
+        defPokeVS = defMaxPokeVS;
+        attSPokeVS = attSMaxPokeVS;
+        defSPokeVS = defSMaxPokeVS;
+        vitPokeVS = vitMaxPokeVS;
+        attaque_dmg1VS = Number("<%- pokemonsVS[1].attaque1.puissance %>");
+        attaque_dmg2VS = Number("<%- pokemonsVS[1].attaque2.puissance %>");
+        attaque_dmg3VS = Number("<%- pokemonsVS[1].attaque3.puissance %>");
+        attaque_dmg4VS = Number("<%- pokemonsVS[1].attaque4.puissance %>");
+        attaque1TypeVS = "<%- pokemonsVS[1].attaque1.type %>";
+        attaque2TypeVS = "<%- pokemonsVS[1].attaque2.type %>";
+        attaque3TypeVS = "<%- pokemonsVS[1].attaque3.type %>";
+        attaque4TypeVS = "<%- pokemonsVS[1].attaque4.type %>";
+        attaque1NomVS = "<%- pokemonsVS[1].attaque1.nom %>";
+        attaque2NomVS = "<%- pokemonsVS[1].attaque2.nom %>";
+        attaque3NomVS = "<%- pokemonsVS[1].attaque3.nom %>";
+        attaque4NomVS = "<%- pokemonsVS[1].attaque4.nom %>";
+        attaque1ClasseVS = "<%- pokemonsVS[1].attaque1.classe %>";
+        attaque2ClasseVS = "<%- pokemonsVS[1].attaque2.classe %>";
+        attaque3ClasseVS = "<%- pokemonsVS[1].attaque3.classe %>";
+        attaque4ClasseVS = "<%- pokemonsVS[1].attaque4.classe %>";
+        type1VS = "<%- pokemonsVS[1].type1 %>";
+        type2VS = "<%- pokemonsVS[1].type2 %>";
+
+        modifSpriteVS.src = "<%- pokemonsVS[1].sprite %>";
+        modifNomVS.textContent = "<%= pokemonsVS[1].nom.toUpperCase() %>";
+        modifBarreVS.value = `${pvActuVS}`;
+        modifBarreVS.max = "<%= pokemonsVS[1].stats.pv %>";
+        modifPVMaxVS.textContent = `${pvActuVS}/<%= pokemonsVS[1].stats.pv %>`;
+      } else if (num === 3) {
+        nombreVS = 2;
+        cranStatVS = [0, 0, 0, 0, 0];
+
+        pvVS = Number("<%- pokemonsVS[2].stats.pv %>");
+        if (Number.isInteger(tabPVActuVS[2])) {
+          pvActuVS = tabPVActuVS[2];
+        } else {
+          pvActuVS = pvVS;
+        }
+        attMaxPokeVS = Number("<%- pokemonsVS[2].stats.att %>");
+        defMaxPokeVS = Number("<%- pokemonsVS[2].stats.def %>");
+        attSMaxPokeVS = Number("<%- pokemonsVS[2].stats.attS %>");
+        defSMaxPokeVS = Number("<%- pokemonsVS[2].stats.defS %>");
+        vitMaxPokeVS = Number("<%- pokemonsVS[2].stats.vit %>");
+        attPokeVS = attMaxPokeVS;
+        defPokeVS = defMaxPokeVS;
+        attSPokeVS = attSMaxPokeVS;
+        defSPokeVS = defSMaxPokeVS;
+        vitPokeVS = vitMaxPokeVS;
+        attaque_dmg1VS = Number("<%- pokemonsVS[2].attaque1.puissance %>");
+        attaque_dmg2VS = Number("<%- pokemonsVS[2].attaque2.puissance %>");
+        attaque_dmg3VS = Number("<%- pokemonsVS[2].attaque3.puissance %>");
+        attaque_dmg4VS = Number("<%- pokemonsVS[2].attaque4.puissance %>");
+        attaque1TypeVS = "<%- pokemonsVS[2].attaque1.type %>";
+        attaque2TypeVS = "<%- pokemonsVS[2].attaque2.type %>";
+        attaque3TypeVS = "<%- pokemonsVS[2].attaque3.type %>";
+        attaque4TypeVS = "<%- pokemonsVS[2].attaque4.type %>";
+        attaque1NomVS = "<%- pokemonsVS[2].attaque1.nom %>";
+        attaque2NomVS = "<%- pokemonsVS[2].attaque2.nom %>";
+        attaque3NomVS = "<%- pokemonsVS[2].attaque3.nom %>";
+        attaque4NomVS = "<%- pokemonsVS[2].attaque4.nom %>";
+        attaque1ClasseVS = "<%- pokemonsVS[2].attaque1.classe %>";
+        attaque2ClasseVS = "<%- pokemonsVS[2].attaque2.classe %>";
+        attaque3ClasseVS = "<%- pokemonsVS[2].attaque3.classe %>";
+        attaque4ClasseVS = "<%- pokemonsVS[2].attaque4.classe %>";
+        type1VS = "<%- pokemonsVS[2].type1 %>";
+        type2VS = "<%- pokemonsVS[2].type2 %>";
+
+        modifSpriteVS.src = "<%- pokemonsVS[2].sprite %>";
+        modifNomVS.textContent = "<%= pokemonsVS[2].nom.toUpperCase() %>";
+        modifBarreVS.value = `${pvActuVS}`;
+        modifBarreVS.max = "<%= pokemonsVS[2].stats.pv %>";
+        modifPVMaxVS.textContent = `${pvActuVS}/<%= pokemonsVS[2].stats.pv %>`;
+      } else if (num === 4) {
+        nombreVS = 3;
+        cranStatVS = [0, 0, 0, 0, 0];
+
+        pvVS = Number("<%- pokemonsVS[3].stats.pv %>");
+        if (Number.isInteger(tabPVActuVS[3])) {
+          pvActuVS = tabPVActuVS[3];
+        } else {
+          pvActuVS = pvVS;
+        }
+        attMaxPokeVS = Number("<%- pokemonsVS[3].stats.att %>");
+        defMaxPokeVS = Number("<%- pokemonsVS[3].stats.def %>");
+        attSMaxPokeVS = Number("<%- pokemonsVS[3].stats.attS %>");
+        defSMaxPokeVS = Number("<%- pokemonsVS[3].stats.defS %>");
+        vitMaxPokeVS = Number("<%- pokemonsVS[3].stats.vit %>");
+        attPokeVS = attMaxPokeVS;
+        defPokeVS = defMaxPokeVS;
+        attSPokeVS = attSMaxPokeVS;
+        defSPokeVS = defSMaxPokeVS;
+        vitPokeVS = vitMaxPokeVS;
+        attaque_dmg1VS = Number("<%- pokemonsVS[3].attaque1.puissance %>");
+        attaque_dmg2VS = Number("<%- pokemonsVS[3].attaque2.puissance %>");
+        attaque_dmg3VS = Number("<%- pokemonsVS[3].attaque3.puissance %>");
+        attaque_dmg4VS = Number("<%- pokemonsVS[3].attaque4.puissance %>");
+        attaque1TypeVS = "<%- pokemonsVS[3].attaque1.type %>";
+        attaque2TypeVS = "<%- pokemonsVS[3].attaque2.type %>";
+        attaque3TypeVS = "<%- pokemonsVS[3].attaque3.type %>";
+        attaque4TypeVS = "<%- pokemonsVS[3].attaque4.type %>";
+        attaque1NomVS = "<%- pokemonsVS[3].attaque1.nom %>";
+        attaque2NomVS = "<%- pokemonsVS[3].attaque2.nom %>";
+        attaque3NomVS = "<%- pokemonsVS[3].attaque3.nom %>";
+        attaque4NomVS = "<%- pokemonsVS[3].attaque4.nom %>";
+        attaque1ClasseVS = "<%- pokemonsVS[3].attaque1.classe %>";
+        attaque2ClasseVS = "<%- pokemonsVS[3].attaque2.classe %>";
+        attaque3ClasseVS = "<%- pokemonsVS[3].attaque3.classe %>";
+        attaque4ClasseVS = "<%- pokemonsVS[3].attaque4.classe %>";
+        type1VS = "<%- pokemonsVS[3].type1 %>";
+        type2VS = "<%- pokemonsVS[3].type2 %>";
+
+        modifSpriteVS.src = "<%- pokemonsVS[3].sprite %>";
+        modifNomVS.textContent = "<%= pokemonsVS[3].nom.toUpperCase() %>";
+        modifBarreVS.value = `${pvActuVS}`;
+        modifBarreVS.max = "<%= pokemonsVS[3].stats.pv %>";
+        modifPVMaxVS.textContent = `${pvActuVS}/<%= pokemonsVS[3].stats.pv %>`;
+      } else if (num === 5) {
+        nombreVS = 4;
+        cranStatVS = [0, 0, 0, 0, 0];
+
+        pvVS = Number("<%- pokemonsVS[4].stats.pv %>");
+        if (Number.isInteger(tabPVActuVS[4])) {
+          pvActuVS = tabPVActuVS[4];
+        } else {
+          pvActuVS = pvVS;
+        }
+        attMaxPokeVS = Number("<%- pokemonsVS[4].stats.att %>");
+        defMaxPokeVS = Number("<%- pokemonsVS[4].stats.def %>");
+        attSMaxPokeVS = Number("<%- pokemonsVS[4].stats.attS %>");
+        defSMaxPokeVS = Number("<%- pokemonsVS[4].stats.defS %>");
+        vitMaxPokeVS = Number("<%- pokemonsVS[4].stats.vit %>");
+        attPokeVS = attMaxPokeVS;
+        defPokeVS = defMaxPokeVS;
+        attSPokeVS = attSMaxPokeVS;
+        defSPokeVS = defSMaxPokeVS;
+        vitPokeVS = vitMaxPokeVS;
+        attaque_dmg1VS = Number("<%- pokemonsVS[4].attaque1.puissance %>");
+        attaque_dmg2VS = Number("<%- pokemonsVS[4].attaque2.puissance %>");
+        attaque_dmg3VS = Number("<%- pokemonsVS[4].attaque3.puissance %>");
+        attaque_dmg4VS = Number("<%- pokemonsVS[4].attaque4.puissance %>");
+        attaque1TypeVS = "<%- pokemonsVS[4].attaque1.type %>";
+        attaque2TypeVS = "<%- pokemonsVS[4].attaque2.type %>";
+        attaque3TypeVS = "<%- pokemonsVS[4].attaque3.type %>";
+        attaque4TypeVS = "<%- pokemonsVS[4].attaque4.type %>";
+        attaque1NomVS = "<%- pokemonsVS[4].attaque1.nom %>";
+        attaque2NomVS = "<%- pokemonsVS[4].attaque2.nom %>";
+        attaque3NomVS = "<%- pokemonsVS[4].attaque3.nom %>";
+        attaque4NomVS = "<%- pokemonsVS[4].attaque4.nom %>";
+        attaque1ClasseVS = "<%- pokemonsVS[4].attaque1.classe %>";
+        attaque2ClasseVS = "<%- pokemonsVS[4].attaque2.classe %>";
+        attaque3ClasseVS = "<%- pokemonsVS[4].attaque3.classe %>";
+        attaque4ClasseVS = "<%- pokemonsVS[4].attaque4.classe %>";
+        type1VS = "<%- pokemonsVS[4].type1 %>";
+        type2VS = "<%- pokemonsVS[4].type2 %>";
+
+        modifSpriteVS.src = "<%- pokemonsVS[4].sprite %>";
+        modifNomVS.textContent = "<%= pokemonsVS[4].nom.toUpperCase() %>";
+        modifBarreVS.value = `${pvActuVS}`;
+        modifBarreVS.max = "<%= pokemonsVS[4].stats.pv %>";
+        modifPVMaxVS.textContent = `${pvActuVS}/<%= pokemonsVS[4].stats.pv %>`;
+      } else if (num === 6) {
+        nombreVS = 5;
+        cranStatVS = [0, 0, 0, 0, 0];
+
+        pvVS = Number("<%- pokemonsVS[5].stats.pv %>");
+        if (Number.isInteger(tabPVActuVS[5])) {
+          pvActuVS = tabPVActuVS[5];
+        } else {
+          pvActuVS = pvVS;
+        }
+        attMaxPokeVS = Number("<%- pokemonsVS[5].stats.att %>");
+        defMaxPokeVS = Number("<%- pokemonsVS[5].stats.def %>");
+        attSMaxPokeVS = Number("<%- pokemonsVS[5].stats.attS %>");
+        defSMaxPokeVS = Number("<%- pokemonsVS[5].stats.defS %>");
+        vitMaxPokeVS = Number("<%- pokemonsVS[5].stats.vit %>");
+        attPokeVS = attMaxPokeVS;
+        defPokeVS = defMaxPokeVS;
+        attSPokeVS = attSMaxPokeVS;
+        defSPokeVS = defSMaxPokeVS;
+        vitPokeVS = vitMaxPokeVS;
+        attaque_dmg1VS = Number("<%- pokemonsVS[5].attaque1.puissance %>");
+        attaque_dmg2VS = Number("<%- pokemonsVS[5].attaque2.puissance %>");
+        attaque_dmg3VS = Number("<%- pokemonsVS[5].attaque3.puissance %>");
+        attaque_dmg4VS = Number("<%- pokemonsVS[5].attaque4.puissance %>");
+        attaque1TypeVS = "<%- pokemonsVS[5].attaque1.type %>";
+        attaque2TypeVS = "<%- pokemonsVS[5].attaque2.type %>";
+        attaque3TypeVS = "<%- pokemonsVS[5].attaque3.type %>";
+        attaque4TypeVS = "<%- pokemonsVS[5].attaque4.type %>";
+        attaque1NomVS = "<%- pokemonsVS[5].attaque1.nom %>";
+        attaque2NomVS = "<%- pokemonsVS[5].attaque2.nom %>";
+        attaque3NomVS = "<%- pokemonsVS[5].attaque3.nom %>";
+        attaque4NomVS = "<%- pokemonsVS[5].attaque4.nom %>";
+        attaque1ClasseVS = "<%- pokemonsVS[5].attaque1.classe %>";
+        attaque2ClasseVS = "<%- pokemonsVS[5].attaque2.classe %>";
+        attaque3ClasseVS = "<%- pokemonsVS[5].attaque3.classe %>";
+        attaque4ClasseVS = "<%- pokemonsVS[5].attaque4.classe %>";
+        type1VS = "<%- pokemonsVS[5].type1 %>";
+        type2VS = "<%- pokemonsVS[5].type2 %>";
+
+        modifSpriteVS.src = "<%- pokemonsVS[5].sprite %>";
+        modifNomVS.textContent = "<%= pokemonsVS[5].nom.toUpperCase() %>";
+        modifBarreVS.value = `${pvActuVS}`;
+        modifBarreVS.max = "<%= pokemonsVS[5].stats.pv %>";
+        modifPVMaxVS.textContent = `${pvActuVS}/<%= pokemonsVS[5].stats.pv %>`;
       }
     }
   </script>

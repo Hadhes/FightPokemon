@@ -857,9 +857,9 @@ router.get("/combat", function (req, res, next) {
   }
 
   let tabPokemonsVS = [];
-  for (let j = 1; j < 3; j++) {
+  for (let j = 1; j < 7; j++) {
     // Recherche pokemon adverse
-    let number = Math.floor(Math.random() * 152);
+    let number = Math.floor(Math.random() * 387);
     if (number === 0) {
       number = 1;
     }
