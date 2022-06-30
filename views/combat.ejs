@@ -757,21 +757,21 @@
         // attS = baisseStat("attS", 1);
       } else if (nomAttaque === "Mimi-Queue") {
         if (joueur === true) {
-          return (defVS = baisseStat("def", 1));
+          return (defVS = baisseStat("def", 1, tabStatutPermaVS[num - 1]));
         } else if (joueur === false) {
-          return (def = baisseStat("def", 1));
+          return (def = baisseStat("def", 1, tabStatutPermaVS[num - 1]));
         }
       } else if (nomAttaque === "Danse Lames") {
         if (joueur === true) {
-          return (att = augmenteStat("att", 2));
+          return (att = augmenteStat("att", 2, tabStatutPermaVS[num - 1]));
         } else if (joueur === false) {
-          return (attVS = augmenteStat("att", 2));
+          return (attVS = augmenteStat("att", 2, tabStatutPermaVS[num - 1]));
         }
       } else if (nomAttaque === "Hâte") {
         if (joueur === true) {
-          return (att = augmenteStat("vit", 2));
+          return (att = augmenteStat("vit", 2, tabStatutPermaVS[num - 1]));
         } else if (joueur === false) {
-          return (attVS = augmenteStat("vit", 2));
+          return (attVS = augmenteStat("vit", 2, tabStatutPermaVS[num - 1]));
         }
       } else if (nomAttaque === "Toxik") {
         if (joueur === true) {
@@ -880,6 +880,7 @@
       nomAttaqueVS,
       typeAttaqueVS
     ) {
+      console.log("statAttStatutDébutPermaPoke", statAtt);
       let resultatStatut = {};
       if (statut === "Brûlure") {
         if (countBru === 0) {
@@ -974,6 +975,16 @@
             statVit,
           });
         }
+      } else {
+        return (resultatStatut = {
+          statAtt,
+          countBru,
+          count,
+          stat0,
+          statut: "Sommeil",
+          countPara,
+          statVit,
+        });
       }
     }
 
@@ -1431,6 +1442,9 @@
             );
             tabCountStatutPermaVS[numPokeVS - 1] = 0;
           }
+          // else if (tabStatutPermaVS[numPokeVS - 1] === "Brûlure") {
+
+          // }
 
           pvActu = Math.round(
             pvActu -
