@@ -142,6 +142,22 @@
 
     let tabPVActu = new Array(6);
     let tabPVActuVS = new Array(6);
+    let tabStatut = ["Vide", "Vide", "Vide", "Vide", "Vide", "Vide"];
+    let tabStatutVS = ["Vide", "Vide", "Vide", "Vide", "Vide", "Vide"];
+    let tabStatutPerma = ["Vide", "Vide", "Vide", "Vide", "Vide", "Vide"];
+    let tabStatutPermaVS = ["Vide", "Vide", "Vide", "Vide", "Vide", "Vide"];
+    let tabCountStatutPerma = [0, 0, 0, 0, 0, 0];
+    let tabCountStatutPermaVS = [0, 0, 0, 0, 0, 0];
+
+    let bru = 0;
+    let bruVS = 0;
+
+    let para = 0;
+    let paraVS = 0;
+
+    let pois = 0;
+    let poisVS = 0;
+
     let nombre = 0;
     let nombreVS = 0;
 
@@ -289,6 +305,37 @@
         colorAttaque4;
     };
 
+    // Calcule du pourcentage pour le calcul de changement de stats
+    function pourcentage(cran, pourcentageV) {
+      if (cran === 0) {
+        return (pourcentageV = 100);
+      } else if (cran === -1) {
+        return (pourcentageV = 67);
+      } else if (cran === -2) {
+        return (pourcentageV = 50);
+      } else if (cran === -3) {
+        return (pourcentageV = 40);
+      } else if (cran === -4) {
+        return (pourcentageV = 33);
+      } else if (cran === -5) {
+        return (pourcentageV = 29);
+      } else if (cran <= -6) {
+        return (pourcentageV = 25);
+      } else if (cran === 1) {
+        return (pourcentageV = 150);
+      } else if (cran === 2) {
+        return (pourcentageV = 200);
+      } else if (cran === 3) {
+        return (pourcentageV = 250);
+      } else if (cran === 4) {
+        return (pourcentageV = 300);
+      } else if (cran === 5) {
+        return (pourcentageV = 350);
+      } else if (cran >= 6) {
+        return (pourcentageV = 400);
+      }
+    }
+
     let cranStat = [0, 0, 0, 0, 0];
     let cranStatVS = [0, 0, 0, 0, 0];
 
@@ -304,43 +351,15 @@
     const badgeDefSVS = document.getElementById("defSVS");
     const badgeVitVS = document.getElementById("vitVS");
 
-    // Calcule du pourcentage pour le calcul de changement de stats
-    function pourcentage(cran, pourcentageV) {
-      if (cran === 0) {
-        return (pourcentageV = 100);
-      } else if (cran === -1) {
-        return (pourcentageV = 67);
-      } else if (cran === -2) {
-        return (pourcentageV = 50);
-      } else if (cran === -3) {
-        return (pourcentageV = 40);
-      } else if (cran === -4) {
-        return (pourcentageV = 33);
-      } else if (cran === -5) {
-        return (pourcentageV = 29);
-      } else if (cran === -6) {
-        return (pourcentageV = 25);
-      } else if (cran === 1) {
-        return (pourcentageV = 150);
-      } else if (cran === 2) {
-        return (pourcentageV = 200);
-      } else if (cran === 3) {
-        return (pourcentageV = 250);
-      } else if (cran === 4) {
-        return (pourcentageV = 300);
-      } else if (cran === 5) {
-        return (pourcentageV = 350);
-      } else if (cran === 6) {
-        return (pourcentageV = 400);
-      }
-    }
-
     // Baisse des stats avec une attaque
-    function baisseStat(stat, num) {
+    function baisseStat(stat, num, statut) {
       let pourcentageT = 100;
       if (joueur === false) {
         if (stat === "att") {
           cranStat[0] = cranStat[0] - num;
+          if (cranStat[0] <= -6) {
+            cranStat[0] = -6;
+          }
           pourcentageT = pourcentage(cranStat[0], pourcentageT);
           if (cranStat[0] < 0) {
             badgeAtt.textContent = "att" + cranStat[0];
@@ -352,9 +371,17 @@
             badgeAtt.textContent = "";
             badgeAtt.style.backgroundColor = "rgb(255, 223, 148)";
           }
-          return (attPoke = (attMaxPoke * pourcentageT) / 100);
+          if (statut === "Brûlure") {
+            return (attPoke = (attMaxPoke * pourcentageT) / 100 / 2);
+          } else {
+            return (attPoke = (attMaxPoke * pourcentageT) / 100);
+          }
         } else if (stat === "def") {
           cranStat[1] = cranStat[1] - num;
+          if (cranStat[1] <= -6) {
+            cranStat[1] = -6;
+          }
+          1;
           pourcentageT = pourcentage(cranStat[1], pourcentageT);
           if (cranStat[1] < 0) {
             badgeDef.textContent = "def" + cranStat[1];
@@ -369,6 +396,9 @@
           return (defPoke = (defMaxPoke * pourcentageT) / 100);
         } else if (stat === "attS") {
           cranStat[2] = cranStat[2] - num;
+          if (cranStat[2] <= -6) {
+            cranStat[2] = -6;
+          }
           pourcentageT = pourcentage(cranStat[2], pourcentageT);
           if (cranStat[2] < 0) {
             badgeAttS.textContent = "attS" + cranStat[2];
@@ -383,6 +413,9 @@
           return (attSPoke = (attSMaxPoke * pourcentageT) / 100);
         } else if (stat === "defS") {
           cranStat[3] = cranStat[3] - num;
+          if (cranStat[3] <= -6) {
+            cranStat[3] = -6;
+          }
           pourcentageT = pourcentage(cranStat[3], pourcentageT);
           if (cranStat[3] < 0) {
             badgeDefS.textContent = "defS" + cranStat[3];
@@ -397,6 +430,9 @@
           return (defSPoke = (defSMaxPoke * pourcentageT) / 100);
         } else if (stat === "vit") {
           cranStat[4] = cranStat[4] - num;
+          if (cranStat[4] <= -6) {
+            cranStat[4] = -6;
+          }
           pourcentageT = pourcentage(cranStat[4], pourcentageT);
           if (cranStat[4] < 0) {
             badgevit.textContent = "vit" + cranStat[4];
@@ -408,11 +444,18 @@
             badgevit.textContent = "";
             badgevit.style.backgroundColor = "rgb(255, 223, 148)";
           }
-          return (vitPoke = (vitMaxPoke * pourcentageT) / 100);
+          if (statut === "Paralysie") {
+            return (vitPoke = (vitMaxPoke * pourcentageT) / 100 / 2);
+          } else {
+            return (vitPoke = (vitMaxPoke * pourcentageT) / 100);
+          }
         }
       } else if (joueur === true) {
         if (stat === "att") {
           cranStatVS[0] = cranStatVS[0] - num;
+          if (cranStatVS[0] <= -6) {
+            cranStatVS[0] = -6;
+          }
           pourcentageT = pourcentage(cranStatVS[0], pourcentageT);
           if (cranStatVS[0] < 0) {
             badgeAttVS.textContent = "att" + cranStatVS[0];
@@ -424,9 +467,16 @@
             badgeAttVS.textContent = "";
             badgeAttVS.style.backgroundColor = "rgb(255, 223, 148)";
           }
-          return (attPokeVS = (attMaxPokeVS * pourcentageT) / 100);
+          if (statut === "Brûlure") {
+            return (attPokeVS = (attMaxPokeVS * pourcentageT) / 100 / 2);
+          } else {
+            return (attPokeVS = (attMaxPokeVS * pourcentageT) / 100);
+          }
         } else if (stat === "def") {
           cranStatVS[1] = cranStatVS[1] - num;
+          if (cranStatVS[1] <= -6) {
+            cranStatVS[1] = -6;
+          }
           pourcentageT = pourcentage(cranStatVS[1], pourcentageT);
           if (cranStatVS[1] < 0) {
             badgeDefVS.textContent = "def" + cranStatVS[1];
@@ -441,6 +491,9 @@
           return (defPokeVS = (defMaxPokeVS * pourcentageT) / 100);
         } else if (stat === "attS") {
           cranStatVS[2] = cranStatVS[2] - num;
+          if (cranStatVS[2] <= -6) {
+            cranStatVS[2] = -6;
+          }
           pourcentageT = pourcentage(cranStatVS[2], pourcentageT);
           if (cranStatVS[2] < 0) {
             badgeAttSVS.textContent = "attS" + cranStatVS[2];
@@ -455,6 +508,9 @@
           return (attSPokeVS = (attSMaxPokeVS * pourcentageT) / 100);
         } else if (stat === "defS") {
           cranStatVS[3] = cranStatVS[3] - num;
+          if (cranStatVS[3] <= -6) {
+            cranStatVS[3] = -6;
+          }
           pourcentageT = pourcentage(cranStatVS[3], pourcentageT);
           if (cranStatVS[3] < 0) {
             badgeDefSVS.textContent = "defS" + cranStatVS[3];
@@ -469,6 +525,9 @@
           return (defSPokeVS = (defSMaxPokeVS * pourcentageT) / 100);
         } else if (stat === "vit") {
           cranStatVS[4] = cranStatVS[4] - num1;
+          if (cranStatVS[4] <= -6) {
+            cranStatVS[4] = -6;
+          }
           pourcentageT = pourcentage(cranStatVS[4], pourcentageT);
           if (cranStatVS[4] < 0) {
             badgeVitVS.textContent = "vit" + cranStatVS[4];
@@ -480,17 +539,24 @@
             badgeVitVS.textContent = "";
             badgeVitVS.style.backgroundColor = "rgb(255, 223, 148)";
           }
-          return (vitPokeVS = (vitMaxPokeVS * pourcentageT) / 100);
+          if (statut === "Paralysie") {
+            return (vitPokeVS = (vitMaxPokeVS * pourcentageT) / 100 / 2);
+          } else {
+            return (vitPokeVS = (vitMaxPokeVS * pourcentageT) / 100);
+          }
         }
       }
     }
 
     // Augmentation des stats avec une attaque
-    function augmenteStat(stat, num) {
+    function augmenteStat(stat, num, statut) {
       let pourcentageT = 100;
       if (joueur === true) {
         if (stat === "att") {
           cranStat[0] = cranStat[0] + num;
+          if (cranStat[0] >= 6) {
+            cranStat[0] = 6;
+          }
           pourcentageT = pourcentage(cranStat[0], pourcentageT);
           if (cranStat[0] < 0) {
             badgeAtt.textContent = "att" + cranStat[0];
@@ -502,9 +568,16 @@
             badgeAtt.textContent = "";
             badgeAtt.style.backgroundColor = "rgb(255, 223, 148)";
           }
-          return (attPoke = (attMaxPoke * pourcentageT) / 100);
+          if (statut === "Brûlure") {
+            return (attPoke = (attMaxPoke * pourcentageT) / 100 / 2);
+          } else {
+            return (attPoke = (attMaxPoke * pourcentageT) / 100);
+          }
         } else if (stat === "def") {
           cranStat[1] = cranStat[1] + num;
+          if (cranStat[1] >= 6) {
+            cranStat[1] = 6;
+          }
           pourcentageT = pourcentage(cranStat[1], pourcentageT);
           if (cranStat[1] < 0) {
             badgeDef.textContent = "def" + cranStat[1];
@@ -519,6 +592,9 @@
           return (defPoke = (defMaxPoke * pourcentageT) / 100);
         } else if (stat === "attS") {
           cranStat[2] = cranStat[2] + num;
+          if (cranStat[2] >= 6) {
+            cranStat[2] = 6;
+          }
           pourcentageT = pourcentage(cranStat[2], pourcentageT);
           if (cranStat[2] < 0) {
             badgeAttS.textContent = "attS" + cranStat[2];
@@ -533,6 +609,9 @@
           return (attSPoke = (attSMaxPoke * pourcentageT) / 100);
         } else if (stat === "defS") {
           cranStat[3] = cranStat[3] + num;
+          if (cranStat[3] >= 6) {
+            cranStat[3] = 6;
+          }
           pourcentageT = pourcentage(cranStat[3], pourcentageT);
           if (cranStat[3] < 0) {
             badgeDefS.textContent = "defS" + cranStat[3];
@@ -547,6 +626,9 @@
           return (defSPoke = (defSMaxPoke * pourcentageT) / 100);
         } else if (stat === "vit") {
           cranStat[4] = cranStat[4] + num;
+          if (cranStat[4] >= 6) {
+            cranStat[4] = 6;
+          }
           pourcentageT = pourcentage(cranStat[4], pourcentageT);
           if (cranStat[4] < 0) {
             badgeVit.textContent = "vit" + cranStat[4];
@@ -558,11 +640,18 @@
             badgeVit.textContent = "";
             badgeVit.style.backgroundColor = "rgb(255, 223, 148)";
           }
-          return (vitPoke = (vitMaxPoke * pourcentageT) / 100);
+          if (statut === "Paralysie") {
+            return (vitPoke = (vitMaxPoke * pourcentageT) / 100 / 2);
+          } else {
+            return (vitPoke = (vitMaxPoke * pourcentageT) / 100);
+          }
         }
       } else if (joueur === false) {
         if (stat === "att") {
           cranStatVS[0] = cranStatVS[0] + num;
+          if (cranStatVS[0] >= 6) {
+            cranStatVS[0] = 6;
+          }
           pourcentageT = pourcentage(cranStatVS[0], pourcentageT);
           if (cranStatVS[0] < 0) {
             badgeAttVS.textContent = "att" + cranStatVS[0];
@@ -574,9 +663,16 @@
             badgeAttVS.textContent = "";
             badgeAttVS.style.backgroundColor = "rgb(255, 223, 148)";
           }
-          return (attPokeVS = (attMaxPokeVS * pourcentageT) / 100);
+          if (statut === "Brûlure") {
+            return (attPokeVS = (attMaxPokeVS * pourcentageT) / 100 / 2);
+          } else {
+            return (attPokeVS = (attMaxPokeVS * pourcentageT) / 100);
+          }
         } else if (stat === "def") {
           cranStatVS[1] = cranStatVS[1] + num;
+          if (cranStatVS[1] >= 6) {
+            cranStatVS[1] = 6;
+          }
           pourcentageT = pourcentage(cranStatVS[1], pourcentageT);
           if (cranStatVS[1] < 0) {
             badgeDefVS.textContent = "def" + cranStatVS[1];
@@ -591,6 +687,9 @@
           return (defPokeVS = (defMaxPokeVS * pourcentageT) / 100);
         } else if (stat === "attS") {
           cranStatVS[2] = cranStatVS[2] + num;
+          if (cranStatVS[2] >= 6) {
+            cranStatVS[2] = 6;
+          }
           pourcentageT = pourcentage(cranStatVS[2], pourcentageT);
           if (cranStatVS[2] < 0) {
             badgeAttSVS.textContent = "attS" + cranStatVS[2];
@@ -605,6 +704,9 @@
           return (attSPokeVS = (attSMaxPokeVS * pourcentageT) / 100);
         } else if (stat === "defS") {
           cranStatVS[3] = cranStatVS[3] + num;
+          if (cranStatVS[3] >= 6) {
+            cranStatVS[3] = 6;
+          }
           pourcentageT = pourcentage(cranStatVS[3], pourcentageT);
           if (cranStatVS[3] < 0) {
             badgeDefSVS.textContent = "defS" + cranStatVS[3];
@@ -619,6 +721,9 @@
           return (defSPokeVS = (defSMaxPokeVS * pourcentageT) / 100);
         } else if (stat === "vit") {
           cranStatVS[4] = cranStatVS[4] + num1;
+          if (cranStatVS[4] >= 6) {
+            cranStatVS[4] = 6;
+          }
           pourcentageT = pourcentage(cranStatVS[4], pourcentageT);
           if (cranStatVS[4] < 0) {
             badgeVitVS.textContent = "vit" + cranStatVS[4];
@@ -630,40 +735,316 @@
             badgeVitVS.textContent = "";
             badgeVitVS.style.backgroundColor = "rgb(255, 223, 148)";
           }
-          return (vitPokeVS = (vitMaxPokeVS * pourcentageT) / 100);
+          if (statut === "Paralysie") {
+            return (vitPokeVS = (vitMaxPokeVS * pourcentageT) / 100 / 2);
+          } else {
+            return (vitPokeVS = (vitMaxPokeVS * pourcentageT) / 100);
+          }
         }
       }
     }
 
     // Effet attaque
-    function effetAtt(nomAttaque) {
+    function effetAtt(nomAttaque, num, type1, type2, type1VS, type2VS) {
       if (nomAttaque === "À la Queue") {
         console.log("Raté...");
       } else if (nomAttaque === "Abattage") {
-        attPokeVS = (attPokeVS * 67) / 100;
+        // attPokeVS = (attPokeVS * 67) / 100;
       } else if (nomAttaque === "Abîme") {
-        PVActuVS = 0;
+        // return PVActuVS = 0;
       } else if (nomAttaque === "Aboiement") {
-        attSPokeVS = (attSPokeVS * 67) / 100;
-        attS = baisseStat("attS", 1);
+        // attSPokeVS = (attSPokeVS * 67) / 100;
+        // attS = baisseStat("attS", 1);
       } else if (nomAttaque === "Mimi-Queue") {
         if (joueur === true) {
-          defVS = baisseStat("att", 1);
+          return (defVS = baisseStat("def", 1));
         } else if (joueur === false) {
-          def = baisseStat("att", 1);
+          return (def = baisseStat("def", 1));
         }
       } else if (nomAttaque === "Danse Lames") {
         if (joueur === true) {
-          att = augmenteStat("att", 2);
+          return (att = augmenteStat("att", 2));
         } else if (joueur === false) {
-          attVS = augmenteStat("att", 2);
+          return (attVS = augmenteStat("att", 2));
         }
       } else if (nomAttaque === "Hâte") {
         if (joueur === true) {
-          att = augmenteStat("vit", 2);
+          return (att = augmenteStat("vit", 2));
         } else if (joueur === false) {
-          attVS = augmenteStat("vit", 2);
+          return (attVS = augmenteStat("vit", 2));
         }
+      } else if (nomAttaque === "Toxik") {
+        if (joueur === true) {
+          if (
+            tabStatutPermaVS[num - 1] === "Vide" &&
+            type1VS !== "poison" &&
+            type2VS !== "poison"
+          ) {
+            badgeStatutPermaPoke("Empoisonnement grave", badgeStatutVS);
+            colorStatutPermaPoke("Empoisonnement grave", badgeStatutVS);
+            return (tabStatutPermaVS[num - 1] = "Empoisonnement grave");
+          }
+        } else if (joueur === false) {
+          if (
+            tabStatutPerma[num - 1] === "Vide" &&
+            type1VS !== "poison" &&
+            type2VS !== "poison"
+          ) {
+            badgeStatutPermaPoke("Empoisonnement grave", badgeStatut);
+            colorStatutPermaPoke("Empoisonnement grave", badgeStatut);
+            return (tabStatutPerma[num - 1] = "Empoisonnement grave");
+          }
+        }
+      } else if (nomAttaque === "Feu Follet") {
+        if (joueur === true) {
+          if (
+            tabStatutPermaVS[num - 1] === "Vide" &&
+            type1VS !== "fire" &&
+            type2VS !== "fire"
+          ) {
+            badgeStatutPermaPoke("Brûlure", badgeStatutVS);
+            colorStatutPermaPoke("Brûlure", badgeStatutVS);
+            return (tabStatutPermaVS[num - 1] = "Brûlure");
+          }
+        } else if (joueur === false) {
+          if (
+            tabStatutPerma[num - 1] === "Vide" &&
+            type1VS !== "fire" &&
+            type2VS !== "fire"
+          ) {
+            badgeStatutPermaPoke("Brûlure", badgeStatut);
+            colorStatutPermaPoke("Brûlure", badgeStatut);
+            return (tabStatutPerma[num - 1] = "Brûluree");
+          }
+        }
+      } else if (nomAttaque === "Poudre Dodo") {
+        if (joueur === true) {
+          if (tabStatutPermaVS[num - 1] === "Vide") {
+            badgeStatutPermaPoke("Sommeil", badgeStatutVS);
+            colorStatutPermaPoke("Sommeil", badgeStatutVS);
+            return (tabStatutPermaVS[num - 1] = "Sommeil");
+          }
+        } else if (joueur === false) {
+          if (tabStatutPerma[num - 1] === "Vide") {
+            badgeStatutPermaPoke("Sommeil", badgeStatut);
+            colorStatutPermaPoke("Sommeil", badgeStatut);
+            return (tabStatutPerma[num - 1] = "Sommeil");
+          }
+        }
+      } else if (nomAttaque === "Cage Éclair") {
+        if (joueur === true) {
+          if (
+            tabStatutPermaVS[num - 1] === "Vide" &&
+            type1VS !== "electric" &&
+            type2VS !== "electric" &&
+            type1VS !== "ground" &&
+            type2VS !== "ground"
+          ) {
+            badgeStatutPermaPoke("Paralysie", badgeStatutVS);
+            colorStatutPermaPoke("Paralysie", badgeStatutVS);
+            return (tabStatutPermaVS[num - 1] = "Paralysie");
+          }
+        } else if (joueur === false) {
+          if (
+            tabStatutPerma[num - 1] === "Vide" &&
+            type1 !== "electric" &&
+            type2 !== "electric" &&
+            type1 !== "ground" &&
+            type2 !== "ground"
+          ) {
+            badgeStatutPermaPoke("Paralysie", badgeStatut);
+            colorStatutPermaPoke("Paralysie", badgeStatut);
+            return (tabStatutPerma[num - 1] = "Paralysie");
+          }
+        }
+      }
+      // } else if (attaqueFeu) {
+      //   if (pokemon !== String) {
+      //     pokemon.push("Brûlure")
+      //   }Poudre Dodo
+    }
+
+    // Effet Statuts
+    const badgeStatutVS = document.getElementById("statutVS");
+    const badgeStatut = document.getElementById("statut");
+
+    function statutDébutPermaPoke(
+      statut,
+      statAtt,
+      statVit,
+      stat0,
+      count,
+      countBru,
+      countPara,
+      nomAttaque,
+      nomAttaqueVS,
+      typeAttaqueVS
+    ) {
+      let resultatStatut = {};
+      if (statut === "Brûlure") {
+        if (countBru === 0) {
+          statAtt = statAtt / 2;
+          countBru = 1;
+        }
+        return (resultatStatut = {
+          statAtt,
+          countBru,
+          count,
+          stat0,
+          statut: "Brûlure",
+          countPara,
+          statVit,
+        });
+      } else if (statut === "Gel") {
+        if (count < 5) {
+          let aleatoire = Math.floor(Math.random() * 5);
+          if (
+            aleatoire === 0 ||
+            count === 5 ||
+            nomAttaque === "Roue de feu" ||
+            nomAttaque === "Feu sacré" ||
+            nomAttaque === "Boutefeu" ||
+            nomAttaque === "Ebullition" ||
+            nomAttaque === "Flamme croix" ||
+            typeAttaqueVS === "fire" ||
+            nomAttaqueVS === "Ebullition"
+          ) {
+            return (resultatStatut = {
+              statAtt,
+              countBru,
+              count,
+              stat0,
+              statut: "Vide",
+              countPara,
+              statVit,
+            });
+          } else {
+            count = count + 1;
+            stat0 = 0;
+            return (resultatStatut = {
+              statAtt,
+              countBru,
+              count,
+              stat0,
+              statut: "Gel",
+              countPara,
+              statVit,
+            });
+          }
+        }
+      } else if (statut === "Paralysie") {
+        let aleatoire = Math.floor(Math.random() * 4);
+        if (countPara === 0) {
+          statVit = statVit / 2;
+          countPara = 1;
+        }
+        if (aleatoire === 0) {
+          stat0 = 0;
+        }
+        return (resultatStatut = {
+          statAtt,
+          countBru,
+          count,
+          stat0,
+          statut: "Paralysie",
+          countPara,
+          statVit,
+        });
+      } else if (statut === "Sommeil") {
+        let aleatoire = Math.floor(Math.random() * 3);
+        if (aleatoire === 0 || count === 3) {
+          return (resultatStatut = {
+            statAtt,
+            countBru,
+            count,
+            stat0,
+            statut: "Vide",
+            countPara,
+            statVit,
+          });
+        } else {
+          count = count + 1;
+          return (resultatStatut = {
+            statAtt,
+            countBru,
+            count,
+            stat0,
+            statut: "Sommeil",
+            countPara,
+            statVit,
+          });
+        }
+      }
+    }
+
+    function statutFinPermaPoke(statut, statPV, statPVMax, count) {
+      let resultatStatut = {};
+      if (statut === "Brûlure") {
+        statPV = statPV - (statPVMax * 6) / 100;
+        return (resultatStatut = { statPV, count });
+      } else if (statut === "Empoisonnement normal") {
+        statPV = statPV - (statPVMax * 12) / 100;
+        return (resultatStatut = { statPV, count });
+      } else if (statut === "Empoisonnement grave") {
+        count = count + 1;
+        statPV = statPV - (statPVMax * (6 * count)) / 100;
+        return (resultatStatut = { statPV, count });
+      } else {
+        return (resultatStatut = { statPV, count });
+      }
+    }
+
+    function badgeStatutPermaPoke(statut, badge) {
+      if (statut === "Brûlure") {
+        return (badge.textContent = "BRU");
+      } else if (statut === "Gel") {
+        return (badge.textContent = "GEL");
+      } else if (statut === "Paralysie") {
+        return (badge.textContent = "PAR");
+      } else if (
+        statut === "Empoisonnement normal" ||
+        statut === "Empoisonnement grave"
+      ) {
+        return (badge.textContent = "PSN");
+      } else if (statut === "Sommeil") {
+        return (badge.textContent = "SOM");
+      } else if (statut === "Vide") {
+        return (badge.textContent = "");
+      }
+    }
+
+    function colorStatutPermaPoke(statut, badge) {
+      if (statut === "Brûlure") {
+        return (badge.style.backgroundColor = "rgba(247,82,49,255)");
+      } else if (statut === "Gel") {
+        return (badge.style.backgroundColor = "rgba(90,206,231,255)");
+      } else if (statut === "Paralysie") {
+        return (badge.style.backgroundColor = "rgba(255,198,49,255)");
+      } else if (
+        statut === "Empoisonnement normal" ||
+        statut === "Empoisonnement grave"
+      ) {
+        return (badge.style.backgroundColor = "rgba(181,90,165,255)");
+      } else if (statut === "Sommeil") {
+        return (badge.style.backgroundColor = "rgba(173,165,148,255)");
+      } else {
+        return (badge.style.backgroundColor = "");
+      }
+    }
+
+    function statutPoke(statut, stat) {
+      if (statut === "Obsession") {
+      } else if (statut === "Attraction") {
+      } else if (statut === "Confusion") {
+      } else if (statut === "Malédiction") {
+      } else if (statut === "Peur") {
+      } else if (statut === "Flair" || "Clairvoyance") {
+      } else if (statut === "Œil Miracle") {
+      } else if (statut === "Vampigraine") {
+      } else if (statut === "Piège") {
+      } else if (statut === "Bâillement") {
+      } else if (statut === "Cauchemar") {
+      } else if (statut === "Pétrification") {
       }
     }
 
@@ -1013,9 +1394,44 @@
         bonusTypeVS = 1.5;
       }
 
+      console.log("attPokeVS", attPokeVS);
+      console.log("vitesse", vitPokeVS);
+
       if (num === "switch") {
         if (pvActuVS > 0) {
           joueur = false;
+          let objetDébutStatut = statutDébutPermaPoke(
+            tabStatutPermaVS[numPokeVS - 1],
+            attPokeVS,
+            vitPokeVS,
+            efficace1VS,
+            tabCountStatutPermaVS[numPokeVS - 1],
+            bruVS,
+            paraVS,
+            nomAttaque,
+            attaque1NomVS,
+            typeAttaqueVS
+          );
+
+          attPokeVS = objetDébutStatut.statAtt;
+          bruVS = objetDébutStatut.countBru;
+          tabCountStatutPermaVS[numPokeVS - 1] = objetDébutStatut.count;
+          efficace1VS = objetDébutStatut.stat0;
+          paraVS = objetDébutStatut.countPara;
+          vitPokeVS = objetDébutStatut.statVit;
+          tabStatutPermaVS[numPokeVS - 1] = objetDébutStatut.statut;
+          if (tabStatutPermaVS[numPokeVS - 1] === "Vide") {
+            badgeStatutPermaPoke(
+              tabStatutPermaVS[numPokeVS - 1],
+              badgeStatutVS
+            );
+            colorStatutPermaPoke(
+              tabStatutPermaVS[numPokeVS - 1],
+              badgeStatutVS
+            );
+            tabCountStatutPermaVS[numPokeVS - 1] = 0;
+          }
+
           pvActu = Math.round(
             pvActu -
               ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
@@ -1028,7 +1444,7 @@
       } else if (vitPoke > vitPokeVS) {
         if (pvActu > 0) {
           joueur = true;
-          effetAtt(nomAttaque);
+          effetAtt(nomAttaque, numPokeVS, type1, type2, type1VS, type2VS);
           pvActuVS = Math.round(
             pvActuVS -
               ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
@@ -1040,6 +1456,38 @@
         }
         if (pvActuVS > 0) {
           joueur = false;
+          let objetDébutStatut = statutDébutPermaPoke(
+            tabStatutPermaVS[numPokeVS - 1],
+            attPokeVS,
+            vitPokeVS,
+            efficace1VS,
+            tabCountStatutPermaVS[numPokeVS - 1],
+            bruVS,
+            paraVS,
+            nomAttaque,
+            attaque1NomVS,
+            typeAttaqueVS
+          );
+
+          attPokeVS = objetDébutStatut.statAtt;
+          bruVS = objetDébutStatut.countBru;
+          tabCountStatutPermaVS[numPokeVS - 1] = objetDébutStatut.count;
+          efficace1VS = objetDébutStatut.stat0;
+          paraVS = objetDébutStatut.countPara;
+          vitPokeVS = objetDébutStatut.statVit;
+          tabStatutPermaVS[numPokeVS - 1] = objetDébutStatut.statut;
+          if (tabStatutPermaVS[numPokeVS - 1] === "Vide") {
+            badgeStatutPermaPoke(
+              tabStatutPermaVS[numPokeVS - 1],
+              badgeStatutVS
+            );
+            colorStatutPermaPoke(
+              tabStatutPermaVS[numPokeVS - 1],
+              badgeStatutVS
+            );
+            tabCountStatutPermaVS[numPokeVS - 1] = 0;
+          }
+
           pvActu = Math.round(
             pvActu -
               ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
@@ -1052,6 +1500,38 @@
       } else if (vitPoke < vitPokeVS) {
         if (pvActuVS > 0) {
           joueur = false;
+          let objetDébutStatut = statutDébutPermaPoke(
+            tabStatutPermaVS[numPokeVS - 1],
+            attPokeVS,
+            vitPokeVS,
+            efficace1VS,
+            tabCountStatutPermaVS[numPokeVS - 1],
+            bruVS,
+            paraVS,
+            nomAttaque,
+            attaque1NomVS,
+            typeAttaqueVS
+          );
+
+          attPokeVS = objetDébutStatut.statAtt;
+          bruVS = objetDébutStatut.countBru;
+          tabCountStatutPermaVS[numPokeVS - 1] = objetDébutStatut.count;
+          efficace1VS = objetDébutStatut.stat0;
+          paraVS = objetDébutStatut.countPara;
+          vitPokeVS = objetDébutStatut.statVit;
+          tabStatutPermaVS[numPokeVS - 1] = objetDébutStatut.statut;
+          if (tabStatutPermaVS[numPokeVS - 1] === "Vide") {
+            badgeStatutPermaPoke(
+              tabStatutPermaVS[numPokeVS - 1],
+              badgeStatutVS
+            );
+            colorStatutPermaPoke(
+              tabStatutPermaVS[numPokeVS - 1],
+              badgeStatutVS
+            );
+            tabCountStatutPermaVS[numPokeVS - 1] = 0;
+          }
+
           pvActu = Math.round(
             pvActu -
               ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
@@ -1063,7 +1543,7 @@
         }
         if (pvActu > 0) {
           joueur = true;
-          effetAtt(nomAttaque);
+          effetAtt(nomAttaque, numPokeVS, type1, type2, type1VS, type2VS);
           pvActuVS = Math.round(
             pvActuVS -
               ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
@@ -1078,6 +1558,38 @@
         if (random === 0) {
           if (pvActuVS > 0) {
             joueur = false;
+            let objetDébutStatut = statutDébutPermaPoke(
+              tabStatutPermaVS[numPokeVS - 1],
+              attPokeVS,
+              vitPokeVS,
+              efficace1VS,
+              tabCountStatutPermaVS[numPokeVS - 1],
+              bruVS,
+              paraVS,
+              nomAttaque,
+              attaque1NomVS,
+              typeAttaqueVS
+            );
+
+            attPokeVS = objetDébutStatut.statAtt;
+            bruVS = objetDébutStatut.countBru;
+            tabCountStatutPermaVS[numPokeVS - 1] = objetDébutStatut.count;
+            efficace1VS = objetDébutStatut.stat0;
+            paraVS = objetDébutStatut.countPara;
+            vitPokeVS = objetDébutStatut.statVit;
+            tabStatutPermaVS[numPokeVS - 1] = objetDébutStatut.statut;
+            if (tabStatutPermaVS[numPokeVS - 1] === "Vide") {
+              badgeStatutPermaPoke(
+                tabStatutPermaVS[numPokeVS - 1],
+                badgeStatutVS
+              );
+              colorStatutPermaPoke(
+                tabStatutPermaVS[numPokeVS - 1],
+                badgeStatutVS
+              );
+              tabCountStatutPermaVS[numPokeVS - 1] = 0;
+            }
+
             pvActu = Math.round(
               pvActu -
                 ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
@@ -1089,7 +1601,7 @@
           }
           if (pvActu > 0) {
             joueur = true;
-            effetAtt(nomAttaque);
+            effetAtt(nomAttaque, numPokeVS, type1, type2, type1VS, type2VS);
             pvActuVS = Math.round(
               pvActuVS -
                 ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
@@ -1102,7 +1614,7 @@
         } else {
           if (pvActu > 0) {
             joueur = true;
-            effetAtt(nomAttaque);
+            effetAtt(nomAttaque, numPokeVS, type1, type2, type1VS, type2VS);
             pvActuVS = Math.round(
               pvActuVS -
                 ((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
@@ -1114,6 +1626,38 @@
           }
           if (pvActuVS > 0) {
             joueur = false;
+            let objetDébutStatut = statutDébutPermaPoke(
+              tabStatutPermaVS[numPokeVS - 1],
+              attPokeVS,
+              vitPokeVS,
+              efficace1VS,
+              tabCountStatutPermaVS[numPokeVS - 1],
+              bruVS,
+              paraVS,
+              nomAttaque,
+              attaque1NomVS,
+              typeAttaqueVS
+            );
+
+            attPokeVS = objetDébutStatut.statAtt;
+            bruVS = objetDébutStatut.countBru;
+            tabCountStatutPermaVS[numPokeVS - 1] = objetDébutStatut.count;
+            efficace1VS = objetDébutStatut.stat0;
+            paraVS = objetDébutStatut.countPara;
+            vitPokeVS = objetDébutStatut.statVit;
+            tabStatutPermaVS[numPokeVS - 1] = objetDébutStatut.statut;
+            if (tabStatutPermaVS[numPokeVS - 1] === "Vide") {
+              badgeStatutPermaPoke(
+                tabStatutPermaVS[numPokeVS - 1],
+                badgeStatutVS
+              );
+              colorStatutPermaPoke(
+                tabStatutPermaVS[numPokeVS - 1],
+                badgeStatutVS
+              );
+              tabCountStatutPermaVS[numPokeVS - 1] = 0;
+            }
+
             pvActu = Math.round(
               pvActu -
                 ((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
@@ -1126,6 +1670,16 @@
         }
       }
 
+      let objetStatut = statutFinPermaPoke(
+        tabStatutPermaVS[numPokeVS - 1],
+        pvActuVS,
+        pvVS,
+        poisVS
+      );
+
+      pvActuVS = Math.round(objetStatut.statPV);
+      poisVS = objetStatut.count;
+
       if (pvActuVS < 0) {
         pvActuVS = 0;
       }
@@ -1133,33 +1687,48 @@
         pvActu = 0;
       }
 
-      console.log("type1VS", test1);
-      console.log("type2VS", test2);
-      console.log("attaque1.name", nomAttaque);
-      console.log("typeAttaque", typeAttaque);
-      console.log("attaque1VS.name", test8);
-      console.log("attaque1VS.type.name", test6);
-      console.log("efficace1", efficace1);
-      console.log("efficace2", efficace2);
-      console.log("attaque", attaque);
-      console.log("defenseVS", defenseVS);
-      console.log("typeAttaqueClass", typeAttaqueClass);
-      console.log("vitPoke", vitPoke);
+      // console.log("type1VS", test1);
+      // console.log("type2VS", test2);
+      // console.log("attaque1.name", nomAttaque);
+      // console.log("typeAttaque", typeAttaque);
+      // console.log("attaque1VS.name", test8);
+      // console.log("attaque1VS.type.name", test6);
+      // console.log("efficace1", efficace1);
+      // console.log("efficace2", efficace2);
+      // console.log("attaque", attaque);
+      // console.log("defenseVS", defenseVS);
+      // console.log("typeAttaqueClass", typeAttaqueClass);
+      // console.log("vitPoke", vitPoke);
+      // console.log("vitPokeVS", vitPokeVS);
+      // console.log("bonusType", bonusType);
+      // console.log("nature", test15);
+
+      console.log("efficace1VS", efficace1VS);
+      console.log("attPokeVS", attPokeVS);
       console.log("vitPokeVS", vitPokeVS);
-      console.log("bonusType", bonusType);
-      console.log("nature", test15);
+      console.log(
+        "tabCountStatutPermaVS[numPokeVS - 1]",
+        tabCountStatutPermaVS[numPokeVS - 1]
+      );
 
       tabPVActu.splice(nombre, 1, pvActu);
 
-      console.log("tab1", tabPVActu[0]);
-      console.log("tab2", tabPVActu[1]);
-      console.log("tab3", tabPVActu[2]);
-      console.log("tab4", tabPVActu[3]);
-      console.log("tab5", tabPVActu[4]);
-      console.log("tab6", tabPVActu[5]);
-      console.log("nombre", nombre);
-      console.log("cranStat[0]", cranStat[0]);
-      console.log("cranStatVS[0]", cranStatVS[0]);
+      // console.log("tab1", tabPVActu[0]);
+      // console.log("tab2", tabPVActu[1]);
+      // console.log("tab3", tabPVActu[2]);
+      // console.log("tab4", tabPVActu[3]);
+      // console.log("tab5", tabPVActu[4]);
+      // console.log("tab6", tabPVActu[5]);
+      // console.log("nombre", nombre);
+      // console.log("cranStat[0]", cranStat[0]);
+      // console.log("cranStatVS[0]", cranStatVS[0]);
+
+      console.log(
+        "tabStatutPermaVS[numPokeVS]",
+        tabStatutPermaVS[numPokeVS - 1]
+      );
+      console.log("poisVS", poisVS);
+      console.log("objetStatut.statPV", objetStatut.statPV);
 
       modifPV.textContent = `${pvActu}/${pv}`;
       barreVie.value = pvActu;
@@ -1240,18 +1809,25 @@
       const modifNomAtt4 = document.getElementById("nomAtt4");
 
       cranStat = [0, 0, 0, 0, 0];
+      bru = 0;
+      para = 0;
+      pois = 0;
       badgeAtt.textContent = "";
-      badgeAtt.style.backgroundColor = "rgb(255, 223, 148)";
+      badgeAtt.style.backgroundColor = "";
       badgeDef.textContent = "";
-      badgeDef.style.backgroundColor = "rgb(255, 223, 148)";
+      badgeDef.style.backgroundColor = "";
       badgeAttS.textContent = "";
-      badgeAttS.style.backgroundColor = "rgb(255, 223, 148)";
+      badgeAttS.style.backgroundColor = "";
       badgeDefS.textContent = "";
-      badgeDefS.style.backgroundColor = "rgb(255, 223, 148)";
+      badgeDefS.style.backgroundColor = "";
       badgeVit.textContent = "";
-      badgeVit.style.backgroundColor = "rgb(255, 223, 148)";
+      badgeVit.style.backgroundColor = "";
 
       let pvAvant = pvActu;
+
+      const badgeStatut = document.getElementById("statut");
+      let texte = "";
+      let color = "";
 
       if (num === 1) {
         numPoke = 1;
@@ -1291,6 +1867,9 @@
         attaque4Classe = "<%- pokemons[0].attaque4.classe %>";
         type1 = "<%- pokemons[0].type1 %>";
         type2 = "<%- pokemons[0].type2 %>";
+
+        badgeStatutPermaPoke(tabStatutPerma[0], badgeStatut);
+        colorStatutPermaPoke(tabStatutPerma[0], badgeStatut);
 
         colorAttaque1 = couleur(attaque1Type, colorAttaque1);
         colorAttaque2 = couleur(attaque2Type, colorAttaque2);
@@ -1362,6 +1941,9 @@
         type1 = "<%- pokemons[1].type1 %>";
         type2 = "<%- pokemons[1].type2 %>";
 
+        badgeStatutPermaPoke(tabStatutPerma[1], badgeStatut);
+        colorStatutPermaPoke(tabStatutPerma[1], badgeStatut);
+
         colorAttaque1 = couleur(attaque1Type, colorAttaque1);
         colorAttaque2 = couleur(attaque2Type, colorAttaque2);
         colorAttaque3 = couleur(attaque3Type, colorAttaque3);
@@ -1431,6 +2013,9 @@
         attaque4Classe = "<%- pokemons[2].attaque4.classe %>";
         type1 = "<%- pokemons[2].type1 %>";
         type2 = "<%- pokemons[2].type2 %>";
+
+        badgeStatutPermaPoke(tabStatutPerma[2], badgeStatut);
+        colorStatutPermaPoke(tabStatutPerma[2], badgeStatut);
 
         colorAttaque1 = couleur(attaque1Type, colorAttaque1);
         colorAttaque2 = couleur(attaque2Type, colorAttaque2);
@@ -1502,6 +2087,9 @@
         type1 = "<%- pokemons[3].type1 %>";
         type2 = "<%- pokemons[3].type2 %>";
 
+        badgeStatutPermaPoke(tabStatutPerma[3], badgeStatut);
+        colorStatutPermaPoke(tabStatutPerma[3], badgeStatut);
+
         colorAttaque1 = couleur(attaque1Type, colorAttaque1);
         colorAttaque2 = couleur(attaque2Type, colorAttaque2);
         colorAttaque3 = couleur(attaque3Type, colorAttaque3);
@@ -1571,6 +2159,9 @@
         attaque4Classe = "<%- pokemons[4].attaque4.classe %>";
         type1 = "<%- pokemons[4].type1 %>";
         type2 = "<%- pokemons[4].type2 %>";
+
+        badgeStatutPermaPoke(tabStatutPerma[4], badgeStatut);
+        colorStatutPermaPoke(tabStatutPerma[4], badgeStatut);
 
         colorAttaque1 = couleur(attaque1Type, colorAttaque1);
         colorAttaque2 = couleur(attaque2Type, colorAttaque2);
@@ -1642,6 +2233,9 @@
         type1 = "<%- pokemons[5].type1 %>";
         type2 = "<%- pokemons[5].type2 %>";
 
+        badgeStatutPermaPoke(tabStatutPerma[5], badgeStatut);
+        colorStatutPermaPoke(tabStatutPerma[5], badgeStatut);
+
         colorAttaque1 = couleur(attaque1Type, colorAttaque1);
         colorAttaque2 = couleur(attaque2Type, colorAttaque2);
         colorAttaque3 = couleur(attaque3Type, colorAttaque3);
@@ -1683,17 +2277,24 @@
       const modifBarreVS = document.getElementById("barrePokeVS");
       const modifPVMaxVS = document.getElementById("pvMaxPokeVS");
 
+      const badgeStatutVS = document.getElementById("statutVS");
+      let texteVS = "";
+      let couleurVS = "";
+
       cranStatVS = [0, 0, 0, 0, 0];
+      bruVS = 0;
+      paraBs = 0;
+      poisVS = 0;
       badgeAttVS.textContent = "";
-      badgeAttVS.style.backgroundColor = "rgb(255, 223, 148)";
+      badgeAttVS.style.backgroundColor = "";
       badgeDefVS.textContent = "";
-      badgeDefVS.style.backgroundColor = "rgb(255, 223, 148)";
+      badgeDefVS.style.backgroundColor = "";
       badgeAttSVS.textContent = "";
-      badgeAttSVS.style.backgroundColor = "rgb(255, 223, 148)";
+      badgeAttSVS.style.backgroundColor = "";
       badgeDefSVS.textContent = "";
-      badgeDefSVS.style.backgroundColor = "rgb(255, 223, 148)";
+      badgeDefSVS.style.backgroundColor = "";
       badgeVitVS.textContent = "";
-      badgeVitVS.style.backgroundColor = "rgb(255, 223, 148)";
+      badgeVitVS.style.backgroundColor = "";
 
       if (num === 1) {
         nombreVS = 0;
@@ -1732,6 +2333,9 @@
         attaque4ClasseVS = "<%- pokemonsVS[0].attaque4.classe %>";
         type1VS = "<%- pokemonsVS[0].type1 %>";
         type2VS = "<%- pokemonsVS[0].type2 %>";
+
+        badgeStatutPermaPoke(tabStatutPermaVS[0], badgeStatutVS);
+        colorStatutPermaPoke(tabStatutPermaVS[0], badgeStatutVS);
 
         modifSpriteVS.src = "<%- pokemonsVS[0].sprite %>";
         modifNomVS.textContent = "<%= pokemonsVS[0].nom.toUpperCase() %>";
@@ -1776,6 +2380,9 @@
         type1VS = "<%- pokemonsVS[1].type1 %>";
         type2VS = "<%- pokemonsVS[1].type2 %>";
 
+        badgeStatutPermaPoke(tabStatutPermaVS[1], badgeStatutVS);
+        colorStatutPermaPoke(tabStatutPermaVS[1], badgeStatutVS);
+
         modifSpriteVS.src = "<%- pokemonsVS[1].sprite %>";
         modifNomVS.textContent = "<%= pokemonsVS[1].nom.toUpperCase() %>";
         modifBarreVS.value = `${pvActuVS}`;
@@ -1818,6 +2425,9 @@
         attaque4ClasseVS = "<%- pokemonsVS[2].attaque4.classe %>";
         type1VS = "<%- pokemonsVS[2].type1 %>";
         type2VS = "<%- pokemonsVS[2].type2 %>";
+
+        badgeStatutPermaPoke(tabStatutPermaVS[2], badgeStatutVS);
+        colorStatutPermaPoke(tabStatutPermaVS[2], badgeStatutVS);
 
         modifSpriteVS.src = "<%- pokemonsVS[2].sprite %>";
         modifNomVS.textContent = "<%= pokemonsVS[2].nom.toUpperCase() %>";
@@ -1862,6 +2472,9 @@
         type1VS = "<%- pokemonsVS[3].type1 %>";
         type2VS = "<%- pokemonsVS[3].type2 %>";
 
+        badgeStatutPermaPoke(tabStatutPermaVS[3], badgeStatutVS);
+        colorStatutPermaPoke(tabStatutPermaVS[3], badgeStatutVS);
+
         modifSpriteVS.src = "<%- pokemonsVS[3].sprite %>";
         modifNomVS.textContent = "<%= pokemonsVS[3].nom.toUpperCase() %>";
         modifBarreVS.value = `${pvActuVS}`;
@@ -1905,6 +2518,9 @@
         type1VS = "<%- pokemonsVS[4].type1 %>";
         type2VS = "<%- pokemonsVS[4].type2 %>";
 
+        badgeStatutPermaPoke(tabStatutPermaVS[4], badgeStatutVS);
+        colorStatutPermaPoke(tabStatutPermaVS[4], badgeStatutVS);
+
         modifSpriteVS.src = "<%- pokemonsVS[4].sprite %>";
         modifNomVS.textContent = "<%= pokemonsVS[4].nom.toUpperCase() %>";
         modifBarreVS.value = `${pvActuVS}`;
@@ -1947,6 +2563,9 @@
         attaque4ClasseVS = "<%- pokemonsVS[5].attaque4.classe %>";
         type1VS = "<%- pokemonsVS[5].type1 %>";
         type2VS = "<%- pokemonsVS[5].type2 %>";
+
+        badgeStatutPermaPoke(tabStatutPermaVS[5], badgeStatutVS);
+        colorStatutPermaPoke(tabStatutPermaVS[5], badgeStatutVS);
 
         modifSpriteVS.src = "<%- pokemonsVS[5].sprite %>";
         modifNomVS.textContent = "<%= pokemonsVS[5].nom.toUpperCase() %>";
