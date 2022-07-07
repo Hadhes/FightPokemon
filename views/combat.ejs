@@ -887,29 +887,6 @@
             return (tabStatutPerma[num - 1] = "Paralysie");
           }
         }
-      } else if (nomAttaque === "Abri") {
-        let aleatoire = Math.floor(Math.random() * 2);
-        if (joueur === true) {
-          if (derniereAttaque === "Abri") {
-            if (aleatoire === 0) {
-              return console.log("Raté");
-            } else {
-              return (efficace1VS = 0);
-            }
-          } else {
-            return (efficace1VS = 0);
-          }
-        } else if (joueur === false) {
-          if (derniereAttaqueVS === "Abri") {
-            if (aleatoire === 0) {
-              return console.log("Raté");
-            } else {
-              return (efficace1 = 0);
-            }
-          } else {
-            return (efficace1 = 0);
-          }
-        }
       } else if (nomAttaque === "Acidarmure") {
         if (joueur === true) {
           return (defPoke = augmenteStat("def", 2, tabStatutPerma[num - 1]));
@@ -1022,7 +999,6 @@
           ));
         }
       } else if (nomAttaque === "Confidence") {
-        // Précision 100%
         if (joueur === true) {
           return (attSPokeVS = baisseStat(
             "attS",
@@ -1034,18 +1010,10 @@
         }
       } else if (nomAttaque === "Coqui-Lame") {
         let aleatoire = Math.floor(Math.random() * 2);
-        if (joueur === true) {
-          if (aleatoire === 0) {
-            return (defPokeVS = baisseStat(
-              "def",
-              1,
-              tabStatutPermaVS[num - 1]
-            ));
-          }
-        } else if (joueur === false) {
-          if (aleatoire === 0) {
-            return (defPoke = baisseStat("def", 1, tabStatutPerma[num - 1]));
-          }
+        if (joueur === true && aleatoire === 0) {
+          return (defPokeVS = baisseStat("def", 1, tabStatutPermaVS[num - 1]));
+        } else if (joueur === false && aleatoire === 0) {
+          return (defPoke = baisseStat("def", 1, tabStatutPerma[num - 1]));
         }
       } else if (nomAttaque === "Cotogarde") {
         if (joueur === true) {
@@ -1105,51 +1073,20 @@
         }
       } else if (nomAttaque === "Danse du Feu") {
         let aleatoire = Math.floor(Math.random() * 2);
-        if (joueur === true) {
-          if (aleatoire === 0) {
-            return (attSPoke = augmenteStat(
-              "attS",
-              1,
-              tabStatutPerma[num - 1]
-            ));
-          }
-        } else if (joueur === false) {
-          if (aleatoire === 0) {
-            return (attSPokeVS = augmenteStat(
-              "attS",
-              1,
-              tabStatutPermaVS[num - 1]
-            ));
-          }
+        if (joueur === true && aleatoire === 0) {
+          return (attSPoke = augmenteStat("attS", 1, tabStatutPerma[num - 1]));
+        } else if (joueur === false && aleatoire === 0) {
+          return (attSPokeVS = augmenteStat(
+            "attS",
+            1,
+            tabStatutPermaVS[num - 1]
+          ));
         }
       } else if (nomAttaque === "Destruction") {
         if (joueur === true) {
           return (pvActu = 0);
         } else if (joueur === false) {
           return (pvActuVS = 0);
-        }
-      } else if (nomAttaque === "Détection") {
-        let aleatoire = Math.floor(Math.random() * 2);
-        if (joueur === true) {
-          if (derniereAttaque === "Détection") {
-            if (aleatoire === 0) {
-              return console.log("Raté");
-            } else {
-              return (efficace1VS = 0);
-            }
-          } else {
-            return (efficace1VS = 0);
-          }
-        } else if (joueur === false) {
-          if (derniereAttaqueVS === "Détection") {
-            if (aleatoire === 0) {
-              return console.log("Raté");
-            } else {
-              return (efficace1 = 0);
-            }
-          } else {
-            return (efficace1 = 0);
-          }
         }
       } else if (nomAttaque === "Danse Plumes") {
         if (joueur === true) {
@@ -1211,18 +1148,14 @@
         }
       } else if (nomAttaque === "Poing Météore") {
         let aleatoire = Math.floor(Math.random() * 6);
-        if (joueur === true) {
-          if (aleatoire === 0) {
-            return (attPoke = augmenteStat("att", 1, tabStatutPerma[num - 1]));
-          }
-        } else if (joueur === false) {
-          if (aleatoire === 0) {
-            return (attPokeVS = augmenteStat(
-              "att",
-              1,
-              tabStatutPermaVS[num - 1]
-            ));
-          }
+        if (joueur === true && aleatoire === 0) {
+          return (attPoke = augmenteStat("att", 1, tabStatutPerma[num - 1]));
+        } else if (joueur === false && aleatoire === 0) {
+          return (attPokeVS = augmenteStat(
+            "att",
+            1,
+            tabStatutPermaVS[num - 1]
+          ));
         }
       } else if (nomAttaque === "Poliroche") {
         if (joueur === true) {
@@ -1236,55 +1169,45 @@
         }
       } else if (nomAttaque === "Pouvoir Antique") {
         let aleatoire = Math.floor(Math.random() * 11);
-        if (joueur === true) {
-          if (aleatoire === 0) {
-            attPoke = augmenteStat("att", 1, tabStatutPerma[num - 1]);
-            attSPoke = augmenteStat("attS", 1, tabStatutPerma[num - 1]);
-            defPoke = augmenteStat("def", 1, tabStatutPerma[num - 1]);
-            defSPoke = augmenteStat("defS", 1, tabStatutPerma[num - 1]);
-            return (vitPoke = augmenteStat("vit", 1, tabStatutPerma[num - 1]));
-          }
-        } else if (joueur === false) {
-          if (aleatoire === 0) {
-            attPokeVS = augmenteStat("att", 1, tabStatutPermaVS[num - 1]);
-            attSPokeVS = augmenteStat("attS", 1, tabStatutPermaVS[num - 1]);
-            defPokeVS = augmenteStat("def", 1, tabStatutPermaVS[num - 1]);
-            defSPokeVS = augmenteStat("defS", 1, tabStatutPermaVS[num - 1]);
-            return (vitPokeVS = augmenteStat(
-              "vit",
-              1,
-              tabStatutPermaVS[num - 1]
-            ));
-          }
+        if (joueur === true && aleatoire === 0) {
+          attPoke = augmenteStat("att", 1, tabStatutPerma[num - 1]);
+          attSPoke = augmenteStat("attS", 1, tabStatutPerma[num - 1]);
+          defPoke = augmenteStat("def", 1, tabStatutPerma[num - 1]);
+          defSPoke = augmenteStat("defS", 1, tabStatutPerma[num - 1]);
+          return (vitPoke = augmenteStat("vit", 1, tabStatutPerma[num - 1]));
+        } else if (joueur === false && aleatoire === 0) {
+          attPokeVS = augmenteStat("att", 1, tabStatutPermaVS[num - 1]);
+          attSPokeVS = augmenteStat("attS", 1, tabStatutPermaVS[num - 1]);
+          defPokeVS = augmenteStat("def", 1, tabStatutPermaVS[num - 1]);
+          defSPokeVS = augmenteStat("defS", 1, tabStatutPermaVS[num - 1]);
+          return (vitPokeVS = augmenteStat(
+            "vit",
+            1,
+            tabStatutPermaVS[num - 1]
+          ));
         }
       } else if (nomAttaque === "Rayon Chargé") {
         let aleatoire = Math.floor(Math.random() * 11);
-        if (joueur === true) {
-          if (
-            aleatoire >= 0 &&
-            aleatoire < 8 &&
-            type1VS !== "ground" &&
-            type2VS !== "ground"
-          ) {
-            return (attSPoke = augmenteStat(
-              "attS",
-              1,
-              tabStatutPerma[num - 1]
-            ));
-          }
-        } else if (joueur === false) {
-          if (
-            aleatoire >= 0 &&
-            aleatoire < 8 &&
-            type1 !== "ground" &&
-            type2 !== "ground"
-          ) {
-            return (attSPokeVS = augmenteStat(
-              "attS",
-              1,
-              tabStatutPermaVS[num - 1]
-            ));
-          }
+        if (
+          joueur === true &&
+          aleatoire >= 0 &&
+          aleatoire < 8 &&
+          type1VS !== "ground" &&
+          type2VS !== "ground"
+        ) {
+          return (attSPoke = augmenteStat("attS", 1, tabStatutPerma[num - 1]));
+        } else if (
+          joueur === false &&
+          aleatoire >= 0 &&
+          aleatoire < 8 &&
+          type1 !== "ground" &&
+          type2 !== "ground"
+        ) {
+          return (attSPokeVS = augmenteStat(
+            "attS",
+            1,
+            tabStatutPermaVS[num - 1]
+          ));
         }
       } else if (nomAttaque === "Rengorgement") {
         if (joueur === true) {
@@ -1321,49 +1244,41 @@
         }
       } else if (nomAttaque === "Vent Argenté") {
         let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (aleatoire === 0) {
-            attPoke = augmenteStat("att", 1, tabStatutPerma[num - 1]);
-            attSPoke = augmenteStat("attS", 1, tabStatutPerma[num - 1]);
-            defPoke = augmenteStat("def", 1, tabStatutPerma[num - 1]);
-            defSPoke = augmenteStat("defS", 1, tabStatutPerma[num - 1]);
-            return (vitPoke = augmenteStat("vit", 1, tabStatutPerma[num - 1]));
-          }
-        } else if (joueur === false) {
-          if (aleatoire === 0) {
-            attPokeVS = augmenteStat("att", 1, tabStatutPermaVS[num - 1]);
-            attSPokeVS = augmenteStat("attS", 1, tabStatutPermaVS[num - 1]);
-            defPokeVS = augmenteStat("def", 1, tabStatutPermaVS[num - 1]);
-            defSPokeVS = augmenteStat("defS", 1, tabStatutPermaVS[num - 1]);
-            return (vitPokeVS = augmenteStat(
-              "vit",
-              1,
-              tabStatutPermaVS[num - 1]
-            ));
-          }
+        if (joueur === true && aleatoire === 0) {
+          attPoke = augmenteStat("att", 1, tabStatutPerma[num - 1]);
+          attSPoke = augmenteStat("attS", 1, tabStatutPerma[num - 1]);
+          defPoke = augmenteStat("def", 1, tabStatutPerma[num - 1]);
+          defSPoke = augmenteStat("defS", 1, tabStatutPerma[num - 1]);
+          return (vitPoke = augmenteStat("vit", 1, tabStatutPerma[num - 1]));
+        } else if (joueur === false && aleatoire === 0) {
+          attPokeVS = augmenteStat("att", 1, tabStatutPermaVS[num - 1]);
+          attSPokeVS = augmenteStat("attS", 1, tabStatutPermaVS[num - 1]);
+          defPokeVS = augmenteStat("def", 1, tabStatutPermaVS[num - 1]);
+          defSPokeVS = augmenteStat("defS", 1, tabStatutPermaVS[num - 1]);
+          return (vitPokeVS = augmenteStat(
+            "vit",
+            1,
+            tabStatutPermaVS[num - 1]
+          ));
         }
       } else if (nomAttaque === "Vent Mauvais") {
         let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (aleatoire === 0) {
-            attPoke = augmenteStat("att", 1, tabStatutPerma[num - 1]);
-            attSPoke = augmenteStat("attS", 1, tabStatutPerma[num - 1]);
-            defPoke = augmenteStat("def", 1, tabStatutPerma[num - 1]);
-            defSPoke = augmenteStat("defS", 1, tabStatutPerma[num - 1]);
-            return (vitPoke = augmenteStat("vit", 1, tabStatutPerma[num - 1]));
-          }
-        } else if (joueur === false) {
-          if (aleatoire === 0) {
-            attPokeVS = augmenteStat("att", 1, tabStatutPermaVS[num - 1]);
-            attSPokeVS = augmenteStat("attS", 1, tabStatutPermaVS[num - 1]);
-            defPokeVS = augmenteStat("def", 1, tabStatutPermaVS[num - 1]);
-            defSPokeVS = augmenteStat("defS", 1, tabStatutPermaVS[num - 1]);
-            return (vitPokeVS = augmenteStat(
-              "vit",
-              1,
-              tabStatutPermaVS[num - 1]
-            ));
-          }
+        if (joueur === true && aleatoire === 0) {
+          attPoke = augmenteStat("att", 1, tabStatutPerma[num - 1]);
+          attSPoke = augmenteStat("attS", 1, tabStatutPerma[num - 1]);
+          defPoke = augmenteStat("def", 1, tabStatutPerma[num - 1]);
+          defSPoke = augmenteStat("defS", 1, tabStatutPerma[num - 1]);
+          return (vitPoke = augmenteStat("vit", 1, tabStatutPerma[num - 1]));
+        } else if (joueur === false && aleatoire === 0) {
+          attPokeVS = augmenteStat("att", 1, tabStatutPermaVS[num - 1]);
+          attSPokeVS = augmenteStat("attS", 1, tabStatutPermaVS[num - 1]);
+          defPokeVS = augmenteStat("def", 1, tabStatutPermaVS[num - 1]);
+          defSPokeVS = augmenteStat("defS", 1, tabStatutPermaVS[num - 1]);
+          return (vitPokeVS = augmenteStat(
+            "vit",
+            1,
+            tabStatutPermaVS[num - 1]
+          ));
         }
       } else if (nomAttaque === "Yoga") {
         if (joueur === true) {
@@ -1377,37 +1292,29 @@
         }
       } else if (nomAttaque === "Papillodanse") {
         let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (aleatoire === 0) {
-            attSPoke = augmenteStat("attS", 1, tabStatutPerma[num - 1]);
-            defSPoke = augmenteStat("defS", 1, tabStatutPerma[num - 1]);
-            return (vitPoke = augmenteStat("vit", 1, tabStatutPerma[num - 1]));
-          }
-        } else if (joueur === false) {
-          if (aleatoire === 0) {
-            attSPokeVS = augmenteStat("attS", 1, tabStatutPermaVS[num - 1]);
-            defSPokeVS = augmenteStat("defS", 1, tabStatutPermaVS[num - 1]);
-            return (vitPokeVS = augmenteStat(
-              "vit",
-              1,
-              tabStatutPermaVS[num - 1]
-            ));
-          }
+        if (joueur === true && aleatoire === 0) {
+          attSPoke = augmenteStat("attS", 1, tabStatutPerma[num - 1]);
+          defSPoke = augmenteStat("defS", 1, tabStatutPerma[num - 1]);
+          return (vitPoke = augmenteStat("vit", 1, tabStatutPerma[num - 1]));
+        } else if (joueur === false && aleatoire === 0) {
+          attSPokeVS = augmenteStat("attS", 1, tabStatutPermaVS[num - 1]);
+          defSPokeVS = augmenteStat("defS", 1, tabStatutPermaVS[num - 1]);
+          return (vitPokeVS = augmenteStat(
+            "vit",
+            1,
+            tabStatutPermaVS[num - 1]
+          ));
         }
       } else if (nomAttaque === "Orage Adamantin") {
         let aleatoire = Math.floor(Math.random() * 2);
-        if (joueur === true) {
-          if (aleatoire === 0) {
-            return (defPoke = augmenteStat("def", 2, tabStatutPerma[num - 1]));
-          }
-        } else if (joueur === false) {
-          if (aleatoire === 0) {
-            return (defPokeVS = augmenteStat(
-              "def",
-              2,
-              tabStatutPermaVS[num - 1]
-            ));
-          }
+        if (joueur === true && aleatoire === 0) {
+          return (defPoke = augmenteStat("def", 2, tabStatutPerma[num - 1]));
+        } else if (joueur === false && aleatoire === 0) {
+          return (defPokeVS = augmenteStat(
+            "def",
+            2,
+            tabStatutPermaVS[num - 1]
+          ));
         }
       } else if (nomAttaque === "Nitrocharge") {
         if (joueur === true) {
@@ -1461,18 +1368,14 @@
         }
       } else if (nomAttaque === "Griffe Acier") {
         let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (aleatoire === 0) {
-            return (attPoke = augmenteStat("att", 1, tabStatutPerma[num - 1]));
-          }
-        } else if (joueur === false) {
-          if (aleatoire === 0) {
-            return (attPokeVS = augmenteStat(
-              "att",
-              1,
-              tabStatutPermaVS[num - 1]
-            ));
-          }
+        if (joueur === true && aleatoire === 0) {
+          return (attPoke = augmenteStat("att", 1, tabStatutPerma[num - 1]));
+        } else if (joueur === false && aleatoire === 0) {
+          return (attPokeVS = augmenteStat(
+            "att",
+            1,
+            tabStatutPermaVS[num - 1]
+          ));
         }
       } else if (nomAttaque === "Force Cosmique") {
         if (joueur === true) {
@@ -1562,18 +1465,14 @@
         }
       } else if (nomAttaque === "Ailes d'Acier") {
         let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (aleatoire === 0) {
-            return (defPoke = augmenteStat("def", 1, tabStatutPerma[num - 1]));
-          }
-        } else if (joueur === false) {
-          if (aleatoire === 0) {
-            return (defPokeVS = augmenteStat(
-              "def",
-              1,
-              tabStatutPermaVS[num - 1]
-            ));
-          }
+        if (joueur === true && aleatoire === 0) {
+          return (defPoke = augmenteStat("def", 1, tabStatutPerma[num - 1]));
+        } else if (joueur === false && aleatoire === 0) {
+          return (defPokeVS = augmenteStat(
+            "def",
+            1,
+            tabStatutPermaVS[num - 1]
+          ));
         }
       } else if (nomAttaque === "Ère Glaciaire") {
         if (joueur === true) {
@@ -1633,142 +1532,132 @@
         nomAttaque === "Éclair"
       ) {
         let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (
-            tabStatutPermaVS[num - 1] === "Vide" &&
-            type1VS !== "electric" &&
-            type2VS !== "electric" &&
-            type1VS !== "ground" &&
-            type2VS !== "ground" &&
-            aleatoire === 0
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatutVS);
-            colorStatutPermaPoke("Paralysie", badgeStatutVS);
-            return (tabStatutPermaVS[num - 1] = "Paralysie");
-          }
-        } else if (joueur === false) {
-          if (
-            tabStatutPerma[num - 1] === "Vide" &&
-            type1 !== "electric" &&
-            type2 !== "electric" &&
-            type1 !== "ground" &&
-            type2 !== "ground" &&
-            aleatoire === 0
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatut);
-            colorStatutPermaPoke("Paralysie", badgeStatut);
-            return (tabStatutPerma[num - 1] = "Paralysie");
-          }
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "electric" &&
+          type2VS !== "electric" &&
+          type1VS !== "ground" &&
+          type2VS !== "ground" &&
+          aleatoire === 0
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatutVS);
+          colorStatutPermaPoke("Paralysie", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Paralysie");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "electric" &&
+          type2 !== "electric" &&
+          type1 !== "ground" &&
+          type2 !== "ground" &&
+          aleatoire === 0
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatut);
+          colorStatutPermaPoke("Paralysie", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Paralysie");
         }
       } else if (nomAttaque === "Plaquage" || nomAttaque === "Forte-Paume") {
         let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (
-            tabStatutPermaVS[num - 1] === "Vide" &&
-            type1VS !== "electric" &&
-            type2VS !== "electric" &&
-            type1VS !== "ghost" &&
-            type2VS !== "ghost" &&
-            aleatoire >= 0 &&
-            aleatoire < 3
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatutVS);
-            colorStatutPermaPoke("Paralysie", badgeStatutVS);
-            return (tabStatutPermaVS[num - 1] = "Paralysie");
-          }
-        } else if (joueur === false) {
-          if (
-            tabStatutPerma[num - 1] === "Vide" &&
-            type1 !== "electric" &&
-            type2 !== "electric" &&
-            type1 !== "ghost" &&
-            type2 !== "ghost" &&
-            aleatoire >= 0 &&
-            aleatoire < 3
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatut);
-            colorStatutPermaPoke("Paralysie", badgeStatut);
-            return (tabStatutPerma[num - 1] = "Paralysie");
-          }
+        if (
+          joueur === true &&
+          aleatoire >= 0 &&
+          aleatoire < 3 &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "electric" &&
+          type2VS !== "electric" &&
+          type1VS !== "ghost" &&
+          type2VS !== "ghost"
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatutVS);
+          colorStatutPermaPoke("Paralysie", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Paralysie");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "electric" &&
+          type2 !== "electric" &&
+          type1 !== "ghost" &&
+          type2 !== "ghost" &&
+          aleatoire >= 0 &&
+          aleatoire < 3
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatut);
+          colorStatutPermaPoke("Paralysie", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Paralysie");
         }
       } else if (nomAttaque === "Regard Médusant") {
-        if (joueur === true) {
-          if (
-            tabStatutPermaVS[num - 1] === "Vide" &&
-            type1VS !== "electric" &&
-            type2VS !== "electric"
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatutVS);
-            colorStatutPermaPoke("Paralysie", badgeStatutVS);
-            return (tabStatutPermaVS[num - 1] = "Paralysie");
-          }
-        } else if (joueur === false) {
-          if (
-            tabStatutPerma[num - 1] === "Vide" &&
-            type1 !== "electric" &&
-            type2 !== "electric"
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatut);
-            colorStatutPermaPoke("Paralysie", badgeStatut);
-            return (tabStatutPerma[num - 1] = "Paralysie");
-          }
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "electric" &&
+          type2VS !== "electric"
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatutVS);
+          colorStatutPermaPoke("Paralysie", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Paralysie");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "electric" &&
+          type2 !== "electric"
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatut);
+          colorStatutPermaPoke("Paralysie", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Paralysie");
         }
       } else if (nomAttaque === "Para-Spore") {
-        if (joueur === true) {
-          if (
-            tabStatutPermaVS[num - 1] === "Vide" &&
-            type1VS !== "electric" &&
-            type2VS !== "electric" &&
-            type1VS !== "grass" &&
-            type2VS !== "grass"
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatutVS);
-            colorStatutPermaPoke("Paralysie", badgeStatutVS);
-            return (tabStatutPermaVS[num - 1] = "Paralysie");
-          }
-        } else if (joueur === false) {
-          if (
-            tabStatutPerma[num - 1] === "Vide" &&
-            type1 !== "electric" &&
-            type2 !== "electric" &&
-            type1VS !== "grass" &&
-            type2VS !== "grass"
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatut);
-            colorStatutPermaPoke("Paralysie", badgeStatut);
-            return (tabStatutPerma[num - 1] = "Paralysie");
-          }
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "electric" &&
+          type2VS !== "electric" &&
+          type1VS !== "grass" &&
+          type2VS !== "grass"
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatutVS);
+          colorStatutPermaPoke("Paralysie", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Paralysie");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "electric" &&
+          type2 !== "electric" &&
+          type1VS !== "grass" &&
+          type2VS !== "grass"
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatut);
+          colorStatutPermaPoke("Paralysie", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Paralysie");
         }
       } else if (nomAttaque === "Léchouille") {
         let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (
-            tabStatutPermaVS[num - 1] === "Vide" &&
-            type1VS !== "electric" &&
-            type2VS !== "electric" &&
-            type1VS !== "normal" &&
-            type2VS !== "normal" &&
-            aleatoire >= 0 &&
-            aleatoire < 3
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatutVS);
-            colorStatutPermaPoke("Paralysie", badgeStatutVS);
-            return (tabStatutPermaVS[num - 1] = "Paralysie");
-          }
-        } else if (joueur === false) {
-          if (
-            tabStatutPerma[num - 1] === "Vide" &&
-            type1 !== "electric" &&
-            type2 !== "electric" &&
-            type1 !== "normal" &&
-            type2 !== "normal" &&
-            aleatoire >= 0 &&
-            aleatoire < 3
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatut);
-            colorStatutPermaPoke("Paralysie", badgeStatut);
-            return (tabStatutPerma[num - 1] = "Paralysie");
-          }
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "electric" &&
+          type2VS !== "electric" &&
+          type1VS !== "normal" &&
+          type2VS !== "normal" &&
+          aleatoire >= 0 &&
+          aleatoire < 3
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatutVS);
+          colorStatutPermaPoke("Paralysie", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Paralysie");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "electric" &&
+          type2 !== "electric" &&
+          type1 !== "normal" &&
+          type2 !== "normal" &&
+          aleatoire >= 0 &&
+          aleatoire < 3
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatut);
+          colorStatutPermaPoke("Paralysie", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Paralysie");
         }
       } else if (
         nomAttaque === "Fatal-Foudre" ||
@@ -1776,79 +1665,75 @@
         nomAttaque === "Coup d'Jus"
       ) {
         let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (
-            tabStatutPermaVS[num - 1] === "Vide" &&
-            type1VS !== "electric" &&
-            type2VS !== "electric" &&
-            type1VS !== "ground" &&
-            type2VS !== "ground" &&
-            aleatoire >= 0 &&
-            aleatoire < 3
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatutVS);
-            colorStatutPermaPoke("Paralysie", badgeStatutVS);
-            return (tabStatutPermaVS[num - 1] = "Paralysie");
-          }
-        } else if (joueur === false) {
-          if (
-            tabStatutPerma[num - 1] === "Vide" &&
-            type1 !== "electric" &&
-            type2 !== "electric" &&
-            type1 !== "ground" &&
-            type2 !== "ground" &&
-            aleatoire >= 0 &&
-            aleatoire < 3
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatut);
-            colorStatutPermaPoke("Paralysie", badgeStatut);
-            return (tabStatutPerma[num - 1] = "Paralysie");
-          }
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "electric" &&
+          type2VS !== "electric" &&
+          type1VS !== "ground" &&
+          type2VS !== "ground" &&
+          aleatoire >= 0 &&
+          aleatoire < 3
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatutVS);
+          colorStatutPermaPoke("Paralysie", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Paralysie");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "electric" &&
+          type2 !== "electric" &&
+          type1 !== "ground" &&
+          type2 !== "ground" &&
+          aleatoire >= 0 &&
+          aleatoire < 3
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatut);
+          colorStatutPermaPoke("Paralysie", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Paralysie");
         }
       } else if (nomAttaque === "Électacle") {
-        let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (
-            tabStatutPermaVS[num - 1] === "Vide" &&
-            type1VS !== "electric" &&
-            type2VS !== "electric" &&
-            type1VS !== "ground" &&
-            type2VS !== "ground" &&
-            aleatoire === 0
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatutVS);
-            colorStatutPermaPoke("Paralysie", badgeStatutVS);
-            pvActu = Math.round(
-              pvActu -
-                (((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
-                  bonusType *
-                  (efficace1 * efficace2)) /
-                  3
-            );
-            return (tabStatutPermaVS[num - 1] = "Paralysie");
-          }
-        } else if (joueur === false) {
-          if (
-            tabStatutPerma[num - 1] === "Vide" &&
-            type1 !== "electric" &&
-            type2 !== "electric" &&
-            type1 !== "ground" &&
-            type2 !== "ground" &&
-            aleatoire === 0
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatut);
-            colorStatutPermaPoke("Paralysie", badgeStatut);
-            pvActuVS =
-              pvActuVS -
-              Math.round(
-                (((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
-                  bonusTypeVS *
-                  (efficace1VS * efficace2VS)) /
-                  3
-              );
-            return (tabStatutPerma[num - 1] = "Paralysie");
-          }
-        }
+        // let aleatoire = Math.floor(Math.random() * 10);
+        // if (
+        //   joueur === true &&
+        //   tabStatutPermaVS[num - 1] === "Vide" &&
+        //   type1VS !== "electric" &&
+        //   type2VS !== "electric" &&
+        //   type1VS !== "ground" &&
+        //   type2VS !== "ground" &&
+        //   aleatoire === 0
+        // ) {
+        //   badgeStatutPermaPoke("Paralysie", badgeStatutVS);
+        //   colorStatutPermaPoke("Paralysie", badgeStatutVS);
+        //   pvActu = Math.round(
+        //     pvActu -
+        //       (((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
+        //         bonusType *
+        //         (efficace1 * efficace2)) /
+        //         3
+        //   );
+        //   return (tabStatutPermaVS[num - 1] = "Paralysie");
+        // } else if (
+        //   joueur === false &&
+        //   tabStatutPerma[num - 1] === "Vide" &&
+        //   type1 !== "electric" &&
+        //   type2 !== "electric" &&
+        //   type1 !== "ground" &&
+        //   type2 !== "ground" &&
+        //   aleatoire === 0
+        // ) {
+        //   badgeStatutPermaPoke("Paralysie", badgeStatut);
+        //   colorStatutPermaPoke("Paralysie", badgeStatut);
+        //   pvActuVS =
+        //     pvActuVS -
+        //     Math.round(
+        //       (((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
+        //         bonusTypeVS *
+        //         (efficace1VS * efficace2VS)) /
+        //         3
+        //     );
+        //   return (tabStatutPerma[num - 1] = "Paralysie");
+        // }
       } else if (nomAttaque === "Écume") {
         let aleatoire = Math.floor(Math.random() * 10);
         if (joueur === true && aleatoire === 0) {
@@ -1858,116 +1743,568 @@
         }
       } else if (nomAttaque === "Draco-Souffle") {
         let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (
-            tabStatutPermaVS[num - 1] === "Vide" &&
-            type1VS !== "electric" &&
-            type2VS !== "electric" &&
-            type1VS !== "fairy" &&
-            type2VS !== "fairy" &&
-            aleatoire >= 0 &&
-            aleatoire < 3
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatutVS);
-            colorStatutPermaPoke("Paralysie", badgeStatutVS);
-            return (tabStatutPermaVS[num - 1] = "Paralysie");
-          }
-        } else if (joueur === false) {
-          if (
-            tabStatutPerma[num - 1] === "Vide" &&
-            type1 !== "electric" &&
-            type2 !== "electric" &&
-            type1 !== "fairy" &&
-            type2 !== "fairy" &&
-            aleatoire >= 0 &&
-            aleatoire < 3
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatut);
-            colorStatutPermaPoke("Paralysie", badgeStatut);
-            return (tabStatutPerma[num - 1] = "Paralysie");
-          }
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "electric" &&
+          type2VS !== "electric" &&
+          type1VS !== "fairy" &&
+          type2VS !== "fairy" &&
+          aleatoire >= 0 &&
+          aleatoire < 3
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatutVS);
+          colorStatutPermaPoke("Paralysie", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Paralysie");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "electric" &&
+          type2 !== "electric" &&
+          type1 !== "fairy" &&
+          type2 !== "fairy" &&
+          aleatoire >= 0 &&
+          aleatoire < 3
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatut);
+          colorStatutPermaPoke("Paralysie", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Paralysie");
         }
       } else if (nomAttaque === "Charge Foudre") {
         let aleatoire = Math.floor(Math.random() * 10);
-        if (joueur === true) {
-          if (
-            tabStatutPermaVS[num - 1] === "Vide" &&
-            type1VS !== "electric" &&
-            type2VS !== "electric" &&
-            type1VS !== "ground" &&
-            type2VS !== "ground" &&
-            aleatoire >= 0 &&
-            aleatoire < 2
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatutVS);
-            colorStatutPermaPoke("Paralysie", badgeStatutVS);
-            return (tabStatutPermaVS[num - 1] = "Paralysie");
-          }
-        } else if (joueur === false) {
-          if (
-            tabStatutPerma[num - 1] === "Vide" &&
-            type1 !== "electric" &&
-            type2 !== "electric" &&
-            type1 !== "ground" &&
-            type2 !== "ground" &&
-            aleatoire >= 0 &&
-            aleatoire < 2
-          ) {
-            badgeStatutPermaPoke("Paralysie", badgeStatut);
-            colorStatutPermaPoke("Paralysie", badgeStatut);
-            return (tabStatutPerma[num - 1] = "Paralysie");
-          }
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "electric" &&
+          type2VS !== "electric" &&
+          type1VS !== "ground" &&
+          type2VS !== "ground" &&
+          aleatoire >= 0 &&
+          aleatoire < 2
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatutVS);
+          colorStatutPermaPoke("Paralysie", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Paralysie");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "electric" &&
+          type2 !== "electric" &&
+          type1 !== "ground" &&
+          type2 !== "ground" &&
+          aleatoire >= 0 &&
+          aleatoire < 2
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatut);
+          colorStatutPermaPoke("Paralysie", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Paralysie");
         }
       } else if (nomAttaque === "Triplattaque") {
         let aleatoire = Math.floor(Math.random() * 10);
+        console.log("aleatoire", aleatoire);
         let aleatoire2 = Math.floor(Math.random() * 3);
+        console.log("aleatoire2", aleatoire2);
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "electric" &&
+          type2VS !== "electric" &&
+          aleatoire >= 0 &&
+          aleatoire < 2 &&
+          aleatoire2 === 0
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatutVS);
+          colorStatutPermaPoke("Paralysie", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Paralysie");
+        } else if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "fire" &&
+          type2VS !== "fire" &&
+          aleatoire >= 0 &&
+          aleatoire < 2 &&
+          aleatoire2 === 1
+        ) {
+          badgeStatutPermaPoke("Brûlure", badgeStatutVS);
+          colorStatutPermaPoke("Brûlure", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Brûlure");
+        } else if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "ice" &&
+          type2VS !== "ice" &&
+          aleatoire >= 0 &&
+          aleatoire < 2 &&
+          aleatoire2 === 2
+        ) {
+          badgeStatutPermaPoke("Gel", badgeStatutVS);
+          colorStatutPermaPoke("Gel", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Gel");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "electric" &&
+          type2 !== "electric" &&
+          aleatoire >= 0 &&
+          aleatoire < 2 &&
+          aleatoire2 === 0
+        ) {
+          badgeStatutPermaPoke("Paralysie", badgeStatut);
+          colorStatutPermaPoke("Paralysie", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Paralysie");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "fire" &&
+          type2 !== "fire" &&
+          aleatoire >= 0 &&
+          aleatoire < 2 &&
+          aleatoire2 === 1
+        ) {
+          badgeStatutPermaPoke("Brûlure", badgeStatut);
+          colorStatutPermaPoke("Brûlure", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Brûlure");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "ice" &&
+          type2 !== "ice" &&
+          aleatoire >= 0 &&
+          aleatoire < 2 &&
+          aleatoire2 === 2
+        ) {
+          badgeStatutPermaPoke("Gel", badgeStatut);
+          colorStatutPermaPoke("Gel", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Gel");
+        }
+      } else if (
+        nomAttaque === "Ballon Brûlant" ||
+        nomAttaque === "Canicule" ||
+        nomAttaque === "Déflagration" ||
+        nomAttaque === "Flammèche" ||
+        nomAttaque === "Lance-Flammes" ||
+        nomAttaque === "Pied Brûleur" ||
+        nomAttaque === "Poing Feu" ||
+        nomAttaque === "Roue de Feu"
+      ) {
+        let aleatoire = Math.floor(Math.random() * 10);
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "fire" &&
+          type2VS !== "fire" &&
+          aleatoire === 0
+        ) {
+          badgeStatutPermaPoke("Brûlure", badgeStatutVS);
+          colorStatutPermaPoke("Brûlure", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Brûlure");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "fire" &&
+          type2 !== "fire" &&
+          aleatoire === 0
+        ) {
+          badgeStatutPermaPoke("Brûlure", badgeStatut);
+          colorStatutPermaPoke("Brûlure", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Brûlure");
+        }
+      } else if (nomAttaque === "Boutefeu") {
+        // let aleatoire = Math.floor(Math.random() * 10);
+        // if (
+        //   joueur === true &&
+        //   tabStatutPermaVS[num - 1] === "Vide" &&
+        //   type1VS !== "fire" &&
+        //   type2VS !== "fire"
+        // ) {
+        //   if (aleatoire === 0) {
+        //     badgeStatutPermaPoke("Brûlure", badgeStatutVS);
+        //     colorStatutPermaPoke("Brûlure", badgeStatutVS);
+        //     tabStatutPermaVS[num - 1] = "Brûlure";
+        //   }
+        //   return (pvActu = Math.round(
+        //     pvActu -
+        //       (((42 * attaque * degatAtt) / (defenseVS * 50) + 2) *
+        //         bonusType *
+        //         (efficace1 * efficace2)) /
+        //         3
+        //   ));
+        // } else if (
+        //   joueur === false &&
+        //   tabStatutPerma[num - 1] === "Vide" &&
+        //   type1 !== "fire" &&
+        //   type2 !== "fire" &&
+        //   aleatoire === 0
+        // ) {
+        //   badgeStatutPermaPoke("Brûlure", badgeStatut);
+        //   colorStatutPermaPoke("Brûlure", badgeStatut);
+        //   pvActuVS =
+        //     pvActuVS -
+        //     Math.round(
+        //       (((42 * attaqueVS * attaque_dmg1VS) / (defense * 50) + 2) *
+        //         bonusTypeVS *
+        //         (efficace1VS * efficace2VS)) /
+        //         3
+        //     );
+        //   return (tabStatutPerma[num - 1] = "Brûlure");
+        // }
+      } else if (nomAttaque === "Ère Glaciaire") {
+        let aleatoire = Math.floor(Math.random() * 10);
+        if (joueur === true && aleatoire === 0) {
+          return (defSPokeVS = baisseStat(
+            "defS",
+            1,
+            tabStatutPermaVS[num - 1]
+          ));
+        } else if (joueur === false && aleatoire === 0) {
+          return (defSPoke = baisseStat("defS", 1, tabStatutPerma[num - 1]));
+        }
+      } else if (
+        nomAttaque === "Ébullilave" ||
+        nomAttaque === "Ébullition" ||
+        nomAttaque === "Incendie" ||
+        nomAttaque === "Jet de Vapeur" ||
+        nomAttaque === "Sable Ardent"
+      ) {
+        let aleatoire = Math.floor(Math.random() * 10);
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "fire" &&
+          type2VS !== "fire" &&
+          aleatoire >= 0 &&
+          aleatoire < 3
+        ) {
+          badgeStatutPermaPoke("Brûlure", badgeStatutVS);
+          colorStatutPermaPoke("Brûlure", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Brûlure");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "fire" &&
+          type2 !== "fire" &&
+          aleatoire >= 0 &&
+          aleatoire < 3
+        ) {
+          badgeStatutPermaPoke("Brûlure", badgeStatut);
+          colorStatutPermaPoke("Brûlure", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Brûlure");
+        }
+      } else if (nomAttaque === "Feu Sacré") {
+        let aleatoire = Math.floor(Math.random() * 10);
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "fire" &&
+          type2VS !== "fire" &&
+          aleatoire >= 0 &&
+          aleatoire < 5
+        ) {
+          badgeStatutPermaPoke("Brûlure", badgeStatutVS);
+          colorStatutPermaPoke("Brûlure", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Brûlure");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "fire" &&
+          type2 !== "fire" &&
+          aleatoire >= 0 &&
+          aleatoire < 5
+        ) {
+          badgeStatutPermaPoke("Brûlure", badgeStatut);
+          colorStatutPermaPoke("Brûlure", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Brûlure");
+        }
+      } else if (nomAttaque === "Flamme Bleue") {
+        let aleatoire = Math.floor(Math.random() * 10);
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "fire" &&
+          type2VS !== "fire" &&
+          aleatoire >= 0 &&
+          aleatoire < 2
+        ) {
+          badgeStatutPermaPoke("Brûlure", badgeStatutVS);
+          colorStatutPermaPoke("Brûlure", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Brûlure");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "fire" &&
+          type2 !== "fire" &&
+          aleatoire >= 0 &&
+          aleatoire < 2
+        ) {
+          badgeStatutPermaPoke("Brûlure", badgeStatut);
+          colorStatutPermaPoke("Brûlure", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Brûlure");
+        }
+      } else if (nomAttaque === "Feu Ensorcelé") {
+        if (joueur === true) {
+          return (attSPokeVS = baisseStat(
+            "attS",
+            1,
+            tabStatutPermaVS[num - 1]
+          ));
+        } else if (joueur === false) {
+          return (attSPoke = baisseStat("attS", 1, tabStatutPerma[num - 1]));
+        }
+      } else if (nomAttaque === "Bombe Acide") {
+        if (joueur === true) {
+          return (defSPokeVS = baisseStat(
+            "defS",
+            2,
+            tabStatutPermaVS[num - 1]
+          ));
+        } else if (joueur === false) {
+          return (defSPoke = baisseStat("defS", 2, tabStatutPerma[num - 1]));
+        }
+      } else if (
+        nomAttaque === "Bombe Beurk" ||
+        nomAttaque === "Dard-Venin" ||
+        nomAttaque === "Détricanon" ||
+        nomAttaque === "Détritus" ||
+        nomAttaque === "Direct Toxik"
+      ) {
+        let aleatoire = Math.floor(Math.random() * 10);
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "poison" &&
+          type2VS !== "poison" &&
+          type1VS !== "steel" &&
+          type2VS !== "steel" &&
+          aleatoire >= 0 &&
+          aleatoire < 3
+        ) {
+          badgeStatutPermaPoke("Empoisonnement normal", badgeStatutVS);
+          colorStatutPermaPoke("Empoisonnement normal", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Empoisonnement normal");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "poison" &&
+          type2 !== "poison" &&
+          type1 !== "steel" &&
+          type2 !== "steel" &&
+          aleatoire >= 0 &&
+          aleatoire < 3
+        ) {
+          badgeStatutPermaPoke("Empoisonnement normal", badgeStatut);
+          colorStatutPermaPoke("Empoisonnement normal", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Empoisonnement normal");
+        }
+      } else if (nomAttaque === "Cradovague") {
+        let aleatoire = Math.floor(Math.random() * 10);
         if (joueur === true) {
           if (
             tabStatutPermaVS[num - 1] === "Vide" &&
-            type1VS !== "electric" &&
-            type2VS !== "electric" &&
-            type1VS !== "ground" &&
-            type2VS !== "ground" &&
-            aleatoire >= 0 &&
-            aleatoire < 2
+            type1VS !== "poison" &&
+            type2VS !== "poison" &&
+            type1VS !== "steel" &&
+            type2VS !== "steel" &&
+            aleatoire === 0
           ) {
-            if (aleatoire2 === 0) {
-              badgeStatutPermaPoke("Paralysie", badgeStatutVS);
-              colorStatutPermaPoke("Paralysie", badgeStatutVS);
-              return (tabStatutPermaVS[num - 1] = "Paralysie");
-            } else if (aleatoire2 === 1) {
-              badgeStatutPermaPoke("Brûlure", badgeStatutVS);
-              colorStatutPermaPoke("Brûlure", badgeStatutVS);
-              return (tabStatutPermaVS[num - 1] = "Brûlure");
-            } else if (aleatoire2 === 2) {
-              badgeStatutPermaPoke("Gel", badgeStatutVS);
-              colorStatutPermaPoke("Gel", badgeStatutVS);
-              return (tabStatutPermaVS[num - 1] = "Gel");
-            }
+            badgeStatutPermaPoke("Empoisonnement normal", badgeStatutVS);
+            colorStatutPermaPoke("Empoisonnement normal", badgeStatutVS);
+            return (tabStatutPermaVS[num - 1] = "Empoisonnement normal");
           }
         } else if (joueur === false) {
           if (
             tabStatutPerma[num - 1] === "Vide" &&
-            type1 !== "electric" &&
-            type2 !== "electric" &&
-            type1 !== "ground" &&
-            type2 !== "ground" &&
-            aleatoire >= 0 &&
-            aleatoire < 2
+            type1 !== "poison" &&
+            type2 !== "poison" &&
+            type1 !== "steel" &&
+            type2 !== "steel" &&
+            aleatoire === 0
           ) {
-            if (aleatoire2 === 0) {
-              badgeStatutPermaPoke("Paralysie", badgeStatut);
-              colorStatutPermaPoke("Paralysie", badgeStatut);
-              return (tabStatutPerma[num - 1] = "Paralysie");
-            } else if (aleatoire2 === 1) {
-              badgeStatutPermaPoke("Brûlure", badgeStatut);
-              colorStatutPermaPoke("Brûlure", badgeStatut);
-              return (tabStatutPerma[num - 1] = "Brûlure");
-            } else if (aleatoire2 === 2) {
-              badgeStatutPermaPoke("Gel", badgeStatut);
-              colorStatutPermaPoke("Gel", badgeStatut);
-              return (tabStatutPerma[num - 1] = "Gel");
+            badgeStatutPermaPoke("Empoisonnement normal", badgeStatut);
+            colorStatutPermaPoke("Empoisonnement normal", badgeStatut);
+            return (tabStatutPerma[num - 1] = "Empoisonnement normal");
+          }
+        }
+      } else if (nomAttaque === "Crochet Venin") {
+        let aleatoire = Math.floor(Math.random() * 10);
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "poison" &&
+          type2VS !== "poison" &&
+          type1VS !== "steel" &&
+          type2VS !== "steel" &&
+          aleatoire >= 0 &&
+          aleatoire < 5
+        ) {
+          badgeStatutPermaPoke("Empoisonnement grave", badgeStatutVS);
+          colorStatutPermaPoke("Empoisonnement grave", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Empoisonnement grave");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "poison" &&
+          type2 !== "poison" &&
+          type1 !== "steel" &&
+          type2 !== "steel" &&
+          aleatoire >= 0 &&
+          aleatoire < 5
+        ) {
+          badgeStatutPermaPoke("Empoisonnement grave", badgeStatut);
+          colorStatutPermaPoke("Empoisonnement grave", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Empoisonnement grave");
+        }
+      } else if (nomAttaque === "Fil Toxique") {
+        // baisse de vit même si pas empoisonné?
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "poison" &&
+          type2VS !== "poison" &&
+          type1VS !== "steel" &&
+          type2VS !== "steel"
+        ) {
+          badgeStatutPermaPoke("Empoisonnement normal", badgeStatutVS);
+          colorStatutPermaPoke("Empoisonnement normal", badgeStatutVS);
+          vitPoke = baisseStat("vit", 1, tabStatutPermaVS[num - 1]);
+          return (tabStatutPermaVS[num - 1] = "Empoisonnement normal");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "poison" &&
+          type2 !== "poison" &&
+          type1 !== "steel" &&
+          type2 !== "steel"
+        ) {
+          badgeStatutPermaPoke("Empoisonnement normal", badgeStatut);
+          colorStatutPermaPoke("Empoisonnement normal", badgeStatut);
+          vitPoke = baisseStat("vit", 1, tabStatutPerma[num - 1]);
+          return (tabStatutPerma[num - 1] = "Empoisonnement normal");
+        }
+      } else if (nomAttaque === "Gaz Toxik" || nomAttaque === "Poudre Toxik") {
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "poison" &&
+          type2VS !== "poison" &&
+          type1VS !== "steel" &&
+          type2VS !== "steel"
+        ) {
+          badgeStatutPermaPoke("Empoisonnement normal", badgeStatutVS);
+          colorStatutPermaPoke("Empoisonnement normal", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Empoisonnement normal");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "poison" &&
+          type2 !== "poison" &&
+          type1 !== "steel" &&
+          type2 !== "steel"
+        ) {
+          badgeStatutPermaPoke("Empoisonnement normal", badgeStatut);
+          colorStatutPermaPoke("Empoisonnement normal", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Empoisonnement normal");
+        }
+      } else if (nomAttaque === "Purédpois") {
+        let aleatoire = Math.floor(Math.random() * 10);
+        if (
+          joueur === true &&
+          tabStatutPermaVS[num - 1] === "Vide" &&
+          type1VS !== "poison" &&
+          type2VS !== "poison" &&
+          type1VS !== "steel" &&
+          type2VS !== "steel" &&
+          aleatoire >= 0 &&
+          aleatoire < 4
+        ) {
+          badgeStatutPermaPoke("Empoisonnement normal", badgeStatutVS);
+          colorStatutPermaPoke("Empoisonnement normal", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Empoisonnement normal");
+        } else if (
+          joueur === false &&
+          tabStatutPerma[num - 1] === "Vide" &&
+          type1 !== "poison" &&
+          type2 !== "poison" &&
+          type1 !== "steel" &&
+          type2 !== "steel" &&
+          aleatoire >= 0 &&
+          aleatoire < 4
+        ) {
+          badgeStatutPermaPoke("Empoisonnement normal", badgeStatut);
+          colorStatutPermaPoke("Empoisonnement normal", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Empoisonnement normal");
+        }
+      } else if (nomAttaque === "Chant Antique") {
+        let aleatoire = Math.floor(Math.random() * 10);
+        if (
+          joueur === true &&
+          aleatoire === 0 &&
+          type1VS !== "ghost" &&
+          type2VS !== "ghost" &&
+          tabStatutPermaVS[num - 1] === "Vide"
+        ) {
+          badgeStatutPermaPoke("Sommeil", badgeStatutVS);
+          colorStatutPermaPoke("Sommeil", badgeStatutVS);
+          return (tabStatutPermaVS[num - 1] = "Sommeil");
+        } else if (
+          joueur === false &&
+          aleatoire === 0 &&
+          type1 !== "ghost" &&
+          type2 !== "ghost" &&
+          tabStatutPerma[num - 1] === "Vide"
+        ) {
+          badgeStatutPermaPoke("Sommeil", badgeStatut);
+          colorStatutPermaPoke("Sommeil", badgeStatut);
+          return (tabStatutPerma[num - 1] = "Sommeil");
+        }
+      }
+    }
+
+    function attaquePrioPoke(nomAttaque) {
+      if (nomAttaque === "Détection") {
+        let aleatoire = Math.floor(Math.random() * 2);
+        if (joueur === true) {
+          // if (derniereAttaque === "Détection") {
+          //   if (aleatoire === 0) {
+          //     return console.log("Raté");
+          //   } else {
+          //     return (efficace1VS = 0);
+          //   }
+          // } else {
+          efficace1VS = 0;
+          return console.log("efficace1VS detection", efficace1VS);
+          // }
+        } else if (joueur === false) {
+          if (derniereAttaqueVS === "Détection") {
+            if (aleatoire === 0) {
+              return console.log("Raté");
+            } else {
+              return (efficace1 = 0);
             }
+          } else {
+            return (efficace1 = 0);
+          }
+        }
+      } else if (nomAttaque === "Abri") {
+        let aleatoire = Math.floor(Math.random() * 2);
+        if (joueur === true) {
+          if (derniereAttaque === "Abri") {
+            if (aleatoire === 0) {
+              return console.log("Raté");
+            } else {
+              return (efficace1VS = 0);
+            }
+          } else {
+            return (efficace1VS = 0);
+          }
+        } else if (joueur === false) {
+          if (derniereAttaqueVS === "Abri") {
+            if (aleatoire === 0) {
+              return console.log("Raté");
+            } else {
+              return (efficace1 = 0);
+            }
+          } else {
+            return (efficace1 = 0);
           }
         }
       }
@@ -2090,7 +2427,7 @@
           countBru,
           count,
           stat0,
-          statut: "Sommeil",
+          statut: "Vide",
           countPara,
           statVit,
         });
@@ -2522,7 +2859,7 @@
       }
 
       console.log("attPokeVS", attPokeVS);
-      console.log("vitesse", vitPokeVS);
+      console.log("vitesse", vitPoke);
 
       if (num === "switch") {
         if (pvActuVS > 0) {
@@ -2558,9 +2895,6 @@
             );
             tabCountStatutPermaVS[numPokeVS - 1] = 0;
           }
-          // else if (tabStatutPermaVS[numPokeVS - 1] === "Brûlure") {
-
-          // }
 
           pvActu = Math.round(
             pvActu -
